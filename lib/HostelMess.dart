@@ -1,4 +1,5 @@
-import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 
 class HostelMess extends StatelessWidget {
@@ -20,7 +21,7 @@ class HostelMess extends StatelessWidget {
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
         ),
-        body: HostelMess(),
+        body: HostelMessBody(),
       ),
     );
   }
@@ -31,12 +32,14 @@ class HostelMessBody extends StatefulWidget {
 }
 
 class _HostelMessBodyState extends State<HostelMessBody> {
-  String url = "null";
-
-
 
   @override
   Widget build(BuildContext context) {
-return ListView();
+return ListView(
+children: <Widget>[
+  Image(image: FirebaseImage("gs://manipallocals-2f95e.appspot.com/hostel.png"),),
+
+],
+);
   }
 }
