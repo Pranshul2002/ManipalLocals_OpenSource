@@ -45,7 +45,7 @@ class _CollegeDataState extends State<CollegeData> {
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasError) {
-              Fluttertoast.showToast(msg: "Error: ${snapshot.error}");
+              Fluttertoast.showToast(msg: "Error: ${snapshot.error}",toastLength: Toast.LENGTH_SHORT);
               return Container();
             }
             switch (snapshot.connectionState) {
