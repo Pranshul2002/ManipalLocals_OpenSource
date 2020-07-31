@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "997930601356",
+    "firebase_url": "https://manipallocals-2f95e.firebaseio.com",
+    "project_id": "manipallocals-2f95e",
+    "storage_bucket": "manipallocals-2f95e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997930601356:android:c4f2b99444f66cd20e64a9",
+        "android_client_info": {
+          "package_name": "com.example.manipal_locals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997930601356-2djm2qq2pfq4ngh9q7v8hie3ftbgae8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.manipal_locals",
+            "certificate_hash": "47d24a98d66483b78ca0cda26dde55705a9cd3f2"
+          }
+        },
+        {
+          "client_id": "997930601356-4ulr60kg5bo2mmrrtgtk366sorgrmjms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRiRjjChZQXuNC4w011YcaPWHmrRz2PHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997930601356-4ulr60kg5bo2mmrrtgtk366sorgrmjms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
