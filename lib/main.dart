@@ -10,6 +10,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: "bangla mn"),
       home: Scaffold(
         body: SplashScreenImage(),
       ),
@@ -38,29 +39,11 @@ class SplashScreenImage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  "assets/logo.png",
-                  width: MediaQuery.of(context).size.width * 0.433,
-                  height: MediaQuery.of(context).size.height * 0.324013514,
+                  "assets/images/logo.png",
+                  width: MediaQuery.of(context).size.width - 32,
+
                 ),
-                Text(
-                  "MANIPAL LOCALS",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(10.0, 10.0),
-                        blurRadius: 10.0,
-                        color: Color.fromRGBO(0, 0, 0, 0.2),
-                      ),
-                      Shadow(
-                        offset: Offset(10.0, 10.0),
-                        blurRadius: 8.0,
-                        color: Color.fromRGBO(0, 0, 0, 0.2),
-                      ),
-                    ],
-                  ),
-                ),
+
               ],
             ),
           ],

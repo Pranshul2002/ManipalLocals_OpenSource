@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:manipal_locals/College.dart';
+import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,7 +53,7 @@ class TopPart extends StatelessWidget {
         Stack(
           children: <Widget>[
             Image.asset(
-              "assets/home_page.png",
+              "assets/images/home_page.png",
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.304054054,
               fit: BoxFit.fill,
@@ -217,7 +218,9 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => GetARide()));
+                        },
                         elevation: 2.0,
                         shape: CircleBorder(),
                         fillColor: Color(0xff737070),
@@ -225,11 +228,11 @@ class TopPart extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("AUTO/CAB",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text("GET",style: TextStyle(color: Colors.white, fontSize: 16.0),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text("A RIDE",style: TextStyle(color: Colors.white, fontSize: 16.0),),
                       ),
                     ],
                   ),

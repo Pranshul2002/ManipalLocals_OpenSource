@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'DataShow.dart';
 
-class College extends StatelessWidget {
+class GetARide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,36 +18,37 @@ class College extends StatelessWidget {
               preferredSize: Size.fromHeight(3.0)),
           backgroundColor: Color(0xffFF9609),
           title: Text(
-            "COLLEGE",
+            "GET A RIDE",
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
         ),
-        body: CollegeData(),
+        body: GetARideBody(),
       ),
     );
   }
 }
 
-class CollegeData extends StatefulWidget {
+class GetARideBody extends StatefulWidget {
   @override
-  _CollegeDataState createState() => _CollegeDataState();
+  _GetARideBodyState createState() => _GetARideBodyState();
 }
 
-class _CollegeDataState extends State<CollegeData> {
-
+class _GetARideBodyState extends State<GetARideBody> {
+  double Height = 100;
+  bool expanded = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Image(
           image:
-          FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
+          FirebaseImage("gs://manipallocals-2f95e.appspot.com/AUTO.png"),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
-                  .collection("college_data")
-                  .document("gHyYe7RUaRgKARY0i4xW")
+                  .collection("get_a_ride")
+                  .document("P4LTcIxxXczvJmkDAxOW")
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -69,14 +69,14 @@ class _CollegeDataState extends State<CollegeData> {
                     return ListView(
                       children: <Widget>[
                         SizedBox(height: 16.0,),
-                        for (String name in snapshot.data["document_names"])
+                        for (String name in snapshot.data["document_data"])
                           Container(
                             padding: EdgeInsets.only(
                                 top: 16.0,
                                 bottom: 16.0,
                                 left: 16.0,
                                 right: 16.0),
-                            height: 100,
+                            height: Height,
                             child: GestureDetector(
                               child: Card(
                                   elevation: 10.0,
