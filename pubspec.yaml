@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cloud_firestore: ^0.13.7
   fluttertoast: ^7.0.1+1
   firebase_image: ^0.1.6
@@ -66,7 +65,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: bangla mn
+     - family: banglamn
        fonts:
          - asset: assets/fonts/Bangla_MN.ttf
   #       - asset: fonts/Schyler-Italic.ttf

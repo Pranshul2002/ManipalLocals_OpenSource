@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: "bangla mn"),
+
       home: Scaffold(
         body: SplashScreenImage(),
       ),
@@ -31,7 +31,7 @@ class SplashScreenImage extends StatelessWidget {
     delay(context);
     return SizedBox.expand(
       child: Container(
-        color: Color.fromRGBO(255, 150, 9, 1.0),
+        color: Color(0xffFF9609),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

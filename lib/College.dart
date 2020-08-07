@@ -18,9 +18,12 @@ class College extends StatelessWidget {
               ),
               preferredSize: Size.fromHeight(3.0)),
           backgroundColor: Color(0xffFF9609),
-          title: Text(
-            "COLLEGE",
-            style: TextStyle(fontSize: 20, color: Colors.white),
+          title: Container(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Text(
+              "COLLEGE",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
         ),
         body: CollegeData(),
@@ -35,14 +38,13 @@ class CollegeData extends StatefulWidget {
 }
 
 class _CollegeDataState extends State<CollegeData> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Image(
           image:
-          FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
+              FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
@@ -62,34 +64,50 @@ class _CollegeDataState extends State<CollegeData> {
                   case ConnectionState.waiting:
                     return Center(
                         child: new CircularProgressIndicator(
-                          valueColor:
+                      valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white),
-                        ));
+                    ));
                   default:
                     return ListView(
                       children: <Widget>[
-                        SizedBox(height: 16.0,),
+                        SizedBox(
+                          height: 16.0,
+                        ),
                         for (String name in snapshot.data["document_names"])
                           Container(
-                            padding: EdgeInsets.only(
-                                top: 16.0,
-                                bottom: 16.0,
-                                left: 16.0,
-                                right: 16.0),
-                            height: 100,
-                            child: GestureDetector(
-                              child: Card(
-                                  elevation: 10.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(24))),
-                                  child: Center(child: Container(padding:EdgeInsets.only(left: 32.0),child: Text(name,style: TextStyle(fontSize: 20),),))
+                              padding: EdgeInsets.only(
+                                  top: 16.0,
+                                  bottom: 16.0,
+                                  left: 16.0,
+                                  right: 16.0
                               ),
-                              onTap: (){
-
-                              },
-                            ),
-                          )
+                              height: 100,
+                              child: GestureDetector(
+                                child: Card(
+                                  color: Color(0xff1e1e1e),
+                                    elevation: 10.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(24))),
+                                    child: Center(
+                                        child: Container(
+                                      padding: EdgeInsets.only(left: 32.0),
+                                      child: Text(
+                                        name,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                    ),
+                                ),
+                                onTap: () {
+                                  print(snapshot.data[name]);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => DataShow(name: name,data: snapshot.data[name])));
+                                },
+                              ),
+                          ),
                       ],
                     );
                 }

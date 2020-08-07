@@ -17,9 +17,12 @@ class HostelMess extends StatelessWidget {
               ),
               preferredSize: Size.fromHeight(3.0)),
           backgroundColor: Color(0xffFF9609),
-          title: Text(
-            "HOSTEL/MESS",
-            style: TextStyle(fontSize: 20, color: Colors.white),
+          title: Container(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Text(
+              "HOSTEL/MESS",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
         ),
         body: HostelMessBody(),

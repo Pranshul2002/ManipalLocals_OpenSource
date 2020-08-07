@@ -21,14 +21,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData(
+        canvasColor: Colors.black,
+        brightness: Brightness.dark,
+        fontFamily: "banglamn"
+      ),
+
       home: SafeArea(
         child: Scaffold(
           drawer: Drawer(),
           body: TopPart(),
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Color(0xff737070),
+            backgroundColor: Color(0xff1e1e1e),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
@@ -63,7 +67,7 @@ class TopPart extends StatelessWidget {
               child: GestureDetector(
                 child: Icon(
                   Icons.format_list_bulleted,
-                  size: 40,
+                  size: 33,
                 ),
                 onTap: () {
                   Scaffold.of(context).openDrawer();
@@ -72,10 +76,11 @@ class TopPart extends StatelessWidget {
             ),
           ],
         ),
-        Expanded(child: ListView(
+        Expanded(
+            child: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(35.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
@@ -83,37 +88,53 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => College()));
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => College()));
                         },
                         elevation: 2.0,
-                          shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
-
+                        shape: CircleBorder(),
+                        fillColor: Color(0xff1e1e1e),
+                        constraints:
+                            BoxConstraints(minWidth: 84, minHeight: 84),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("COLLEGE",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "COLLEGE",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       )
                     ],
                   ),
                   Expanded(
-                    child:Column(
+                    child: Column(
                       children: [
                         RawMaterialButton(
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => HostelMess()));
-                          },
-                          elevation: 2.0,
-                          shape: CircleBorder(),
-                          fillColor: Color(0xff737070),
-                          constraints: BoxConstraints(minWidth: 84,minHeight: 84),
-                            child: Center(child: Icon(Icons.fastfood,size: 50 , color: Colors.white,))
-                        ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => HostelMess()));
+                            },
+                            elevation: 2.0,
+                            shape: CircleBorder(),
+                            fillColor: Color(0xff1e1e1e),
+                            constraints:
+                                BoxConstraints(minWidth: 84, minHeight: 84),
+                            child: Center(
+                                child: Icon(
+                              Icons.fastfood,
+                              size: 50,
+                              color: Colors.white,
+                            ))),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("HOSTEL/MESS",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          child: Text(
+                            "HOSTEL/MESS",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
                         )
                       ],
                     ),
@@ -121,25 +142,29 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){},
-                        elevation: 2.0,
-                        shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
-                          child: Center(child: Icon(Icons.location_on,size:50, color: Colors.white))
-                      ),
+                          onPressed: () {},
+                          elevation: 2.0,
+                          shape: CircleBorder(),
+                          fillColor: Color(0xff1e1e1e),
+                          constraints:
+                              BoxConstraints(minWidth: 84, minHeight: 84),
+                          child: Center(
+                              child: Icon(Icons.location_on,
+                                  size: 50, color: Colors.white))),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("MAPS",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "MAPS",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       )
                     ],
                   ),
                 ],
               ),
             ),
-
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(35.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
@@ -147,39 +172,55 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         elevation: 2.0,
                         shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
+                        fillColor: Color(0xff1e1e1e),
+                        constraints:
+                            BoxConstraints(minWidth: 84, minHeight: 84),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("CAMPUS",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "CAMPUS",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("STORES",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "STORES",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
                   Expanded(
-                    child:Column(
+                    child: Column(
                       children: [
                         RawMaterialButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           elevation: 2.0,
                           shape: CircleBorder(),
-                          fillColor: Color(0xff737070),
-                          constraints: BoxConstraints(minWidth: 84,minHeight: 84),
+                          fillColor: Color(0xff1e1e1e),
+                          constraints:
+                              BoxConstraints(minWidth: 84, minHeight: 84),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("DIRECTORY",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          child: Text(
+                            "DIRECTORY",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          child: Text(
+                            "",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
                         ),
                       ],
                     ),
@@ -187,30 +228,34 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         elevation: 2.0,
                         shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("PLACES"
-                           ,style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        fillColor: Color(0xff1e1e1e),
+                        constraints:
+                            BoxConstraints(minWidth: 84, minHeight: 84),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                            "TO VISIT",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          "PLACES",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "TO VISIT",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(35.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
@@ -218,41 +263,58 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => GetARide()));
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => GetARide()));
                         },
                         elevation: 2.0,
                         shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
+                        fillColor: Color(0xff1e1e1e),
+                        constraints:
+                            BoxConstraints(minWidth: 84, minHeight: 84),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("GET",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "GET",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("A RIDE",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "A RIDE",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
                   Expanded(
-                    child:Column(
+                    child: Column(
                       children: [
                         RawMaterialButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           elevation: 2.0,
                           shape: CircleBorder(),
-                          fillColor: Color(0xff737070),
-                          constraints: BoxConstraints(minWidth: 84,minHeight: 84),
+                          fillColor: Color(0xff1e1e1e),
+                          constraints:
+                              BoxConstraints(minWidth: 84, minHeight: 84),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("FAQs",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          child: Text(
+                            "FAQs",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                          child: Text(
+                            "",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
                         ),
                       ],
                     ),
@@ -260,20 +322,26 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         elevation: 2.0,
                         shape: CircleBorder(),
-                        fillColor: Color(0xff737070),
-                        constraints: BoxConstraints(minWidth: 84,minHeight: 84),
+                        fillColor: Color(0xff1e1e1e),
+                        constraints:
+                            BoxConstraints(minWidth: 84, minHeight: 84),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("STUDENT"
-                            ,style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "STUDENT",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("CLUBS",style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                        child: Text(
+                          "CLUBS",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
