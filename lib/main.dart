@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:manipal_locals/PushNotification.dart';
 import 'HomePage.dart';
 
 void main() {
@@ -7,8 +8,10 @@ void main() {
 }
 
 class SplashScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
 
       home: Scaffold(
@@ -29,6 +32,7 @@ class SplashScreenImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     delay(context);
+
     return SizedBox.expand(
       child: Container(
         color: Color(0xffFF9609),
@@ -41,9 +45,7 @@ class SplashScreenImage extends StatelessWidget {
                 Image.asset(
                   "assets/images/logo.png",
                   width: MediaQuery.of(context).size.width - 32,
-
                 ),
-
               ],
             ),
           ],

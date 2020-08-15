@@ -78,21 +78,35 @@ bool expanded = false;
                                 top: 16.0,
                                 bottom: 16.0,
                                 left: 16.0,
-                                right: 16.0),
+                                right: 16.0
+                            ),
                             height: 100,
                             child: GestureDetector(
                               child: Card(
+                                color: Color(0xff1e1e1e),
                                 elevation: 10.0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(24))),
-                                child: Center(child: Container(padding:EdgeInsets.only(left: 32.0),child: Text(name,style: TextStyle(fontSize: 20),),))
+                                child: Center(
+                                  child: Container(
+                                    child: Text(
+                                      name,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => DataShow()));
+                              onTap: () {
+                                if(snapshot.data[name] != null){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => DataShow(name: name,data: snapshot.data[name])));
+                                }
                               },
                             ),
-                          )
+                          ),
                       ],
                     );
                 }

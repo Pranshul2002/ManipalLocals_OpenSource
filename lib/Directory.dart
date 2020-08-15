@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-class Get_A_Ride extends StatelessWidget {
+class Directory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,41 +19,41 @@ class Get_A_Ride extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.only(top: 8.0),
           child: Text(
-            "Get A Ride",
+            "DIRECTORY",
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
         ),
       ),
-      body: Get_A_RideStateful(),
+      body: DirectoryStateful(),
     );
   }
 }
 
-class Get_A_RideStateful extends StatefulWidget {
+class DirectoryStateful extends StatefulWidget {
   @override
-  _Get_A_RideStatefulState createState() => _Get_A_RideStatefulState();
+  _DirectoryStatefulState createState() => _DirectoryStatefulState();
 }
 
-class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
+class _DirectoryStatefulState extends State<DirectoryStateful> {
   final global = GlobalKey();
   Widget custom(List contacts){
-    print(contacts);
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (context, index){
-        return ListTile(
-          onTap: (){
-            UrlLauncher.launch("tel://" + contacts[index]);
-          },
-          title: Row(children: [
-            Icon(Icons.phone),
-            SizedBox(width: 25.0,),
-            Padding(
-              padding: const EdgeInsets.only(top:5.0),
-              child: Text("${contacts[index]}" ,style: TextStyle(fontSize: 16.0),),
-            )]),
-        );
-      },itemCount: contacts.length,);
+print(contacts);
+   return ListView.builder(
+     shrinkWrap: true,
+     itemBuilder: (context, index){
+      return ListTile(
+        onTap: (){
+         UrlLauncher.launch("tel://" + contacts[index]);
+        },
+        title: Row(children: [
+          Icon(Icons.phone),
+          SizedBox(width: 25.0,),
+          Padding(
+            padding: const EdgeInsets.only(top:5.0),
+            child: Text("${contacts[index]}" ,style: TextStyle(fontSize: 16.0),),
+          )]),
+      );
+    },itemCount: contacts.length,);
   }
 
   @override
@@ -62,13 +62,14 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
       children: <Widget>[
         Image(
           image: FirebaseImage(
-              "gs://manipallocals-2f95e.appspot.com/AUTO.png"),
+              "gs://manipallocals-2f95e.appspot.com/DIRECTORY.png"
+          ),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
-                  .collection("get_a_ride")
-                  .document("P4LTcIxxXczvJmkDAxOW")
+                  .collection("directory")
+                  .document("8ptjVmVbwBJXZCNqt6JP")
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -82,9 +83,9 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
                   case ConnectionState.waiting:
                     return Center(
                         child: new CircularProgressIndicator(
-                          valueColor:
+                      valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white),
-                        ));
+                    ));
                   default:
 
                     return ListView(
@@ -92,7 +93,7 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
                         SizedBox(
                           height: 16.0,
                         ),
-                        for (String name in snapshot.data["document_data"])
+                        for (String name in snapshot.data["phone_number"])
                           Padding(
                             child: ExpansionTile(
                               title: Text(

@@ -91,20 +91,20 @@ class _CollegeDataState extends State<CollegeData> {
                                             Radius.circular(24))),
                                     child: Center(
                                         child: Container(
-                                      padding: EdgeInsets.only(left: 32.0),
                                       child: Text(
                                         name,
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                     ),
                                     ),
                                 ),
                                 onTap: () {
-                                  print(snapshot.data[name]);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => DataShow(name: name,data: snapshot.data[name])));
+                                  if(snapshot.data[name] != null){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => DataShow(name: name,data: snapshot.data[name])));
+                                  }
                                 },
                               ),
                           ),
