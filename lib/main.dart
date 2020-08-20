@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:manipal_locals/PushNotification.dart';
+
 import 'HomePage.dart';
 
 void main() {

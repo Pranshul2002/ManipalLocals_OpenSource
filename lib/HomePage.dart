@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,28 +8,27 @@ import 'package:manipal_locals/Directory.dart';
 import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
 import 'package:manipal_locals/Notification.dart';
-import 'package:manipal_locals/PushNotification.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import 'MessageBean.dart';
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-
+class HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
-
     });
   }
 
   FirebaseMessaging _firebaseMessaging;
-MessageBean messageBean = new MessageBean();
-bool _newNotification = false;
+  MessageBean messageBean = new MessageBean();
+  static bool newNotification = false;
+
   void setUpFirebase() {
     _firebaseMessaging = FirebaseMessaging();
     firebaseCloudMessaging_Listeners();
@@ -39,42 +37,37 @@ bool _newNotification = false;
   void firebaseCloudMessaging_Listeners() {
     if (Platform.isIOS) iOS_Permission();
 
-
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');
         setState(() {
-          _newNotification = true;
+          newNotification = true;
+          messageBean.input_data(message);
         });
-        messageBean.input_data(message);
+
       },
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
         try{
-          messageBean.input_data(message);
           setState(() {
-            print(1);
+            messageBean.input_data(message);
             selectedIndex = 2;
-          NotificationPage.item = messageBean;
+
           });
         }catch(e){
           print(e);
         }
-       // _navigateToItemDetail(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print('on launch $message');
         try{
-          messageBean.input_data(message);
           setState(() {
-            print(2);
+            messageBean.input_data(message);
             selectedIndex = 2;
-            NotificationPage.item = messageBean;
           });
         }catch(e){
           print(e);
         }
-        //_navigateToItemDetail(message);
       },
     );
   }
@@ -87,20 +80,22 @@ bool _newNotification = false;
       print("Settings registered: $settings");
     });
   }
- /* MessageBean item;
-final MessageBean messageBean = MessageBean();*/
- /* void _navigateToItemDetail(Map<String, dynamic> message){
-    item = messageBean.itemForMessage(message);
-    setState(() {
-      selectedIndex = 2;
-
-    });
-  }*/
-
   @override
   void initState() {
     setUpFirebase();
     super.initState();
+    NotificationPage.item = messageBean;
+    try {
+      NotificationPage.item.addListener(() {
+        setState(() {
+          NotificationPageState.items = NotificationPage.item;
+          print(NotificationPageState.items);
+        });
+      });
+    }
+    catch (e) {
+      print(e);
+    }
   }
 final list = [
   TopPart(),
