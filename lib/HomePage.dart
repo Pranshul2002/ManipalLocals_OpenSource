@@ -85,6 +85,7 @@ class HomePageState extends State<HomePage> {
     setUpFirebase();
     super.initState();
     NotificationPage.item = messageBean;
+
     try {
       NotificationPage.item.addListener(() {
         setState(() {
