@@ -1,33 +1,112 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:manipal_locals/College.dart';
 import 'package:manipal_locals/Directory.dart';
 import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
-import 'package:manipal_locals/Maps.dart';
+import 'package:manipal_locals/Notification.dart';
 import 'package:manipal_locals/PushNotification.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+
+import 'MessageBean.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseNotifications firebaseNotifications = new FirebaseNotifications();
+
   int selectedIndex = 0;
-  final widgetOptions = [Text("Home"), Text("SLCM")];
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
+
     });
   }
 
-  @override
-  void initState() {
-    firebaseNotifications.setUpFirebase();
-    super.initState();
+  FirebaseMessaging _firebaseMessaging;
+MessageBean messageBean = new MessageBean();
+bool _newNotification = false;
+  void setUpFirebase() {
+    _firebaseMessaging = FirebaseMessaging();
+    firebaseCloudMessaging_Listeners();
   }
 
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+        setState(() {
+          _newNotification = true;
+        });
+        messageBean.input_data(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+        try{
+          messageBean.input_data(message);
+          setState(() {
+            print(1);
+            selectedIndex = 2;
+          NotificationPage.item = messageBean;
+          });
+        }catch(e){
+          print(e);
+        }
+       // _navigateToItemDetail(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+        try{
+          messageBean.input_data(message);
+          setState(() {
+            print(2);
+            selectedIndex = 2;
+            NotificationPage.item = messageBean;
+          });
+        }catch(e){
+          print(e);
+        }
+        //_navigateToItemDetail(message);
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
+ /* MessageBean item;
+final MessageBean messageBean = MessageBean();*/
+ /* void _navigateToItemDetail(Map<String, dynamic> message){
+    item = messageBean.itemForMessage(message);
+    setState(() {
+      selectedIndex = 2;
+
+    });
+  }*/
+
+  @override
+  void initState() {
+    setUpFirebase();
+    super.initState();
+  }
+final list = [
+  TopPart(),
+  Text("Coming Soon"),
+  NotificationPage(),
+];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,6 +116,12 @@ class _HomePageState extends State<HomePage> {
           fontFamily: "banglamn"),
       home: SafeArea(
         child: Scaffold(
+          appBar: (selectedIndex == 2)?  AppBar(backgroundColor: Colors.transparent,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text("Notifications",style: TextStyle(fontSize: 22),),
+            ),
+          ) : null,
           drawer: Drawer(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -115,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () async {
                             var url = 'https://www.instagram.com/instagram/';
                             if(await UrlLauncher.canLaunch(url))
-                              {await UrlLauncher.launch(url,universalLinksOnly: true);
+                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
                               }
                           },
                           child: Padding(
@@ -123,17 +208,41 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset("assets/images/instagram.png" , height: 25.0,width: 25.0,),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Image.asset("assets/images/facebook.png" , height: 25.0,width: 25.0,),
+                        GestureDetector(
+                          onTap: () async {
+                            var url = 'https://www.facebook.com/narendramodi/';
+                            if(await UrlLauncher.canLaunch(url))
+                            {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                            }
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Image.asset("assets/images/facebook.png" , height: 25.0,width: 25.0,),
+                          ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Image.asset("assets/images/twitter.png" , height: 25.0,width: 25.0,),
+                        GestureDetector(
+                            onTap: () async {
+                              var url = 'https://twitter.com/PMOIndia';
+                              if(await UrlLauncher.canLaunch(url))
+                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                              }
+                            },
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Image.asset("assets/images/twitter.png" , height: 25.0,width: 25.0,),
+                          ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Image.asset("assets/images/whatsapp.png" , height: 25.0,width: 25.0,),
+                        GestureDetector(
+                            onTap: () async {
+                              var url = 'https://chat.whatsapp.com/JLCOqP7SWCH2dwE67xJNLr';
+                              if(await UrlLauncher.canLaunch(url))
+                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                              }
+                            },
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Image.asset("assets/images/whatsapp.png" , height: 25.0,width: 25.0,),
+                          ),
                         ),
                       ],
                     )
@@ -142,9 +251,10 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          body: TopPart(),
+          body: list[selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Color(0xff1e1e1e),
+
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
@@ -154,6 +264,7 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.bookmark), title: Text('Notifications')),
             ],
             currentIndex: selectedIndex,
+            type: BottomNavigationBarType.shifting,
             fixedColor: Color.fromRGBO(255, 150, 9, 1.0),
             onTap: onItemTapped,
           ),
@@ -162,6 +273,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
 
 class TopPart extends StatelessWidget {
   double iconsize = 33;
