@@ -8,6 +8,8 @@ import 'package:manipal_locals/Directory.dart';
 import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
 import 'package:manipal_locals/Notification.dart';
+import 'package:manipal_locals/PlacesToVisit.dart';
+import 'package:manipal_locals/StudentClubs.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import 'MessageBean.dart';
@@ -206,14 +208,19 @@ final list = [
                         ),
                         GestureDetector(
                           onTap: () async {
-                            var url = 'https://www.facebook.com/narendramodi/';
+                            final Uri params = Uri(
+                              scheme: 'mailto',
+                              path: 'pranshul20162002@gmail.com',
+                              query: '',
+                            );
+                            var url = params.toString();
                             if(await UrlLauncher.canLaunch(url))
                             {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
                             }
                           },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Image.asset("assets/images/facebook.png" , height: 25.0,width: 25.0,),
+                            child: Image.asset("assets/images/gmail.png" , height: 25.0,width: 25.0,),
                           ),
                         ),
                         GestureDetector(
@@ -534,7 +541,12 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => PlacesToVisit()));
+                        },
                         child: Center(
                             child: Icon(
                           Icons.directions,
@@ -569,7 +581,12 @@ class TopPart extends StatelessWidget {
                     child: Column(
                       children: [
                         RawMaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => StudentClubs()));
+                          },
                           child: Center(
                               child: Icon(
                             Icons.people,

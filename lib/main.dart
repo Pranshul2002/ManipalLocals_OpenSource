@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -23,10 +24,9 @@ class SplashScreen extends StatelessWidget {
 
 class SplashScreenImage extends StatelessWidget {
   Future<void> delay(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 1), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomePage()));
-    });
+    await FirebaseAuth.instance.signInAnonymously();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => HomePage()));
   }
 
   @override
