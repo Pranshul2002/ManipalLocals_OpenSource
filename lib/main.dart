@@ -24,6 +24,7 @@ class SplashScreen extends StatelessWidget {
 
 class SplashScreenImage extends StatelessWidget {
   Future<void> delay(BuildContext context) async {
+    if(FirebaseAuth.instance.currentUser() != null)
     await FirebaseAuth.instance.signInAnonymously();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (_) => HomePage()));
@@ -35,7 +36,7 @@ class SplashScreenImage extends StatelessWidget {
 
     return SizedBox.expand(
       child: Container(
-        color: Color(0xffFF9609),
+        color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

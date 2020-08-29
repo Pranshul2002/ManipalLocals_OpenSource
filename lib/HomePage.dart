@@ -9,10 +9,11 @@ import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
 import 'package:manipal_locals/Notification.dart';
 import 'package:manipal_locals/PlacesToVisit.dart';
-import 'package:manipal_locals/StudentClubs.dart';
+
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import 'MessageBean.dart';
+import 'StudentClubs.dart';
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => HomePageState();
@@ -53,7 +54,7 @@ class HomePageState extends State<HomePage> {
         try{
           setState(() {
             messageBean.input_data(message);
-            selectedIndex = 2;
+            selectedIndex = 1;
 
           });
         }catch(e){
@@ -65,7 +66,7 @@ class HomePageState extends State<HomePage> {
         try{
           setState(() {
             messageBean.input_data(message);
-            selectedIndex = 2;
+            selectedIndex = 1;
           });
         }catch(e){
           print(e);
@@ -102,7 +103,6 @@ class HomePageState extends State<HomePage> {
   }
 final list = [
   TopPart(),
-  Text("Coming Soon"),
   NotificationPage(),
 ];
   @override
@@ -114,7 +114,21 @@ final list = [
           fontFamily: "banglamn"),
       home: SafeArea(
         child: Scaffold(
-          appBar: (selectedIndex == 2)?  AppBar(backgroundColor: Colors.transparent,
+          appBar: (selectedIndex == 1)?  AppBar(backgroundColor: Colors.transparent,
+            leading: Builder(
+              builder:(context) => Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: GestureDetector(
+                  child: Icon(
+                    Icons.format_list_bulleted,
+                    size: 30,
+                  ),
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+              ),
+            ),
             title: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text("Notifications",style: TextStyle(fontSize: 22),),
@@ -166,15 +180,150 @@ final list = [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    GestureDetector(
+                      onTap: (){
+                        showModalBottomSheet<void>(
+                            backgroundColor: Colors.transparent,
+                            context: context, builder: (BuildContext bc) => Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(left:20.0,top:32.0,bottom: 16.0,),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(radius: 35,
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left:32.0),
+                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Pranshul Goyal",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    )
+                                  ],
+
+                                ),
+                                SizedBox(height: 16.0,),
+                                Row(
+                                  children: [
+                                    CircleAvatar(radius: 35,
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left:32.0),
+                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Vaibhav Awasthi",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Project Lead",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    )
+                                  ],
+
+                                ),
+                                SizedBox(height: 16.0,),
+                                Row(
+                                  children: [
+                                    CircleAvatar(radius: 35,
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left:32.0),
+                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    )
+                                  ],
+
+                                ),
+                              ],
+                            ),
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Color(0xff3B3B3B),
+                              borderRadius: new BorderRadius.only(
+                                  topLeft:  const  Radius.circular(40.0),
+                                  topRight: const  Radius.circular(40.0))
+                          ),
+                        ));
+                      },
+                      child:
                     Container(
                         padding: EdgeInsets.all(15.0),
-                        child: Text("Developers" , style: TextStyle(fontSize: 16.0),)),
-                    Container(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text("Privacy Policy" , style: TextStyle(fontSize: 16.0),)),
-                    Container(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text("About Us" , style: TextStyle(fontSize: 16.0),)),
+                        child: Text("Team" , style: TextStyle(fontSize: 16.0),)),)
+                    ,
+                    GestureDetector(
+                      onTap: (){
+                        showModalBottomSheet<void>(
+                            backgroundColor: Colors.transparent,
+                            context: context, builder: (BuildContext bc) => Container(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                               Expanded(
+                                 child: ListView(
+                                   children: [
+                                     Container(
+                                       alignment:Alignment.topCenter,
+                                       child: Text("Privacy Policy",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),
+                                     ),
+                                     SizedBox(height: 16),
+                                     Container(
+                                       alignment:Alignment.topCenter,
+                                       child: Text("Privacy Policy",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
+                                     ),
+                                   ],
+                                 ),
+                               )
+                              ],
+                            ),
+                          ),
+                          decoration: new BoxDecoration(
+                              color: Color(0xff3B3B3B),
+                              borderRadius: new BorderRadius.only(
+                                  topLeft:  const  Radius.circular(40.0),
+                                  topRight: const  Radius.circular(40.0))
+                          ),
+                        ));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text("Privacy Policy" , style: TextStyle(fontSize: 16.0),)),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        showModalBottomSheet<void>(
+                            backgroundColor: Colors.transparent,
+                            context: context, builder: (BuildContext bc) => Container(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(
+                                  child: ListView(
+                                    children: [
+                                      Container(
+                                        alignment:Alignment.topCenter,
+                                        child: Text("About Us",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),
+                                      ),
+                                      SizedBox(height: 16),
+                                      Container(
+                                        alignment:Alignment.topCenter,
+                                        child: Text("About Us",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          decoration: new BoxDecoration(
+                              color: Color(0xff3B3B3B),
+                              borderRadius: new BorderRadius.only(
+                                  topLeft:  const  Radius.circular(40.0),
+                                  topRight: const  Radius.circular(40.0))
+                          ),
+                        ));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text("About Us" , style: TextStyle(fontSize: 16.0),)),
+                    ),
                     SizedBox(height: 45,),
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -261,8 +410,8 @@ final list = [
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), title: Text('SLCM')),
+             /* BottomNavigationBarItem(
+                  icon: Icon(Icons.person), title: Text('SLCM')),*/
               BottomNavigationBarItem(
                   icon: Icon(Icons.bookmark), title: Text('Notifications')),
             ],
@@ -582,10 +731,10 @@ class TopPart extends StatelessWidget {
                       children: [
                         RawMaterialButton(
                           onPressed: () {
-                            Navigator.push(
+                           /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => StudentClubs()));
+                                    builder: (_) => StudentClubs()));*/
                           },
                           child: Center(
                               child: Icon(
