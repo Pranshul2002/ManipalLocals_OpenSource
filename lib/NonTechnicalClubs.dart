@@ -21,7 +21,7 @@ class NonTechnicalClubs extends StatelessWidget {
                 height: 3.0,
               ),
               preferredSize: Size.fromHeight(3.0)),
-          backgroundColor: Color(0xffFF9609),
+          backgroundColor: Color(0xffFF8C00),
           title: Container(
             padding: EdgeInsets.only(top: 8.0),
             child: Text(

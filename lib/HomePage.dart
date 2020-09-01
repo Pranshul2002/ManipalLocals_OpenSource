@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:manipal_locals/College.dart';
 import 'package:manipal_locals/Directory.dart';
+import 'package:manipal_locals/FAQ.dart';
 import 'package:manipal_locals/GetARide.dart';
 import 'package:manipal_locals/HostelMess.dart';
 import 'package:manipal_locals/Notification.dart';
@@ -108,12 +111,14 @@ final list = [
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           canvasColor: Colors.black,
           brightness: Brightness.dark,
           fontFamily: "banglamn"),
       home: SafeArea(
         child: Scaffold(
+
           appBar: (selectedIndex == 1)?  AppBar(backgroundColor: Colors.transparent,
             leading: Builder(
               builder:(context) => Padding(
@@ -135,7 +140,9 @@ final list = [
             ),
           ) : null,
           drawer: Drawer(
+
             child: Column(
+
               mainAxisSize: MainAxisSize.max,
               children: [
                 Row(
@@ -146,26 +153,13 @@ final list = [
                         height:
                             MediaQuery.of(context).size.height * 0.206756757,
                         child: Container(
-                          color: Color(0xff1E1E1E),
+                          color: Colors.black,
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.only(top: 16.0),
                               child: Column(
                                 children: [
-                                  ClipRRect(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10.0),
-                                      height: 80,
-                                      width: 80,
-                                      color: Colors.white,
-                                      child:Image.asset("assets/images/logo_drawer.png"),
-                                    ),
-                                    borderRadius: BorderRadius.circular(66.0),
-                                  ),
-                                SizedBox(height: 16.0,),
-                                Container(
-                                  child: Text("MANIPAL LOCALS",style: TextStyle(fontSize: 20.0),),
-                                )
+Expanded(child: Image.asset("assets/images/ml_drawer.png",fit: BoxFit.fitWidth,))
                                 ],
 
                               ),
@@ -191,40 +185,81 @@ final list = [
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    CircleAvatar(radius: 35,
+                                    CircleAvatar(radius: 35,child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(35),
+                                        child: Image.asset("assets/images/Pranshul.png",fit: BoxFit.cover,)),
                                       backgroundColor: Colors.black,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left:32.0),
-                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Pranshul Goyal",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    )
+                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Pranshul Goyal",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    Container(
+
+                                      alignment: Alignment.topCenter,
+                                      padding: EdgeInsets.only(right: 64),
+                                      child: GestureDetector(onTap: ()
+                                      async {
+                                        var url = 'https://www.instagram.com/pranshul_2002/';
+                                        if(await UrlLauncher.canLaunch(url))
+                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                                        }
+                                      },
+                                          child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                                    ),
                                   ],
 
                                 ),
                                 SizedBox(height: 16.0,),
-                                Row(
+                                Row(  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     CircleAvatar(radius: 35,
                                       backgroundColor: Colors.black,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(35),
+                                          child: Image.asset("assets/images/vaibhav.png",fit: BoxFit.cover,)),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left:32.0),
-                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Vaibhav Awasthi",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Project Lead",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    )
+                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Vaibhav Awasthi",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("App Designer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    Container(
+
+                                      alignment: Alignment.topCenter,
+                                      padding: EdgeInsets.only(right: 64),
+                                      child: GestureDetector(onTap: ()
+                                      async {
+                                        var url = 'https://www.instagram.com/_vaibhavawasthi_/';
+                                        if(await UrlLauncher.canLaunch(url))
+                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                                        }
+                                      },
+                                        child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                                    ),
                                   ],
 
                                 ),
                                 SizedBox(height: 16.0,),
-                                Row(
+                                Row(  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     CircleAvatar(radius: 35,
-                                      backgroundColor: Colors.black,
+                                      backgroundColor: Colors.black,child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(35),
+                                          child: Image.asset("assets/images/kushagra.png",fit: BoxFit.cover,)),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left:32.0),
-                                      child: Column(mainAxisSize: MainAxisSize.min,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 5,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    )
+                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                    Container(
+
+                                      alignment: Alignment.topCenter,
+                                      padding: EdgeInsets.only(right: 64),
+                                      child: GestureDetector(onTap: ()
+                                      async {
+                                        var url = 'https://www.instagram.com/kushagra__garg/';
+                                        if(await UrlLauncher.canLaunch(url))
+                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                                        }
+                                      },
+                                        child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                                    ),
                                   ],
 
                                 ),
@@ -246,43 +281,11 @@ final list = [
                     ,
                     GestureDetector(
                       onTap: (){
-                        showModalBottomSheet<void>(
-                            backgroundColor: Colors.transparent,
-                            context: context, builder: (BuildContext bc) => Container(
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                               Expanded(
-                                 child: ListView(
-                                   children: [
-                                     Container(
-                                       alignment:Alignment.topCenter,
-                                       child: Text("Privacy Policy",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),
-                                     ),
-                                     SizedBox(height: 16),
-                                     Container(
-                                       alignment:Alignment.topCenter,
-                                       child: Text("Privacy Policy",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
-                                     ),
-                                   ],
-                                 ),
-                               )
-                              ],
-                            ),
-                          ),
-                          decoration: new BoxDecoration(
-                              color: Color(0xff3B3B3B),
-                              borderRadius: new BorderRadius.only(
-                                  topLeft:  const  Radius.circular(40.0),
-                                  topRight: const  Radius.circular(40.0))
-                          ),
-                        ));
+showAboutDialog(context: context,applicationName: "ManipalLocals");
                       },
                       child: Container(
-                          padding: EdgeInsets.all(15.0),
-                          child: Text("Privacy Policy" , style: TextStyle(fontSize: 16.0),)),
+                      padding: EdgeInsets.all(15.0),
+                      child: Text("Licenses" , style: TextStyle(fontSize: 16.0),)),
                     ),
                     GestureDetector(
                       onTap: (){
@@ -304,7 +307,7 @@ final list = [
                                       SizedBox(height: 16),
                                       Container(
                                         alignment:Alignment.topCenter,
-                                        child: Text("About Us",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
+                                        child: Text("Honestly, it's tough moving to a new city, freshers start wondering about settling themselves and wonder why can't they find everything easily, that too from the right places near them. We made ManipalLocals just to make sure that our juniors don’t face the difficulties we did and also to make their life at Manipal easy and smooth.",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
                                       ),
                                     ],
                                   ),
@@ -345,7 +348,7 @@ final list = [
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            var url = 'https://www.instagram.com/instagram/';
+                            var url = 'https://www.instagram.com/manipallocals/';
                             if(await UrlLauncher.canLaunch(url))
                               {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
                               }
@@ -359,7 +362,7 @@ final list = [
                           onTap: () async {
                             final Uri params = Uri(
                               scheme: 'mailto',
-                              path: 'pranshul20162002@gmail.com',
+                              path: 'manipallocals@gmail.com',
                               query: '',
                             );
                             var url = params.toString();
@@ -374,7 +377,7 @@ final list = [
                         ),
                         GestureDetector(
                             onTap: () async {
-                              var url = 'https://twitter.com/PMOIndia';
+                              var url = 'https://twitter.com/LocalsManipal';
                               if(await UrlLauncher.canLaunch(url))
                               {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
                               }
@@ -386,7 +389,7 @@ final list = [
                         ),
                         GestureDetector(
                             onTap: () async {
-                              var url = 'https://chat.whatsapp.com/JLCOqP7SWCH2dwE67xJNLr';
+                              var url = 'https://chat.whatsapp.com/BeuKq3UTCot0zqFvTaVB9z';
                               if(await UrlLauncher.canLaunch(url))
                               {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
                               }
@@ -433,6 +436,8 @@ class TopPart extends StatelessWidget {
   double iconsize = 33;
   double fontsize = 13;
   double buttonsize = 70;
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -651,7 +656,9 @@ class TopPart extends StatelessWidget {
                           size: iconsize,
                           color: Colors.white,
                         )),
-                        onPressed: () {},
+                        onPressed: () {
+Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLength: Toast.LENGTH_SHORT,textColor: Colors.white);
+                        },
                         elevation: 2.0,
                         shape: CircleBorder(),
                         fillColor: Color(0xff1e1e1e),
@@ -735,6 +742,7 @@ class TopPart extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => StudentClubs()));*/
+                            Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLength: Toast.LENGTH_SHORT,textColor: Colors.white);
                           },
                           child: Center(
                               child: Icon(
@@ -770,7 +778,12 @@ class TopPart extends StatelessWidget {
                   Column(
                     children: [
                       RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Faq()));
+                        },
                         child: Center(
                             child: Icon(
                               Icons.question_answer,

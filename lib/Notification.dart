@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:manipal_locals/NotificationShow.dart';
 
 import 'MessageBean.dart';
 class NotificationPage extends StatefulWidget {
@@ -85,10 +86,10 @@ class NotificationPageState extends State<NotificationPage> {
                     new AlwaysStoppedAnimation<Color>(Colors.white),
                   ));
             default:
-              return ListView(
-                children: <Widget>[
-
-                  for (String name in snapshot.data["head"])
+              return ListView.builder(
+                itemCount: snapshot.data["head"].length,
+                itemBuilder: (BuildContext context, int index){
+                  return
                     Container(
                       height: 50,
                       child: GestureDetector(
@@ -110,7 +111,7 @@ class NotificationPageState extends State<NotificationPage> {
                                   padding: EdgeInsets.only(
                                       left: 16.0, top: 8.0),
                                   child: Text(
-                                    name,
+                                    snapshot.data["head"][index],
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ),
@@ -119,11 +120,18 @@ class NotificationPageState extends State<NotificationPage> {
                           ),
                         ),
                         onTap: () {
-
+                   //       print(snapshot.data["pdf_included"][index].toString());
+                          if(snapshot.data["body"][index] != "null"){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => NotificationShow(name: snapshot.data["head"][index],data:  snapshot.data["body"][index],url: snapshot.data["pdf_included"][index].toString() == "null" ? ["null"]: snapshot.data[snapshot.data["pdf_included"][index]],)));
+                          }
                         },
                       ),
-                    ),
-                ],
+                    );
+                },
+
               );
           }
         }),);

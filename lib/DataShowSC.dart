@@ -89,7 +89,7 @@ class _DataShowSCStfState extends State<DataShowSCStf> {
             padding: const EdgeInsets.only(left: 33.0, right: 33.0),
             child: Text(
               article,
-              style: TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
+              style: TextStyle(fontSize: 14),
             ),
           ),
       ],

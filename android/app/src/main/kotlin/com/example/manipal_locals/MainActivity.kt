@@ -1,4 +1,4 @@
-package com.example.manipal_locals
+package com.manipal_locals.android
 
 import io.flutter.embedding.android.FlutterActivity
 
