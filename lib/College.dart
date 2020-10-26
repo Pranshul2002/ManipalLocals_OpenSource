@@ -75,38 +75,39 @@ class _CollegeDataState extends State<CollegeData> {
                         ),
                         for (String name in snapshot.data["document_names"])
                           Container(
-                              padding: EdgeInsets.only(
-                                  top: 16.0,
-                                  bottom: 16.0,
-                                  left: 16.0,
-                                  right: 16.0
-                              ),
-                              height: 100,
-                              child: GestureDetector(
-                                child: Card(
-                                  color: Color(0xff1e1e1e),
-                                    elevation: 10.0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(24))),
-                                    child: Center(
-                                        child: Container(
-                                      child: Text(
-                                        name,
-                                        style: TextStyle(fontSize: 16),
-                                      ),
+                            padding: EdgeInsets.only(
+                                top: 16.0,
+                                bottom: 16.0,
+                                left: 16.0,
+                                right: 16.0),
+                            height: 100,
+                            child: GestureDetector(
+                              child: Card(
+                                color: Color(0xff1e1e1e),
+                                elevation: 10.0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(48))),
+                                child: Center(
+                                  child: Container(
+                                    child: Text(
+                                      name,
+                                      style: TextStyle(fontSize: 16),
                                     ),
-                                    ),
+                                  ),
                                 ),
-                                onTap: () {
-                                  if(snapshot.data[name] != null){
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => DataShow(name: name,data: snapshot.data[name])));
-                                  }
-                                },
                               ),
+                              onTap: () {
+                                if (snapshot.data[name] != null) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => DataShow(
+                                              name: name,
+                                              data: snapshot.data[name])));
+                                }
+                              },
+                            ),
                           ),
                       ],
                     );

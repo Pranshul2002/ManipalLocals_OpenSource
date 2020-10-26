@@ -34,14 +34,13 @@ class AnswerShowStf extends StatefulWidget {
 }
 
 class _AnswerShowStfState extends State<AnswerShowStf> {
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         Container(
           alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(top: 8.0),
+          padding: EdgeInsets.only(top: 8.0, left: 33.0, right: 33.0),
           child: Text(
             widget.name,
             style: TextStyle(
@@ -51,13 +50,15 @@ class _AnswerShowStfState extends State<AnswerShowStf> {
         SizedBox(
           height: 8.0,
         ),
-          Padding(
-            padding: const EdgeInsets.only(left: 33.0, right: 33.0,top: 16.0),
-            child: Text(
-              widget.data,
-              style: TextStyle(fontSize: 14, ),
+        Padding(
+          padding: const EdgeInsets.only(left: 33.0, right: 33.0, top: 16.0),
+          child: Text(
+            widget.data,
+            style: TextStyle(
+              fontSize: 14,
             ),
           ),
+        ),
       ],
     );
   }

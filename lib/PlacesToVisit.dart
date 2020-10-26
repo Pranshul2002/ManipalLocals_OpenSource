@@ -45,7 +45,6 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
@@ -64,15 +63,14 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                   case ConnectionState.waiting:
                     return Center(
                         child: new CircularProgressIndicator(
-                          valueColor:
+                      valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white),
-                        ));
+                    ));
                   default:
                     return ListView(
-
                       children: <Widget>[
                         SizedBox(
-                          height: 32.0,
+                          height: 16.0,
                         ),
                         for (String name in snapshot.data["places_name"])
                           Container(
@@ -80,8 +78,7 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                                 top: 16.0,
                                 bottom: 16.0,
                                 left: 16.0,
-                                right: 16.0
-                            ),
+                                right: 16.0),
                             height: 200,
                             child: GestureDetector(
                               child: Card(
@@ -98,8 +95,12 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                                       children: [
                                         Expanded(
                                           child: Image(
-                                            image:
-                                            FirebaseImage("gs://manipallocals-2f95e.appspot.com/"+name.replaceAll(new RegExp(r"\s+"), "")+"1.png"),
+                                            image: FirebaseImage(
+                                                "gs://manipallocals-2f95e.appspot.com/" +
+                                                    name.replaceAll(
+                                                        new RegExp(r"\s+"),
+                                                        "") +
+                                                    "1.png"),
                                             fit: BoxFit.fitWidth,
                                           ),
                                         ),
@@ -109,7 +110,8 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                                       child: Container(
                                         color: Colors.black12,
                                       ),
-                                      filter: ImageFilter.blur(sigmaY: 4, sigmaX: 4),
+                                      filter: ImageFilter.blur(
+                                          sigmaY: 4, sigmaX: 4),
                                     ),
                                     Center(
                                       child: Container(
@@ -123,12 +125,16 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                                 ),
                               ),
                               onTap: () {
-                                print("gs://manipallocals-2f95e.appspot.com/"+name.replaceAll(new RegExp(r"\s+"), "")+".png");
-                                if(snapshot.data[name] != null){
+                                if (snapshot.data[name] != null) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => DataShowPTV(name: name,data: snapshot.data[name])));
+                                          builder: (_) => DataShowPTV(
+                                                name: name,
+                                                data: snapshot.data[name],
+                                                location: snapshot
+                                                    .data["location"][name],
+                                              )));
                                 }
                               },
                             ),

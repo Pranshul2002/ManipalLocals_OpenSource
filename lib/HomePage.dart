@@ -15,8 +15,10 @@ import 'package:manipal_locals/PlacesToVisit.dart';
 
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
+import 'Feed.dart';
 import 'MessageBean.dart';
 import 'StudentClubs.dart';
+
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => HomePageState();
@@ -50,28 +52,26 @@ class HomePageState extends State<HomePage> {
           newNotification = true;
           messageBean.input_data(message);
         });
-
       },
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
-        try{
+        try {
           setState(() {
             messageBean.input_data(message);
             selectedIndex = 1;
-
           });
-        }catch(e){
+        } catch (e) {
           print(e);
         }
       },
       onLaunch: (Map<String, dynamic> message) async {
         print('on launch $message');
-        try{
+        try {
           setState(() {
             messageBean.input_data(message);
             selectedIndex = 1;
           });
-        }catch(e){
+        } catch (e) {
           print(e);
         }
       },
@@ -86,6 +86,7 @@ class HomePageState extends State<HomePage> {
       print("Settings registered: $settings");
     });
   }
+
   @override
   void initState() {
     setUpFirebase();
@@ -99,15 +100,15 @@ class HomePageState extends State<HomePage> {
           print(NotificationPageState.items);
         });
       });
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
     }
   }
-final list = [
-  TopPart(),
-  NotificationPage(),
-];
+
+  final list = [
+    TopPart(),
+    NotificationPage(),
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -118,31 +119,34 @@ final list = [
           fontFamily: "banglamn"),
       home: SafeArea(
         child: Scaffold(
-
-          appBar: (selectedIndex == 1)?  AppBar(backgroundColor: Colors.transparent,
-            leading: Builder(
-              builder:(context) => Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: GestureDetector(
-                  child: Icon(
-                    Icons.format_list_bulleted,
-                    size: 30,
+          appBar: (selectedIndex == 1)
+              ? AppBar(
+                  backgroundColor: Colors.transparent,
+                  leading: Builder(
+                    builder: (context) => Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: GestureDetector(
+                        child: Icon(
+                          Icons.format_list_bulleted,
+                          size: 30,
+                        ),
+                        onTap: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
+                    ),
                   ),
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-              ),
-            ),
-            title: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text("Notifications",style: TextStyle(fontSize: 22),),
-            ),
-          ) : null,
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "Notifications",
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                )
+              : null,
           drawer: Drawer(
-
             child: Column(
-
               mainAxisSize: MainAxisSize.max,
               children: [
                 Row(
@@ -159,9 +163,12 @@ final list = [
                               padding: const EdgeInsets.only(top: 16.0),
                               child: Column(
                                 children: [
-Expanded(child: Image.asset("assets/images/ml_drawer.png",fit: BoxFit.fitWidth,))
+                                  Expanded(
+                                      child: Image.asset(
+                                    "assets/images/ml_drawer.png",
+                                    fit: BoxFit.fitWidth,
+                                  ))
                                 ],
-
                               ),
                             ),
                           ),
@@ -170,192 +177,310 @@ Expanded(child: Image.asset("assets/images/ml_drawer.png",fit: BoxFit.fitWidth,)
                     ),
                   ],
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         showModalBottomSheet<void>(
                             backgroundColor: Colors.transparent,
-                            context: context, builder: (BuildContext bc) => Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(left:20.0,top:32.0,bottom: 16.0,),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CircleAvatar(radius: 35,child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(35),
-                                        child: Image.asset("assets/images/Pranshul.png",fit: BoxFit.cover,)),
-                                      backgroundColor: Colors.black,
+                            context: context,
+                            builder: (BuildContext bc) => Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 20.0,
+                                      top: 32.0,
+                                      bottom: 16.0,
                                     ),
-                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Pranshul Goyal",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    Container(
-
-                                      alignment: Alignment.topCenter,
-                                      padding: EdgeInsets.only(right: 64),
-                                      child: GestureDetector(onTap: ()
-                                      async {
-                                        var url = 'https://www.instagram.com/pranshul_2002/';
-                                        if(await UrlLauncher.canLaunch(url))
-                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                                        }
-                                      },
-                                          child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 35,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(35),
+                                                  child: Image.asset(
+                                                    "assets/images/Pranshul.png",
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                              backgroundColor: Colors.black,
+                                            ),
+                                            Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Pranshul Goyal",
+                                                    style: TextStyle(
+                                                        fontFamily: "banglamn",
+                                                        fontSize: 20,
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  //    Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
+                                                ]),
+                                            Container(
+                                              alignment: Alignment.topCenter,
+                                              padding:
+                                                  EdgeInsets.only(right: 64),
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  var url =
+                                                      'https://www.instagram.com/pranshul_2002/';
+                                                  if (await UrlLauncher
+                                                      .canLaunch(url)) {
+                                                    await UrlLauncher.launch(
+                                                        url,
+                                                        universalLinksOnly:
+                                                            true,
+                                                        forceSafariVC: false,
+                                                        forceWebView: false);
+                                                  }
+                                                },
+                                                child: Icon(
+                                                  FontAwesomeIcons.instagram,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 16.0,
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 35,
+                                              backgroundColor: Colors.black,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(35),
+                                                  child: Image.asset(
+                                                    "assets/images/vaibhav.png",
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                            ),
+                                            Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Vaibhav Awasthi",
+                                                    style: TextStyle(
+                                                        fontFamily: "banglamn",
+                                                        fontSize: 20,
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  //  Text("App Designer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
+                                                ]),
+                                            Container(
+                                              alignment: Alignment.topCenter,
+                                              padding:
+                                                  EdgeInsets.only(right: 64),
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  var url =
+                                                      'https://www.instagram.com/_vaibhavawasthi_/';
+                                                  if (await UrlLauncher
+                                                      .canLaunch(url)) {
+                                                    await UrlLauncher.launch(
+                                                        url,
+                                                        universalLinksOnly:
+                                                            true,
+                                                        forceSafariVC: false,
+                                                        forceWebView: false);
+                                                  }
+                                                },
+                                                child: Icon(
+                                                  FontAwesomeIcons.instagram,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 16.0,
+                                        ),
+                                        // Row(  mainAxisSize: MainAxisSize.max,
+                                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     CircleAvatar(radius: 35,
+                                        //       backgroundColor: Colors.black,child: ClipRRect(
+                                        //           borderRadius: BorderRadius.circular(35),
+                                        //           child: Image.asset("assets/images/kushagra.png",fit: BoxFit.cover,)),
+                                        //     ),
+                                        //     Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                                        //     Container(
+                                        //
+                                        //       alignment: Alignment.topCenter,
+                                        //       padding: EdgeInsets.only(right: 64),
+                                        //       child: GestureDetector(onTap: ()
+                                        //       async {
+                                        //         var url = 'https://www.instagram.com/kushagra__garg/';
+                                        //         if(await UrlLauncher.canLaunch(url))
+                                        //         {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                                        //         }
+                                        //       },
+                                        //         child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                                        //     ),
+                                        //   ],
+                                        //
+                                        // ),
+                                      ],
                                     ),
-                                  ],
-
-                                ),
-                                SizedBox(height: 16.0,),
-                                Row(  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CircleAvatar(radius: 35,
-                                      backgroundColor: Colors.black,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(35),
-                                          child: Image.asset("assets/images/vaibhav.png",fit: BoxFit.cover,)),
-                                    ),
-                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Vaibhav Awasthi",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("App Designer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    Container(
-
-                                      alignment: Alignment.topCenter,
-                                      padding: EdgeInsets.only(right: 64),
-                                      child: GestureDetector(onTap: ()
-                                      async {
-                                        var url = 'https://www.instagram.com/_vaibhavawasthi_/';
-                                        if(await UrlLauncher.canLaunch(url))
-                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                                        }
-                                      },
-                                        child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
-                                    ),
-                                  ],
-
-                                ),
-                                SizedBox(height: 16.0,),
-                                Row(  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CircleAvatar(radius: 35,
-                                      backgroundColor: Colors.black,child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(35),
-                                          child: Image.asset("assets/images/kushagra.png",fit: BoxFit.cover,)),
-                                    ),
-                                    Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                    Container(
-
-                                      alignment: Alignment.topCenter,
-                                      padding: EdgeInsets.only(right: 64),
-                                      child: GestureDetector(onTap: ()
-                                      async {
-                                        var url = 'https://www.instagram.com/kushagra__garg/';
-                                        if(await UrlLauncher.canLaunch(url))
-                                        {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                                        }
-                                      },
-                                        child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
-                                    ),
-                                  ],
-
-                                ),
-                              ],
-                            ),
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Color(0xff3B3B3B),
-                              borderRadius: new BorderRadius.only(
-                                  topLeft:  const  Radius.circular(40.0),
-                                  topRight: const  Radius.circular(40.0))
-                          ),
-                        ));
-                      },
-                      child:
-                    Container(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text("Team" , style: TextStyle(fontSize: 16.0),)),)
-                    ,
-                    GestureDetector(
-                      onTap: (){
-showAboutDialog(context: context,applicationName: "ManipalLocals");
-                      },
-                      child: Container(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text("Licenses" , style: TextStyle(fontSize: 16.0),)),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        showModalBottomSheet<void>(
-                            backgroundColor: Colors.transparent,
-                            context: context, builder: (BuildContext bc) => Container(
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Expanded(
-                                  child: ListView(
-                                    children: [
-                                      Container(
-                                        alignment:Alignment.topCenter,
-                                        child: Text("About Us",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),
-                                      ),
-                                      SizedBox(height: 16),
-                                      Container(
-                                        alignment:Alignment.topCenter,
-                                        child: Text("Honestly, it's tough moving to a new city, freshers start wondering about settling themselves and wonder why can't they find everything easily, that too from the right places near them. We made ManipalLocals just to make sure that our juniors don’t face the difficulties we did and also to make their life at Manipal easy and smooth.",style: TextStyle(fontFamily: "banglamn",fontSize: 15,color: Colors.white),),
-                                      ),
-                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          decoration: new BoxDecoration(
-                              color: Color(0xff3B3B3B),
-                              borderRadius: new BorderRadius.only(
-                                  topLeft:  const  Radius.circular(40.0),
-                                  topRight: const  Radius.circular(40.0))
-                          ),
-                        ));
+                                  decoration: new BoxDecoration(
+                                      color: Color(0xff3B3B3B),
+                                      borderRadius: new BorderRadius.only(
+                                          topLeft: const Radius.circular(40.0),
+                                          topRight:
+                                              const Radius.circular(40.0))),
+                                ));
                       },
                       child: Container(
                           padding: EdgeInsets.all(15.0),
-                          child: Text("About Us" , style: TextStyle(fontSize: 16.0),)),
+                          child: Text(
+                            "Team",
+                            style: TextStyle(fontSize: 16.0),
+                          )),
                     ),
-                    SizedBox(height: 45,),
+                    GestureDetector(
+                      onTap: () {
+                        showAboutDialog(
+                            context: context, applicationName: "ManipalLocals");
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(
+                            "Licenses",
+                            style: TextStyle(fontSize: 16.0),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet<void>(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (BuildContext bc) => Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Expanded(
+                                          child: ListView(
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.topCenter,
+                                                child: Text(
+                                                  "About Us",
+                                                  style: TextStyle(
+                                                      fontFamily: "banglamn",
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                              SizedBox(height: 16),
+                                              Container(
+                                                alignment: Alignment.topCenter,
+                                                child: Text(
+                                                  "Honestly, it's tough moving to a new city, freshers start wondering about settling themselves and wonder why can't they find everything easily, that too from the right places near them. We made ManipalLocals just to make sure that our juniors don’t face the difficulties we did and also to make their life at Manipal easy and smooth.",
+                                                  style: TextStyle(
+                                                      fontFamily: "banglamn",
+                                                      fontSize: 15,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  decoration: new BoxDecoration(
+                                      color: Color(0xff3B3B3B),
+                                      borderRadius: new BorderRadius.only(
+                                          topLeft: const Radius.circular(40.0),
+                                          topRight:
+                                              const Radius.circular(40.0))),
+                                ));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(
+                            "About Us",
+                            style: TextStyle(fontSize: 16.0),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 45,
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 22.0),
-                          child: Icon(Icons.people , size: 28.0,),
+                          child: Icon(
+                            Icons.people,
+                            size: 28.0,
+                          ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 35.0),
-                            child: Text("Connect with Us:" , style: TextStyle(fontSize: 20.0),)
-                        ),
+                            padding: EdgeInsets.only(left: 35.0),
+                            child: Text(
+                              "Connect with Us:",
+                              style: TextStyle(fontSize: 20.0),
+                            )),
                       ],
                     ),
-                    SizedBox(height: 20.0,),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            var url = 'https://www.instagram.com/manipallocals/';
-                            if(await UrlLauncher.canLaunch(url))
-                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                              }
+                            var url =
+                                'https://www.instagram.com/manipallocals/';
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Image.asset("assets/images/instagram.png" , height: 25.0,width: 25.0,),
+                            child: Image.asset(
+                              "assets/images/instagram.png",
+                              height: 25.0,
+                              width: 25.0,
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -366,37 +491,59 @@ showAboutDialog(context: context,applicationName: "ManipalLocals");
                               query: '',
                             );
                             var url = params.toString();
-                            if(await UrlLauncher.canLaunch(url))
-                            {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
                             }
                           },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Image.asset("assets/images/gmail.png" , height: 25.0,width: 25.0,),
+                            child: Image.asset(
+                              "assets/images/gmail.png",
+                              height: 25.0,
+                              width: 25.0,
+                            ),
                           ),
                         ),
                         GestureDetector(
-                            onTap: () async {
-                              var url = 'https://twitter.com/LocalsManipal';
-                              if(await UrlLauncher.canLaunch(url))
-                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                              }
-                            },
+                          onTap: () async {
+                            var url = 'https://twitter.com/LocalsManipal';
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
+                            }
+                          },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Image.asset("assets/images/twitter.png" , height: 25.0,width: 25.0,),
+                            child: Image.asset(
+                              "assets/images/twitter.png",
+                              height: 25.0,
+                              width: 25.0,
+                            ),
                           ),
                         ),
                         GestureDetector(
-                            onTap: () async {
-                              var url = 'https://chat.whatsapp.com/BeuKq3UTCot0zqFvTaVB9z';
-                              if(await UrlLauncher.canLaunch(url))
-                              {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                              }
-                            },
+                          onTap: () async {
+                            var url =
+                                'https://chat.whatsapp.com/BeuKq3UTCot0zqFvTaVB9z';
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
+                            }
+                          },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Image.asset("assets/images/whatsapp.png" , height: 25.0,width: 25.0,),
+                            child: Image.asset(
+                              "assets/images/whatsapp.png",
+                              height: 25.0,
+                              width: 25.0,
+                            ),
                           ),
                         ),
                       ],
@@ -409,11 +556,10 @@ showAboutDialog(context: context,applicationName: "ManipalLocals");
           body: list[selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Color(0xff1e1e1e),
-
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
-             /* BottomNavigationBarItem(
+              /* BottomNavigationBarItem(
                   icon: Icon(Icons.person), title: Text('SLCM')),*/
               BottomNavigationBarItem(
                   icon: Icon(Icons.bookmark), title: Text('Notifications')),
@@ -429,14 +575,10 @@ showAboutDialog(context: context,applicationName: "ManipalLocals");
   }
 }
 
-
-
-
 class TopPart extends StatelessWidget {
   double iconsize = 33;
   double fontsize = 13;
   double buttonsize = 70;
-
 
   @override
   Widget build(BuildContext context) {
@@ -539,7 +681,8 @@ class TopPart extends StatelessWidget {
                     children: [
                       RawMaterialButton(
                           onPressed: () {
-                           UrlLauncher.launch("https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
+                            UrlLauncher.launch(
+                                "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
                           },
                           elevation: 2.0,
                           shape: CircleBorder(),
@@ -573,10 +716,8 @@ class TopPart extends StatelessWidget {
                     children: [
                       RawMaterialButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => Directory()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => Directory()));
                           },
                           elevation: 2.0,
                           shape: CircleBorder(),
@@ -657,7 +798,11 @@ class TopPart extends StatelessWidget {
                           color: Colors.white,
                         )),
                         onPressed: () {
-Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLength: Toast.LENGTH_SHORT,textColor: Colors.white);
+                          Fluttertoast.showToast(
+                              msg: "Coming Soon!",
+                              backgroundColor: Colors.grey,
+                              toastLength: Toast.LENGTH_SHORT,
+                              textColor: Colors.white);
                         },
                         elevation: 2.0,
                         shape: CircleBorder(),
@@ -693,7 +838,6 @@ Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLen
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-
                   Column(
                     children: [
                       RawMaterialButton(
@@ -738,15 +882,12 @@ Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLen
                       children: [
                         RawMaterialButton(
                           onPressed: () {
-                           /* Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => StudentClubs()));*/
-                            Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLength: Toast.LENGTH_SHORT,textColor: Colors.white);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => Feed()));
                           },
                           child: Center(
                               child: Icon(
-                            Icons.people,
+                            Icons.article,
                             size: iconsize,
                             color: Colors.white,
                           )),
@@ -759,7 +900,7 @@ Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLen
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            "STUDENT",
+                            "FEED",
                             style: TextStyle(
                                 color: Colors.white, fontSize: fontsize),
                           ),
@@ -767,7 +908,7 @@ Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLen
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            "CLUBS",
+                            "",
                             style: TextStyle(
                                 color: Colors.white, fontSize: fontsize),
                           ),
@@ -779,17 +920,15 @@ Fluttertoast.showToast(msg: "Coming Soon!",backgroundColor: Colors.grey,toastLen
                     children: [
                       RawMaterialButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => Faq()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Faq()));
                         },
                         child: Center(
                             child: Icon(
-                              Icons.question_answer,
-                              size: iconsize,
-                              color: Colors.white,
-                            )),
+                          Icons.question_answer,
+                          size: iconsize,
+                          color: Colors.white,
+                        )),
                         elevation: 2.0,
                         shape: CircleBorder(),
                         fillColor: Color(0xff1e1e1e),
