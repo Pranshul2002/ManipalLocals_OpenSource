@@ -1,23 +1,22 @@
 import 'dart:io';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:manipal_locals/College.dart';
-import 'package:manipal_locals/Directory.dart';
-import 'package:manipal_locals/FAQ.dart';
-import 'package:manipal_locals/GetARide.dart';
-import 'package:manipal_locals/HostelMess.dart';
-import 'package:manipal_locals/Notification.dart';
-import 'package:manipal_locals/PlacesToVisit.dart';
-
-import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
-
+import 'College.dart';
+import 'Directory.dart';
+import 'FAQ.dart';
+import 'GetARide.dart';
+import 'HostelMess.dart';
+import 'Notification.dart';
+import 'PlacesToVisit.dart';
 import 'Feed.dart';
 import 'MessageBean.dart';
 import 'StudentClubs.dart';
+
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -558,11 +557,15 @@ class HomePageState extends State<HomePage> {
             backgroundColor: Color(0xff1e1e1e),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Text('Home')),
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
               /* BottomNavigationBarItem(
                   icon: Icon(Icons.person), title: Text('SLCM')),*/
               BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark), title: Text('Notifications')),
+                icon: Icon(Icons.bookmark),
+                label: 'Notifications',
+              ),
             ],
             currentIndex: selectedIndex,
             type: BottomNavigationBarType.shifting,
@@ -579,6 +582,44 @@ class TopPart extends StatelessWidget {
   double iconsize = 33;
   double fontsize = 13;
   double buttonsize = 70;
+
+  Widget homeButton(
+      {String title1, String title2, IconData icon, Function onPressed}) {
+    return Column(
+      children: [
+        RawMaterialButton(
+          onPressed: onPressed,
+          elevation: 2.0,
+          shape: CircleBorder(),
+          fillColor: Color(0xff1e1e1e),
+          constraints:
+              BoxConstraints(minWidth: buttonsize, minHeight: buttonsize),
+          child: Center(
+              child: Icon(
+            icon,
+            size: iconsize,
+            color: Colors.white,
+          )),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            title1,
+            style: TextStyle(color: Colors.white, fontSize: fontsize),
+          ),
+        ),
+        title2 != ''
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  title2,
+                  style: TextStyle(color: Colors.white, fontSize: fontsize),
+                ),
+              )
+            : Container(),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -616,34 +657,14 @@ class TopPart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => College()));
-                        },
-                        elevation: 2.0,
-                        shape: CircleBorder(),
-                        fillColor: Color(0xff1e1e1e),
-                        constraints: BoxConstraints(
-                            minWidth: buttonsize, minHeight: buttonsize),
-                        child: Center(
-                            child: Icon(
-                          Icons.school,
-                          size: iconsize,
-                          color: Colors.white,
-                        )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "COLLEGE",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      )
-                    ],
+                  homeButton(
+                    title1: "college".toUpperCase(),
+                    icon: Icons.school,
+                    title2: '',
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => College()));
+                    },
                   ),
                   Expanded(
                     child: Column(
