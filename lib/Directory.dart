@@ -37,7 +37,6 @@ class DirectoryStateful extends StatefulWidget {
 class _DirectoryStatefulState extends State<DirectoryStateful> {
   final global = GlobalKey();
   Widget custom(List contacts){
-print(contacts);
    return ListView.builder(
      shrinkWrap: true,
      itemBuilder: (context, index){

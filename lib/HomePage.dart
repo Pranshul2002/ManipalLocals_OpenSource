@@ -587,19 +587,22 @@ class TopPart extends StatelessWidget {
       {String title1, String title2, IconData icon, Function onPressed}) {
     return Column(
       children: [
-        RawMaterialButton(
-          onPressed: onPressed,
-          elevation: 2.0,
-          shape: CircleBorder(),
-          fillColor: Color(0xff1e1e1e),
-          constraints:
-              BoxConstraints(minWidth: buttonsize, minHeight: buttonsize),
-          child: Center(
-              child: Icon(
-            icon,
-            size: iconsize,
-            color: Colors.white,
-          )),
+        Padding(
+          padding:  EdgeInsets.only(top: title2!=''?18.0:0),
+          child: RawMaterialButton(
+            onPressed: onPressed,
+            elevation: 2.0,
+            shape: CircleBorder(),
+            fillColor: Color(0xff1e1e1e),
+            constraints:
+                BoxConstraints(minWidth: buttonsize, minHeight: buttonsize),
+            child: Center(
+                child: Icon(
+              icon,
+              size: iconsize,
+              color: Colors.white,
+            )),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
@@ -667,62 +670,19 @@ class TopPart extends StatelessWidget {
                     },
                   ),
                   Expanded(
-                    child: Column(
-                      children: [
-                        RawMaterialButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => HostelMess()));
-                            },
-                            elevation: 2.0,
-                            shape: CircleBorder(),
-                            fillColor: Color(0xff1e1e1e),
-                            constraints: BoxConstraints(
-                                minWidth: buttonsize, minHeight: buttonsize),
-                            child: Center(
-                                child: Icon(
-                              Icons.fastfood,
-                              size: iconsize,
-                              color: Colors.white,
-                            ))),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "HOSTEL/MESS",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontsize),
-                          ),
-                        )
-                      ],
-                    ),
+                     child: homeButton(title1: 'college/mess'.toUpperCase(),title2: '', icon: Icons.fastfood,onPressed: (){
+                       Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                             builder: (_) => HostelMess()));
+                     },) ,
+
                   ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                          onPressed: () {
-                            UrlLauncher.launch(
-                                "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
-                          },
-                          elevation: 2.0,
-                          shape: CircleBorder(),
-                          fillColor: Color(0xff1e1e1e),
-                          constraints: BoxConstraints(
-                              minWidth: buttonsize, minHeight: buttonsize),
-                          child: Center(
-                              child: Icon(Icons.explore,
-                                  size: iconsize, color: Colors.white))),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "MAPS",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      )
-                    ],
-                  ),
+                  homeButton(title1: 'maps'.toUpperCase(),title2: '',icon: Icons.explore,onPressed: (){
+                    UrlLauncher.launch(
+                        "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
+                  },),
+
                 ],
               ),
             ),
@@ -733,247 +693,56 @@ class TopPart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => Directory()));
-                          },
-                          elevation: 2.0,
-                          shape: CircleBorder(),
-                          fillColor: Color(0xff1e1e1e),
-                          constraints: BoxConstraints(
-                              minWidth: buttonsize, minHeight: buttonsize),
-                          child: Center(
-                              child: Icon(
-                            Icons.library_books,
-                            size: iconsize,
-                            color: Colors.white,
-                          ))),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "DIRECTORY",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                    ],
-                  ),
+                  homeButton(title1: 'directory'.toUpperCase(),title2: '',icon: Icons.library_books,onPressed: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => Directory()));
+                  },),
+
                   Expanded(
-                    child: Column(
-                      children: [
-                        RawMaterialButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Get_A_Ride()));
-                            },
-                            elevation: 2.0,
-                            shape: CircleBorder(),
-                            fillColor: Color(0xff1e1e1e),
-                            constraints: BoxConstraints(
-                                minWidth: buttonsize, minHeight: buttonsize),
-                            child: Center(
-                                child: Icon(
-                              Icons.local_taxi,
-                              size: iconsize,
-                              color: Colors.white,
-                            ))),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "GET A RIDE",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontsize),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontsize),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: homeButton(title1: 'get a ride'.toUpperCase(), title2: '', icon: Icons.local_taxi, onPressed: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Get_A_Ride()));
+                    }),
+
                   ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        child: Center(
-                            child: Icon(
-                          Icons.store,
-                          size: iconsize,
-                          color: Colors.white,
-                        )),
-                        onPressed: () {
-                          Fluttertoast.showToast(
-                              msg: "Coming Soon!",
-                              backgroundColor: Colors.grey,
-                              toastLength: Toast.LENGTH_SHORT,
-                              textColor: Colors.white);
-                        },
-                        elevation: 2.0,
-                        shape: CircleBorder(),
-                        fillColor: Color(0xff1e1e1e),
-                        constraints: BoxConstraints(
-                            minWidth: buttonsize, minHeight: buttonsize),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "STORES",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                    ],
-                  ),
+                  homeButton(title1: 'stores'.toUpperCase(),title2: '',icon: Icons.store,onPressed: (){
+                    Fluttertoast.showToast(
+                        msg: "Coming Soon!",
+                        backgroundColor: Colors.grey,
+                        toastLength: Toast.LENGTH_SHORT,
+                        textColor: Colors.white);
+                  },),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 35.0, right: 35.0, top: 10.0, bottom: 15.0),
+                  left: 35.0, right: 35.0, top: 20.0, bottom: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => PlacesToVisit()));
-                        },
-                        child: Center(
-                            child: Icon(
-                          Icons.directions,
-                          size: iconsize,
-                          color: Colors.white,
-                        )),
-                        elevation: 2.0,
-                        shape: CircleBorder(),
-                        fillColor: Color(0xff1e1e1e),
-                        constraints: BoxConstraints(
-                            minWidth: buttonsize, minHeight: buttonsize),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "PLACES",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "TO VISIT",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                    ],
-                  ),
+                  homeButton(title2: 'to visit'.toUpperCase(),title1: 'places'.toUpperCase(),icon: Icons.directions,onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => PlacesToVisit()));
+                  }),
+
                   Expanded(
-                    child: Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => Feed()));
-                          },
-                          child: Center(
-                              child: Icon(
-                            Icons.article,
-                            size: iconsize,
-                            color: Colors.white,
-                          )),
-                          elevation: 2.0,
-                          shape: CircleBorder(),
-                          fillColor: Color(0xff1e1e1e),
-                          constraints: BoxConstraints(
-                              minWidth: buttonsize, minHeight: buttonsize),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "FEED",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontsize),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontsize),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: homeButton(title1: 'feed'.toUpperCase(),title2: '', icon: Icons.article,onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => Feed()));
+                    }),
+
                   ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Faq()));
-                        },
-                        child: Center(
-                            child: Icon(
-                          Icons.question_answer,
-                          size: iconsize,
-                          color: Colors.white,
-                        )),
-                        elevation: 2.0,
-                        shape: CircleBorder(),
-                        fillColor: Color(0xff1e1e1e),
-                        constraints: BoxConstraints(
-                            minWidth: buttonsize, minHeight: buttonsize),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "FAQs",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: fontsize),
-                        ),
-                      ),
-                    ],
-                  ),
+                  homeButton(title2: '',title1: 'FAQs',icon: Icons.question_answer,onPressed: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => Faq()));
+                  }),
+
                 ],
               ),
             ),
