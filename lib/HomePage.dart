@@ -587,22 +587,19 @@ class TopPart extends StatelessWidget {
       {String title1, String title2, IconData icon, Function onPressed}) {
     return Column(
       children: [
-        Padding(
-          padding:  EdgeInsets.only(top: title2!=''?18.0:0),
-          child: RawMaterialButton(
-            onPressed: onPressed,
-            elevation: 2.0,
-            shape: CircleBorder(),
-            fillColor: Color(0xff1e1e1e),
-            constraints:
-                BoxConstraints(minWidth: buttonsize, minHeight: buttonsize),
-            child: Center(
-                child: Icon(
-              icon,
-              size: iconsize,
-              color: Colors.white,
-            )),
-          ),
+        RawMaterialButton(
+          onPressed: onPressed,
+          elevation: 2.0,
+          shape: CircleBorder(),
+          fillColor: Color(0xff1e1e1e),
+          constraints:
+              BoxConstraints(minWidth: buttonsize, minHeight: buttonsize),
+          child: Center(
+              child: Icon(
+            icon,
+            size: iconsize,
+            color: Colors.white,
+          )),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
@@ -611,15 +608,12 @@ class TopPart extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: fontsize),
           ),
         ),
-        title2 != ''
-            ? Padding(
+        Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  title2,
+                child: Text(title2,
                   style: TextStyle(color: Colors.white, fontSize: fontsize),
                 ),
-              )
-            : Container(),
+              ),
       ],
     );
   }

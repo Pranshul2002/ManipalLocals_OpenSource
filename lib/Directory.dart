@@ -112,6 +112,5 @@ class _DirectoryStatefulState extends State<DirectoryStateful> {
         ),
       ],
     );
-    ;
   }
 }
