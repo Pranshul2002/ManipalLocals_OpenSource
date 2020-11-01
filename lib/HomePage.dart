@@ -609,11 +609,12 @@ class TopPart extends StatelessWidget {
           ),
         ),
         Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(title2,
-                  style: TextStyle(color: Colors.white, fontSize: fontsize),
-                ),
-              ),
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            title2,
+            style: TextStyle(color: Colors.white, fontSize: fontsize),
+          ),
+        ),
       ],
     );
   }
@@ -649,7 +650,7 @@ class TopPart extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                  left: 35.0, right: 35.0, top: 35.0, bottom: 20.0),
+                  left: 35.0, right: 35.0, top: 35.0, bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
@@ -664,79 +665,102 @@ class TopPart extends StatelessWidget {
                     },
                   ),
                   Expanded(
-                     child: homeButton(title1: 'college/mess'.toUpperCase(),title2: '', icon: Icons.fastfood,onPressed: (){
-                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                             builder: (_) => HostelMess()));
-                     },) ,
-
+                    child: homeButton(
+                      title1: 'hostel/mess'.toUpperCase(),
+                      title2: '',
+                      icon: Icons.fastfood,
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => HostelMess()));
+                      },
+                    ),
                   ),
-                  homeButton(title1: 'maps'.toUpperCase(),title2: '',icon: Icons.explore,onPressed: (){
-                    UrlLauncher.launch(
-                        "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
-                  },),
-
+                  homeButton(
+                    title1: 'maps'.toUpperCase(),
+                    title2: '',
+                    icon: Icons.explore,
+                    onPressed: () {
+                      UrlLauncher.launch(
+                          "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
+                    },
+                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 35.0, right: 35.0, top: 20.0, bottom: 3.0),
+                  left: 35.0, right: 35.0, top: 10.0, bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  homeButton(title1: 'directory'.toUpperCase(),title2: '',icon: Icons.library_books,onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => Directory()));
-                  },),
-
-                  Expanded(
-                    child: homeButton(title1: 'get a ride'.toUpperCase(), title2: '', icon: Icons.local_taxi, onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => Get_A_Ride()));
-                    }),
-
-                  ),
-                  homeButton(title1: 'stores'.toUpperCase(),title2: '',icon: Icons.store,onPressed: (){
-                    Fluttertoast.showToast(
-                        msg: "Coming Soon!",
-                        backgroundColor: Colors.grey,
-                        toastLength: Toast.LENGTH_SHORT,
-                        textColor: Colors.white);
-                  },),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 35.0, right: 35.0, top: 20.0, bottom: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  homeButton(title2: 'to visit'.toUpperCase(),title1: 'places'.toUpperCase(),icon: Icons.directions,onPressed: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => PlacesToVisit()));
-                  }),
-
-                  Expanded(
-                    child: homeButton(title1: 'feed'.toUpperCase(),title2: '', icon: Icons.article,onPressed: (){
+                  homeButton(
+                    title1: 'directory'.toUpperCase(),
+                    title2: '',
+                    icon: Icons.library_books,
+                    onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => Feed()));
-                    }),
-
+                          MaterialPageRoute(builder: (_) => Directory()));
+                    },
                   ),
-                  homeButton(title2: '',title1: 'FAQs',icon: Icons.question_answer,onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => Faq()));
-                  }),
-
+                  Expanded(
+                    child: homeButton(
+                        title1: 'get a ride'.toUpperCase(),
+                        title2: '',
+                        icon: Icons.local_taxi,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Get_A_Ride()));
+                        }),
+                  ),
+                  homeButton(
+                    title1: 'stores'.toUpperCase(),
+                    title2: '',
+                    icon: Icons.store,
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                          msg: "Coming Soon!",
+                          backgroundColor: Colors.grey,
+                          toastLength: Toast.LENGTH_SHORT,
+                          textColor: Colors.white);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 35.0, right: 35.0, top: 10.0, bottom: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  homeButton(
+                      title2: 'to visit'.toUpperCase(),
+                      title1: 'places'.toUpperCase(),
+                      icon: Icons.directions,
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => PlacesToVisit()));
+                      }),
+                  Expanded(
+                    child: homeButton(
+                        title1: 'feed'.toUpperCase(),
+                        title2: '',
+                        icon: Icons.article,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Feed()));
+                        }),
+                  ),
+                  homeButton(
+                      title2: '',
+                      title1: 'FAQs',
+                      icon: Icons.question_answer,
+                      onPressed: () {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (_) => Faq()));
+                      }),
                 ],
               ),
             ),
