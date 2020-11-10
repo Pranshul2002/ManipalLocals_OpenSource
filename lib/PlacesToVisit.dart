@@ -1,10 +1,11 @@
 import 'dart:ui';
-
+import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manipal_locals/DataShowPTV.dart';
+import 'package:manipal_locals/main.dart';
 
 import 'DataShow.dart';
 
@@ -37,10 +38,10 @@ class PlacesToVisit extends StatelessWidget {
 
 class PlacesToVisitData extends StatefulWidget {
   @override
-  _PlacesToVisitDataState createState() => _PlacesToVisitDataState();
+  PlacesToVisitDataState createState() => PlacesToVisitDataState();
 }
 
-class _PlacesToVisitDataState extends State<PlacesToVisitData> {
+class PlacesToVisitDataState extends State<PlacesToVisitData> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,84 +68,203 @@ class _PlacesToVisitDataState extends State<PlacesToVisitData> {
                           new AlwaysStoppedAnimation<Color>(Colors.white),
                     ));
                   default:
-                    return ListView(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 16.0,
-                        ),
-                        for (String name in snapshot.data["places_name"])
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: 16.0,
-                                bottom: 16.0,
-                                left: 16.0,
-                                right: 16.0),
-                            height: 200,
-                            child: GestureDetector(
-                              child: Card(
-                                semanticContainer: true,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: Color(0xff1e1e1e),
-                                elevation: 10.0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(24))),
-                                child: Stack(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Image(
-                                            image: FirebaseImage(
-                                                "gs://manipallocals-2f95e.appspot.com/" +
-                                                    name.replaceAll(
-                                                        new RegExp(r"\s+"),
-                                                        "") +
-                                                    "1.png"),
-                                            fit: BoxFit.fitWidth,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    BackdropFilter(
-                                      child: Container(
-                                        color: Colors.black12,
-                                      ),
-                                      filter: ImageFilter.blur(
-                                          sigmaY: 4, sigmaX: 4),
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        child: Text(
-                                          name,
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              onTap: () {
-                                if (snapshot.data[name] != null) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => DataShowPTV(
-                                                name: name,
-                                                data: snapshot.data[name],
-                                                location: snapshot
-                                                    .data["location"][name],
-                                              )));
-                                }
-                              },
+                    return ListView.builder(
+                      itemCount: snapshot.data["places_name"].length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 16.0,
                             ),
-                          ),
-                      ],
+                            Container(
+                                padding: EdgeInsets.only(
+                                    top: 16.0,
+                                    bottom: 16.0,
+                                    left: 16.0,
+                                    right: 16.0),
+                                height: 300,
+                                child: CardDesign(
+                                    snapshot.data["places_name"][index],
+                                    snapshot)),
+                          ],
+                        );
+                      },
                     );
                 }
               }),
         ),
       ],
+    );
+  }
+}
+
+class CardDesign extends StatefulWidget {
+  String name;
+  AsyncSnapshot<DocumentSnapshot> ds;
+  CardDesign(this.name, this.ds);
+
+  @override
+  _CardDesignState createState() => _CardDesignState();
+}
+
+class _CardDesignState extends State<CardDesign>
+    with SingleTickerProviderStateMixin {
+  AnimationController animation;
+  String name;
+
+  AnimationStatus _animationStatus = AnimationStatus.dismissed;
+  Animation<double> animate;
+
+  int index = 1;
+  @override
+  void initState() {
+    super.initState();
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    animate = Tween<double>(begin: 0, end: 180).animate(animation);
+    animate.addListener(() {
+      setState(() {});
+    });
+    setState(() {
+      name = widget.name;
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animation.dispose();
+  }
+
+  String article = "";
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Transform(
+        alignment: FractionalOffset.center,
+        transform: Matrix4.identity()..rotateY(math.pi * animate.value / 180),
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: Color(0xff1e1e1e),
+          elevation: 10.0,
+          shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(30))),
+          child: Column(
+            children: [
+              if (animate.value < 90)
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Image(
+                                image: FirebaseImage(
+                                    "gs://manipallocals-2f95e.appspot.com/" +
+                                        name.replaceAll(
+                                            new RegExp(r"\s+"), "") +
+                                        index.toString() +
+                                        ".png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.navigate_next,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (index < 3) {
+                                  index = index + 1;
+                                }
+                              });
+                            }),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.navigate_before,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              print(index);
+                              setState(() {
+                                if (index > 1) {
+                                  index = index - 1;
+                                }
+                              });
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              if (animate.value >= 90)
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        alignment: Alignment.topCenter,
+                        child: Transform(
+                          alignment: FractionalOffset.center,
+                          transform: Matrix4.identity()..rotateY(math.pi),
+                          child: Text(
+                            name,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      for (article in widget.ds.data[name])
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          alignment: Alignment.topCenter,
+                          child: Transform(
+                            alignment: FractionalOffset.center,
+                            transform: Matrix4.identity()..rotateY(math.pi),
+                            child: Text(
+                              article,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+      onTap: () {
+        if (_animationStatus == AnimationStatus.dismissed) {
+          animation.forward();
+          _animationStatus = AnimationStatus.completed;
+        } else {
+          animation.reverse();
+          _animationStatus = AnimationStatus.dismissed;
+        }
+        // if (widget.ds.data[name] != null) {
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //           builder: (_) => DataShowPTV(
+        //                 name: name,
+        //                 data: widget.ds.data[name],
+        //                 location: widget.ds.data["location"][name],
+        //               )));
+        // }
+      },
     );
   }
 }
