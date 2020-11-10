@@ -4,16 +4,17 @@ import 'package:flutter/widgets.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:manipal_locals/StudentClub.dart';
 import 'College.dart';
 import 'Directory.dart';
 import 'FAQ.dart';
+import 'Gallery/gallery_screen.dart';
 import 'GetARide.dart';
 import 'HostelMess.dart';
 import 'Notification.dart';
 import 'PlacesToVisit.dart';
 import 'Feed.dart';
 import 'MessageBean.dart';
-import 'StudentClubs.dart';
 
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,7 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
 
   void onItemTapped(int index) {
     setState(() {
@@ -57,7 +58,7 @@ class HomePageState extends State<HomePage> {
         try {
           setState(() {
             messageBean.input_data(message);
-            selectedIndex = 1;
+            selectedIndex = 2;
           });
         } catch (e) {
           print(e);
@@ -68,7 +69,7 @@ class HomePageState extends State<HomePage> {
         try {
           setState(() {
             messageBean.input_data(message);
-            selectedIndex = 1;
+            selectedIndex = 2;
           });
         } catch (e) {
           print(e);
@@ -105,6 +106,7 @@ class HomePageState extends State<HomePage> {
   }
 
   final list = [
+    GalleryScreen(),
     TopPart(),
     NotificationPage(),
   ];
@@ -118,7 +120,7 @@ class HomePageState extends State<HomePage> {
           fontFamily: "banglamn"),
       home: SafeArea(
         child: Scaffold(
-          appBar: (selectedIndex == 1)
+          appBar: (selectedIndex == 2)
               ? AppBar(
                   backgroundColor: Colors.transparent,
                   leading: Builder(
@@ -557,6 +559,10 @@ class HomePageState extends State<HomePage> {
             backgroundColor: Color(0xff1e1e1e),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
+                icon: Icon(Icons.collections),
+                label: 'Gallery',
+              ),
+              BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
               ),
@@ -681,7 +687,7 @@ class TopPart extends StatelessWidget {
                     icon: Icons.explore,
                     onPressed: () {
                       UrlLauncher.launch(
-                          "https://goo.gl/maps/FxYbhvJQzXoSrS6E8");
+                          "https://goo.gl/maps/xBGTvCw7SwaUvvya8");
                     },
                   ),
                 ],
@@ -718,11 +724,13 @@ class TopPart extends StatelessWidget {
                     title2: '',
                     icon: Icons.store,
                     onPressed: () {
-                      Fluttertoast.showToast(
-                          msg: "Coming Soon!",
-                          backgroundColor: Colors.grey,
-                          toastLength: Toast.LENGTH_SHORT,
-                          textColor: Colors.white);
+                      // Fluttertoast.showToast(
+                      // msg: "Coming Soon!",
+                      // backgroundColor: Colors.grey,
+                      // toastLength: Toast.LENGTH_SHORT,
+                      // textColor: Colors.white);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => StudentClub()));
                     },
                   ),
                 ],

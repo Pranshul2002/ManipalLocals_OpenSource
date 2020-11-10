@@ -118,7 +118,9 @@ class _FeedDataState extends State<FeedData> {
                                       child: Container(
                                         child: Text(
                                           name,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ),

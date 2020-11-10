@@ -1,0 +1,144 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'gallery_image_container.dart';
+
+class GalleryScreen extends StatefulWidget {
+  // 150 ,150,120,130,150
+  @override
+  _GalleryScreenState createState() => _GalleryScreenState();
+}
+
+class _GalleryScreenState extends State<GalleryScreen> {
+  List<double> width = [250, 300, 300, 200, 200, 270, 270, 350, 400];
+  List<double> height = [150, 125, 100, 112, 145, 120, 130, 135, 160];
+  Random random = Random();
+  int dimensionIndex1, dimensionIndex2;
+  int index1;
+  int randomLandscape;
+  int prev;
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+        stream: Firestore.instance
+            .collection("gallery")
+            .document("VU38e36gySgxCHnJaFk3")
+            .snapshots(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            Fluttertoast.showToast(
+                msg: "Error: ${snapshot.error}",
+                toastLength: Toast.LENGTH_SHORT);
+            return Container();
+          }
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                  child: new CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+              ));
+            default:
+              index1 = -1;
+              return Scaffold(
+                  backgroundColor: Colors.black,
+                  body: Column(
+                    children: [
+                      SizedBox(
+                        height: 16,
+                      ),
+                      // Container(
+                      //   alignment: Alignment.centerLeft,
+                      //   padding: EdgeInsets.all(16),
+                      //   child: Text(
+                      //     "Gallery",
+                      //     style: TextStyle(fontSize: 75),
+                      //   ),
+                      // ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: snapshot.data["images"].length,
+                          itemBuilder: (context, index) {
+                            randomLandscape = random.nextInt(5);
+                            dimensionIndex1 = random.nextInt(9);
+                            dimensionIndex2 = random.nextInt(9);
+                            // print(prev);
+                            if (index1 == -1) {
+                              index1++;
+                            } else {
+                              if (randomLandscape == 1 && prev == 1) {
+                                index1 = index1 + 1;
+                              } else if (randomLandscape == 1 && prev != 1) {
+                                index1 = index1 + 2;
+                              } else if (prev != 1) {
+                                index1 = index1 + 2;
+                              } else {
+                                index1 = index1 + 1;
+                              }
+                            }
+                            prev = randomLandscape;
+                            if (index1 == 0) prev = 1;
+
+                            return (index1 == 0 || randomLandscape == 1)
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (index1 <=
+                                          snapshot.data["images"].length - 1)
+                                        Expanded(
+                                          child: ImageContainer(
+                                            height: 250,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            credit: snapshot.data["credit"]
+                                                [index1],
+                                            url: snapshot.data["images"]
+                                                [index1],
+                                          ),
+                                        ),
+                                    ],
+                                  )
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (index1 <=
+                                          snapshot.data["images"].length - 1)
+                                        Expanded(
+                                          child: ImageContainer(
+                                            credit: snapshot.data["credit"]
+                                                [index1],
+                                            height: height[dimensionIndex1],
+                                            width: width[dimensionIndex1],
+                                            url: snapshot.data["images"]
+                                                [index1],
+                                          ),
+                                        ),
+                                      if (index1 + 1 <=
+                                          snapshot.data["images"].length - 1)
+                                        Expanded(
+                                          child: ImageContainer(
+                                            credit: snapshot.data["credit"]
+                                                [index1 + 1],
+                                            height: height[dimensionIndex2],
+                                            width: width[dimensionIndex2],
+                                            url: snapshot.data["images"]
+                                                [index1 + 1],
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                          },
+                        ),
+                      ),
+                    ],
+                  ));
+          }
+        });
+  }
+}
