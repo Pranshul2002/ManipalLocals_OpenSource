@@ -74,7 +74,9 @@ class _HostelMessBodyState extends State<HostelMessBody> {
                         SizedBox(
                           height: 16.0,
                         ),
-                        for (String name in snapshot.data["hostel_mess_data"])
+                        for (String name in snapshot
+                            .data["hostel_mess_data"].reversed
+                            .toList())
                           Container(
                             padding: EdgeInsets.only(
                                 top: 16.0,

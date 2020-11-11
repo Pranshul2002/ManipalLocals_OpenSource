@@ -4,10 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:manipal_locals/DataShowPTV.dart';
-import 'package:manipal_locals/main.dart';
-
-import 'DataShow.dart';
 
 class PlacesToVisit extends StatelessWidget {
   @override
@@ -71,6 +67,7 @@ class PlacesToVisitDataState extends State<PlacesToVisitData> {
                     return ListView.builder(
                       itemCount: snapshot.data["places_name"].length,
                       itemBuilder: (BuildContext context, int index) {
+                        index = snapshot.data["places_name"].length - index - 1;
                         return Column(
                           children: [
                             SizedBox(

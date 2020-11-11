@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:manipal_locals/AnsewerShow.dart';
+import 'package:manipal_locals/HomePage.dart';
+import 'package:manipal_locals/SCShowData.dart';
 
 class StudentClub extends StatefulWidget {
   @override
@@ -14,7 +16,6 @@ class StudentClub extends StatefulWidget {
 class _StudentClubState extends State<StudentClub>
     with TickerProviderStateMixin {
   bool loading = true;
-  int selectedtab = 0;
   TabController _tabController;
   @override
   void dispose() {
@@ -47,7 +48,10 @@ class _StudentClubState extends State<StudentClub>
                   ));
                 default:
                   _tabController = new TabController(
-                      length: snapshot.data['type_names'].length, vsync: this);
+                      length: snapshot.data['type_names'].length,
+                      vsync: this,
+                      initialIndex: HomePageState.selectedtab);
+
                   return Scaffold(
                       appBar: AppBar(
                         bottom: TabBar(
@@ -113,96 +117,113 @@ class _StudentClubState extends State<StudentClub>
                                             snapshot.data["clubs"].length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          index =
+                                              snapshot.data["clubs"].length -
+                                                  index -
+                                                  1;
                                           if (snapshot.data["type"][snapshot
                                                   .data["clubs"][index]] ==
                                               snapshot.data['type_names'][i])
-                                            return Container(
-                                              height: 100,
-                                              child: GestureDetector(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 0.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xff1e1e1e),
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  20)),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 0.0),
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            width: 100,
-                                                            height: 100,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    10),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20),
-                                                              child: Image(
-                                                                image: FirebaseImage(snapshot
-                                                                        .data[
-                                                                    "club_icon"][snapshot
-                                                                            .data[
-                                                                        "clubs"]
-                                                                    [index]]),
-                                                                fit:
-                                                                    BoxFit.fill,
+                                            // return homeButton(
+                                            //     title1: snapshot.data["clubs"]
+                                            //         [index],
+                                            //     title2: "",
+                                            //     url: snapshot.data["club_icon"][
+                                            //         snapshot.data["clubs"]
+                                            //             [index]],
+                                            //     onPressed: () {});
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16.0, bottom: 32.0),
+                                              child: Container(
+                                                height: 100,
+                                                child: GestureDetector(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 0.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.transparent,
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    20)),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 0.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Container(
+                                                              width: 100,
+                                                              height: 100,
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(10),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                                child: Image(
+                                                                  image: FirebaseImage(snapshot
+                                                                          .data[
+                                                                      "club_icon"][snapshot
+                                                                              .data[
+                                                                          "clubs"]
+                                                                      [index]]),
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Container(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left:
-                                                                          16.0,
-                                                                      top: 16.0,
-                                                                      bottom:
-                                                                          16.0,
-                                                                      right:
-                                                                          16.0),
-                                                              child: Text(
-                                                                snapshot.data[
-                                                                        "clubs"]
-                                                                    [index],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                            Expanded(
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            16.0,
+                                                                        top:
+                                                                            16.0,
+                                                                        bottom:
+                                                                            16.0,
+                                                                        right:
+                                                                            16.0),
+                                                                child: Text(
+                                                                  snapshot.data[
+                                                                          "clubs"]
+                                                                      [index],
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) => ClubContent(
+                                                                snapshot,
+                                                                snapshot.data[
+                                                                        "clubs"]
+                                                                    [index],
+                                                                _tabController
+                                                                    .index)));
+                                                  },
                                                 ),
-                                                onTap: () {
-                                                  // Navigator.push(
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //         builder:
-                                                  //             (_) => AnswerShow(
-                                                  //                   name: snapshot
-                                                  //                           .data["questions"]
-                                                  //                       [index],
-                                                  //                   data: snapshot
-                                                  //                           .data["answers"]
-                                                  //                       [index],
-                                                  //                 )));
-                                                },
                                               ),
                                             );
                                           else

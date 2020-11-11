@@ -4,11 +4,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manipal_locals/NotificationShow.dart';
 
 import 'MessageBean.dart';
+
 class NotificationPage extends StatefulWidget {
   @override
   NotificationPageState createState() => NotificationPageState();
-  static MessageBean item ;
-
+  static MessageBean item;
 }
 
 class NotificationPageState extends State<NotificationPage> {
@@ -32,7 +32,7 @@ class NotificationPageState extends State<NotificationPage> {
       print(e);
     }
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(16.0),
       height: MediaQuery.of(context).size.height * 0.3,
       child: Card(
         color: Colors.transparent,
@@ -44,11 +44,14 @@ class NotificationPageState extends State<NotificationPage> {
           child: ListView(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(16.0),
                 alignment: Alignment.topCenter,
                 child: items.head != null
-                    ? Text(items.head, style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 15.0),)
+                    ? Text(
+                        items.head,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )
                     : Text("No new notifications"),
               ),
               Container(
@@ -65,42 +68,41 @@ class NotificationPageState extends State<NotificationPage> {
   final fire = Firestore.instance;
 
   Widget BottomPart() {
-    return Expanded(child: StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
-            .collection("notification")
-            .document("MbVRBNqnOSwu0n5aAZQl")
-            .snapshots(),
-        builder: (BuildContext context,
-            AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            Fluttertoast.showToast(
-                msg: "Error: ${snapshot.error}",
-                toastLength: Toast.LENGTH_SHORT);
-            return Container();
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(
-                  child: new CircularProgressIndicator(
-                    valueColor:
-                    new AlwaysStoppedAnimation<Color>(Colors.white),
-                  ));
-            default:
-              return ListView.builder(
-                itemCount: snapshot.data["head"].length,
-                itemBuilder: (BuildContext context, int index){
-                  return
-                    Container(
+    return Expanded(
+      child: StreamBuilder<DocumentSnapshot>(
+          stream: Firestore.instance
+              .collection("notification")
+              .document("MbVRBNqnOSwu0n5aAZQl")
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasError) {
+              Fluttertoast.showToast(
+                  msg: "Error: ${snapshot.error}",
+                  toastLength: Toast.LENGTH_SHORT);
+              return Container();
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(
+                    child: new CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                ));
+              default:
+                return ListView.builder(
+                  itemCount: snapshot.data["head"].length,
+                  itemBuilder: (BuildContext context, int index) {
+                    index = snapshot.data["head"].length - index - 1;
+                    return Container(
                       height: 50,
                       child: GestureDetector(
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border(
                               top: BorderSide(width: 1.0, color: Colors.white),
-                              bottom: BorderSide(
-                                  width: 1.0, color: Colors.white),
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.white),
                             ),
-
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
@@ -108,8 +110,8 @@ class NotificationPageState extends State<NotificationPage> {
                               children: [
                                 Icon(Icons.bookmark),
                                 Container(
-                                  padding: EdgeInsets.only(
-                                      left: 16.0, top: 8.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 8.0),
                                   child: Text(
                                     snapshot.data["head"][index],
                                     style: TextStyle(fontSize: 16),
@@ -120,33 +122,43 @@ class NotificationPageState extends State<NotificationPage> {
                           ),
                         ),
                         onTap: () {
-                   //       print(snapshot.data["pdf_included"][index].toString());
-                          if(snapshot.data["body"][index] != "null"){
+                          //       print(snapshot.data["pdf_included"][index].toString());
+                          if (snapshot.data["body"][index] != "null") {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => NotificationShow(name: snapshot.data["head"][index],data:  snapshot.data["body"][index],url: snapshot.data["pdf_included"][index].toString() == "null" ? ["null"]: snapshot.data[snapshot.data["pdf_included"][index]],)));
+                                    builder: (_) => NotificationShow(
+                                          name: snapshot.data["head"][index],
+                                          data: snapshot.data["body"][index],
+                                          url: snapshot.data["pdf_included"]
+                                                          [index]
+                                                      .toString() ==
+                                                  "null"
+                                              ? ["null"]
+                                              : snapshot.data[snapshot
+                                                  .data["pdf_included"][index]],
+                                        )));
                           }
                         },
                       ),
                     );
-                },
-
-              );
-          }
-        }),);
+                  },
+                );
+            }
+          }),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [NewNotification(),
-        SizedBox(height: 25,),
+      children: [
+        NewNotification(),
+        SizedBox(
+          height: 25,
+        ),
         BottomPart()
       ],
     );
   }
 }
-
-
-

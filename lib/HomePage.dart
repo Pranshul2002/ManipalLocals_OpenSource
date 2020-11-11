@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,7 +27,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int selectedIndex = 1;
-
+  static int selectedtab = 0;
+  static int faqtab = 0;
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -185,186 +187,201 @@ class HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (BuildContext bc) => Container(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 20.0,
-                                      top: 32.0,
-                                      bottom: 16.0,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 35,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(35),
-                                                  child: Image.asset(
-                                                    "assets/images/Pranshul.png",
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                              backgroundColor: Colors.black,
-                                            ),
-                                            Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Pranshul Goyal",
-                                                    style: TextStyle(
-                                                        fontFamily: "banglamn",
-                                                        fontSize: 20,
-                                                        color: Colors.white),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  //    Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
-                                                ]),
-                                            Container(
-                                              alignment: Alignment.topCenter,
-                                              padding:
-                                                  EdgeInsets.only(right: 64),
-                                              child: GestureDetector(
-                                                onTap: () async {
-                                                  var url =
-                                                      'https://www.instagram.com/pranshul_2002/';
-                                                  if (await UrlLauncher
-                                                      .canLaunch(url)) {
-                                                    await UrlLauncher.launch(
-                                                        url,
-                                                        universalLinksOnly:
-                                                            true,
-                                                        forceSafariVC: false,
-                                                        forceWebView: false);
-                                                  }
-                                                },
-                                                child: Icon(
-                                                  FontAwesomeIcons.instagram,
-                                                  color: Colors.white,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor: Colors.black,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(35),
-                                                  child: Image.asset(
-                                                    "assets/images/vaibhav.png",
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                            ),
-                                            Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Vaibhav Awasthi",
-                                                    style: TextStyle(
-                                                        fontFamily: "banglamn",
-                                                        fontSize: 20,
-                                                        color: Colors.white),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  //  Text("App Designer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
-                                                ]),
-                                            Container(
-                                              alignment: Alignment.topCenter,
-                                              padding:
-                                                  EdgeInsets.only(right: 64),
-                                              child: GestureDetector(
-                                                onTap: () async {
-                                                  var url =
-                                                      'https://www.instagram.com/_vaibhavawasthi_/';
-                                                  if (await UrlLauncher
-                                                      .canLaunch(url)) {
-                                                    await UrlLauncher.launch(
-                                                        url,
-                                                        universalLinksOnly:
-                                                            true,
-                                                        forceSafariVC: false,
-                                                        forceWebView: false);
-                                                  }
-                                                },
-                                                child: Icon(
-                                                  FontAwesomeIcons.instagram,
-                                                  color: Colors.white,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        // Row(  mainAxisSize: MainAxisSize.max,
-                                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     CircleAvatar(radius: 35,
-                                        //       backgroundColor: Colors.black,child: ClipRRect(
-                                        //           borderRadius: BorderRadius.circular(35),
-                                        //           child: Image.asset("assets/images/kushagra.png",fit: BoxFit.cover,)),
-                                        //     ),
-                                        //     Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
-                                        //     Container(
-                                        //
-                                        //       alignment: Alignment.topCenter,
-                                        //       padding: EdgeInsets.only(right: 64),
-                                        //       child: GestureDetector(onTap: ()
-                                        //       async {
-                                        //         var url = 'https://www.instagram.com/kushagra__garg/';
-                                        //         if(await UrlLauncher.canLaunch(url))
-                                        //         {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
-                                        //         }
-                                        //       },
-                                        //         child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
-                                        //     ),
-                                        //   ],
-                                        //
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                  decoration: new BoxDecoration(
-                                      color: Color(0xff3B3B3B),
-                                      borderRadius: new BorderRadius.only(
-                                          topLeft: const Radius.circular(40.0),
-                                          topRight:
-                                              const Radius.circular(40.0))),
-                                ));
+                      onTap: () async {
+                        await Firestore.instance
+                            .collection("SideBar")
+                            .document("24gilAUR9c7Mp96RtBAg")
+                            .get()
+                            .then((DocumentSnapshot ds) async {
+                          if (ds.data["feedback"] != "null") {
+                            var url = ds.data["feedback"];
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
+                            }
+                          }
+                        });
+                        // showModalBottomSheet<void>(
+                        //     backgroundColor: Colors.transparent,
+                        //     context: context,
+                        //     builder: (BuildContext bc) => Container(
+                        //           child: Padding(
+                        //             padding: EdgeInsets.only(
+                        //               left: 20.0,
+                        //               top: 32.0,
+                        //               bottom: 16.0,
+                        //             ),
+                        //             child: Column(
+                        //               mainAxisSize: MainAxisSize.min,
+                        //               children: [
+                        //                 Row(
+                        //                   mainAxisSize: MainAxisSize.max,
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.spaceBetween,
+                        //                   children: [
+                        //                     CircleAvatar(
+                        //                       radius: 35,
+                        //                       child: ClipRRect(
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(35),
+                        //                           child: Image.asset(
+                        //                             "assets/images/Pranshul.png",
+                        //                             fit: BoxFit.cover,
+                        //                           )),
+                        //                       backgroundColor: Colors.black,
+                        //                     ),
+                        //                     Column(
+                        //                         mainAxisSize: MainAxisSize.min,
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment.center,
+                        //                         children: [
+                        //                           Text(
+                        //                             "Pranshul Goyal",
+                        //                             style: TextStyle(
+                        //                                 fontFamily: "banglamn",
+                        //                                 fontSize: 20,
+                        //                                 color: Colors.white),
+                        //                           ),
+                        //                           SizedBox(
+                        //                             height: 2,
+                        //                           ),
+                        //                           //    Text("Head Developer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
+                        //                         ]),
+                        //                     Container(
+                        //                       alignment: Alignment.topCenter,
+                        //                       padding:
+                        //                           EdgeInsets.only(right: 64),
+                        //                       child: GestureDetector(
+                        //                         onTap: () async {
+                        //                           var url =
+                        //                               'https://www.instagram.com/pranshul_2002/';
+                        //                           if (await UrlLauncher
+                        //                               .canLaunch(url)) {
+                        //                             await UrlLauncher.launch(
+                        //                                 url,
+                        //                                 universalLinksOnly:
+                        //                                     true,
+                        //                                 forceSafariVC: false,
+                        //                                 forceWebView: false);
+                        //                           }
+                        //                         },
+                        //                         child: Icon(
+                        //                           FontAwesomeIcons.instagram,
+                        //                           color: Colors.white,
+                        //                           size: 20,
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: 16.0,
+                        //                 ),
+                        //                 Row(
+                        //                   mainAxisSize: MainAxisSize.max,
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.spaceBetween,
+                        //                   children: [
+                        //                     CircleAvatar(
+                        //                       radius: 35,
+                        //                       backgroundColor: Colors.black,
+                        //                       child: ClipRRect(
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(35),
+                        //                           child: Image.asset(
+                        //                             "assets/images/vaibhav.png",
+                        //                             fit: BoxFit.cover,
+                        //                           )),
+                        //                     ),
+                        //                     Column(
+                        //                         mainAxisSize: MainAxisSize.min,
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment.center,
+                        //                         children: [
+                        //                           Text(
+                        //                             "Vaibhav Awasthi",
+                        //                             style: TextStyle(
+                        //                                 fontFamily: "banglamn",
+                        //                                 fontSize: 20,
+                        //                                 color: Colors.white),
+                        //                           ),
+                        //                           SizedBox(
+                        //                             height: 2,
+                        //                           ),
+                        //                           //  Text("App Designer",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),
+                        //                         ]),
+                        //                     Container(
+                        //                       alignment: Alignment.topCenter,
+                        //                       padding:
+                        //                           EdgeInsets.only(right: 64),
+                        //                       child: GestureDetector(
+                        //                         onTap: () async {
+                        //                           var url =
+                        //                               'https://www.instagram.com/_vaibhavawasthi_/';
+                        //                           if (await UrlLauncher
+                        //                               .canLaunch(url)) {
+                        //                             await UrlLauncher.launch(
+                        //                                 url,
+                        //                                 universalLinksOnly:
+                        //                                     true,
+                        //                                 forceSafariVC: false,
+                        //                                 forceWebView: false);
+                        //                           }
+                        //                         },
+                        //                         child: Icon(
+                        //                           FontAwesomeIcons.instagram,
+                        //                           color: Colors.white,
+                        //                           size: 20,
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: 16.0,
+                        //                 ),
+                        // Row(  mainAxisSize: MainAxisSize.max,
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     CircleAvatar(radius: 35,
+                        //       backgroundColor: Colors.black,child: ClipRRect(
+                        //           borderRadius: BorderRadius.circular(35),
+                        //           child: Image.asset("assets/images/kushagra.png",fit: BoxFit.cover,)),
+                        //     ),
+                        //     Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Kushagra Garg",style: TextStyle(fontFamily: "banglamn",fontSize: 20,color: Colors.white),),SizedBox(height: 2,),Text("Data Manager",style: TextStyle(fontSize: 15,fontFamily: "banglamn",color: Colors.white),),]),
+                        //     Container(
+                        //
+                        //       alignment: Alignment.topCenter,
+                        //       padding: EdgeInsets.only(right: 64),
+                        //       child: GestureDetector(onTap: ()
+                        //       async {
+                        //         var url = 'https://www.instagram.com/kushagra__garg/';
+                        //         if(await UrlLauncher.canLaunch(url))
+                        //         {await UrlLauncher.launch(url,universalLinksOnly: true,forceSafariVC: false, forceWebView: false);
+                        //         }
+                        //       },
+                        //         child: Icon(FontAwesomeIcons.instagram,color: Colors.white,size: 20,),),
+                        //     ),
+                        //   ],
+                        //
+                        // ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        //   decoration: new BoxDecoration(
+                        //       color: Color(0xff3B3B3B),
+                        //       borderRadius: new BorderRadius.only(
+                        //           topLeft: const Radius.circular(40.0),
+                        //           topRight:
+                        //               const Radius.circular(40.0))),
+                        // ));
                       },
                       child: Container(
                           padding: EdgeInsets.all(15.0),
                           child: Text(
-                            "Team",
+                            "Feedback",
                             style: TextStyle(fontSize: 16.0),
                           )),
                     ),
@@ -529,14 +546,21 @@ class HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            var url =
-                                'https://chat.whatsapp.com/BeuKq3UTCot0zqFvTaVB9z';
-                            if (await UrlLauncher.canLaunch(url)) {
-                              await UrlLauncher.launch(url,
-                                  universalLinksOnly: true,
-                                  forceSafariVC: false,
-                                  forceWebView: false);
-                            }
+                            await Firestore.instance
+                                .collection("SideBar")
+                                .document("24gilAUR9c7Mp96RtBAg")
+                                .get()
+                                .then((DocumentSnapshot ds) async {
+                              if (ds.data["whatsapp"] != "null") {
+                                var url = ds.data["whatsapp"];
+                                if (await UrlLauncher.canLaunch(url)) {
+                                  await UrlLauncher.launch(url,
+                                      universalLinksOnly: true,
+                                      forceSafariVC: false,
+                                      forceWebView: false);
+                                }
+                              }
+                            });
                           },
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
@@ -566,8 +590,6 @@ class HomePageState extends State<HomePage> {
                 icon: Icon(Icons.home),
                 label: 'Home',
               ),
-              /* BottomNavigationBarItem(
-                  icon: Icon(Icons.person), title: Text('SLCM')),*/
               BottomNavigationBarItem(
                 icon: Icon(Icons.bookmark),
                 label: 'Notifications',
@@ -720,9 +742,9 @@ class TopPart extends StatelessWidget {
                         }),
                   ),
                   homeButton(
-                    title1: 'stores'.toUpperCase(),
-                    title2: '',
-                    icon: Icons.store,
+                    title1: 'student'.toUpperCase(),
+                    title2: 'clubs'.toUpperCase(),
+                    icon: Icons.people_sharp,
                     onPressed: () {
                       // Fluttertoast.showToast(
                       // msg: "Coming Soon!",

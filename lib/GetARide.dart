@@ -36,24 +36,32 @@ class Get_A_RideStateful extends StatefulWidget {
 
 class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
   final global = GlobalKey();
-  Widget custom(List contacts){
+  Widget custom(List contacts) {
     print(contacts);
     return ListView.builder(
       shrinkWrap: true,
-      itemBuilder: (context, index){
+      itemBuilder: (context, index) {
         return ListTile(
-          onTap: (){
+          onTap: () {
             UrlLauncher.launch("tel://" + contacts[index]);
           },
           title: Row(children: [
             Icon(Icons.phone),
-            SizedBox(width: 25.0,),
+            SizedBox(
+              width: 25.0,
+            ),
             Padding(
-              padding: const EdgeInsets.only(top:5.0),
-              child: Text("${contacts[index]}" ,style: TextStyle(fontSize: 16.0),),
-            )]),
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                "${contacts[index]}",
+                style: TextStyle(fontSize: 16.0),
+              ),
+            )
+          ]),
         );
-      },itemCount: contacts.length,);
+      },
+      itemCount: contacts.length,
+    );
   }
 
   @override
@@ -61,8 +69,7 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
     return Column(
       children: <Widget>[
         Image(
-          image: FirebaseImage(
-              "gs://manipallocals-2f95e.appspot.com/AUTO.png"),
+          image: FirebaseImage("gs://manipallocals-2f95e.appspot.com/AUTO.png"),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
@@ -82,11 +89,10 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
                   case ConnectionState.waiting:
                     return Center(
                         child: new CircularProgressIndicator(
-                          valueColor:
+                      valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white),
-                        ));
+                    ));
                   default:
-
                     return ListView(
                       children: <Widget>[
                         SizedBox(
