@@ -20,13 +20,14 @@ class ImageContainer extends StatelessWidget {
               CachedNetworkImage(
                 imageUrl: url,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Text(
-                  "Image Credit: " + credit,
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
+              if (credit != "null")
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    "Image Credit: " + credit,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
             ],
           )),
         );

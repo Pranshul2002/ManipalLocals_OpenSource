@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:manipal_locals/AnsewerShow.dart';
+import 'package:manipal_locals/HomePage.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class Faq extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class Faq extends StatefulWidget {
 
 class _FaqState extends State<Faq> with TickerProviderStateMixin {
   bool loading = true;
-  int selectedtab = 0;
+
   TabController _tabController;
   @override
   void dispose() {
@@ -46,8 +47,29 @@ class _FaqState extends State<Faq> with TickerProviderStateMixin {
                 default:
                   _tabController = new TabController(
                       length: snapshot.data['category_name'].length,
-                      vsync: this);
+                      vsync: this,
+                      initialIndex: HomePageState.faqtab);
                   return Scaffold(
+                      floatingActionButton: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.orangeAccent.shade700,
+                          onPressed: () async {
+                            var url = snapshot.data["faq"];
+                            if (await UrlLauncher.canLaunch(url)) {
+                              await UrlLauncher.launch(url,
+                                  universalLinksOnly: true,
+                                  forceSafariVC: false,
+                                  forceWebView: false);
+                            }
+                          },
+                          child: Icon(
+                            Icons.question_answer,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                       appBar: AppBar(
                         bottom: TabBar(
                             controller: _tabController,
@@ -112,6 +134,10 @@ class _FaqState extends State<Faq> with TickerProviderStateMixin {
                                             snapshot.data["questions"].length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          index = snapshot
+                                                  .data["questions"].length -
+                                              index -
+                                              1;
                                           if (snapshot.data["category"]
                                                   [index] ==
                                               snapshot.data['category_name'][i])
@@ -180,6 +206,8 @@ class _FaqState extends State<Faq> with TickerProviderStateMixin {
                                                                     data: snapshot
                                                                             .data["answers"]
                                                                         [index],
+                                                                    index: _tabController
+                                                                        .index,
                                                                   )));
                                                 },
                                               ),

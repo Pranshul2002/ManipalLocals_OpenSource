@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:manipal_locals/HomePage.dart';
 
 class AnswerShow extends StatelessWidget {
   String name;
   String data;
-  AnswerShow({this.name, this.data});
+  int index;
+  AnswerShow({this.name, this.data, this.index});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,7 +20,11 @@ class AnswerShow extends StatelessWidget {
               preferredSize: Size.fromHeight(3.0)),
           backgroundColor: Color(0xff00FFFFFF),
         ),
-        body: AnswerShowStf(name: name, data: data),
+        body: AnswerShowStf(
+          name: name,
+          data: data,
+          index: index,
+        ),
       ),
     );
   }
@@ -27,13 +33,22 @@ class AnswerShow extends StatelessWidget {
 class AnswerShowStf extends StatefulWidget {
   String name;
   String data;
-
-  AnswerShowStf({this.name, this.data});
+  int index;
+  AnswerShowStf({this.name, this.data, this.index});
   @override
   _AnswerShowStfState createState() => _AnswerShowStfState();
 }
 
 class _AnswerShowStfState extends State<AnswerShowStf> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      HomePageState.faqtab = widget.index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(

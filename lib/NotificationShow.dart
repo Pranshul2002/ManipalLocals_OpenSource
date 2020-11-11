@@ -7,13 +7,11 @@ class NotificationShow extends StatelessWidget {
   String name;
   String data;
   List url;
-  NotificationShow({this.name, this.data,this.url});
+  NotificationShow({this.name, this.data, this.url});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
-
         appBar: AppBar(
           bottom: PreferredSize(
               child: Container(
@@ -23,7 +21,7 @@ class NotificationShow extends StatelessWidget {
               preferredSize: Size.fromHeight(3.0)),
           backgroundColor: Color(0xff00FFFFFF),
         ),
-        body: NotificationShowStf(name: name, data: data,url: url),
+        body: NotificationShowStf(name: name, data: data, url: url),
       ),
     );
   }
@@ -32,8 +30,8 @@ class NotificationShow extends StatelessWidget {
 class NotificationShowStf extends StatefulWidget {
   String name;
   String data;
-List url;
-  NotificationShowStf({this.name, this.data,this.url});
+  List url;
+  NotificationShowStf({this.name, this.data, this.url});
   @override
   _NotificationShowStfState createState() => _NotificationShowStfState();
 }
@@ -56,22 +54,23 @@ class _NotificationShowStfState extends State<NotificationShowStf> {
         SizedBox(
           height: 8.0,
         ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 33.0, right: 33.0),
-            child: Text(
-              widget.data,
-              style: TextStyle(fontSize: 14, ),
+        Padding(
+          padding: const EdgeInsets.only(left: 33.0, right: 33.0),
+          child: Text(
+            widget.data,
+            style: TextStyle(
+              fontSize: 14,
             ),
           ),
-if(widget.url != ["null"])
-  for(String url in widget.url)
-    Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Image(
-        image: FirebaseImage(url),
-      ),
-    )
+        ),
+        if (widget.url != ["null"])
+          for (String url in widget.url)
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Image(
+                image: FirebaseImage(url),
+              ),
+            )
       ],
     );
   }

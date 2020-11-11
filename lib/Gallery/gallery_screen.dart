@@ -14,7 +14,7 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
-  List<double> width = [250, 300, 300, 200, 200, 270, 270, 350, 400];
+  List<double> width = [150, 125, 100, 112, 145, 120, 130, 135, 160];
   List<double> height = [150, 125, 100, 112, 145, 120, 130, 135, 160];
   Random random = Random();
   int dimensionIndex1, dimensionIndex2;
@@ -61,6 +61,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       // ),
                       Expanded(
                         child: ListView.builder(
+                          reverse: true,
                           itemCount: snapshot.data["images"].length,
                           itemBuilder: (context, index) {
                             randomLandscape = random.nextInt(5);

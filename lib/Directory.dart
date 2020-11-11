@@ -36,23 +36,31 @@ class DirectoryStateful extends StatefulWidget {
 
 class _DirectoryStatefulState extends State<DirectoryStateful> {
   final global = GlobalKey();
-  Widget custom(List contacts){
-   return ListView.builder(
-     shrinkWrap: true,
-     itemBuilder: (context, index){
-      return ListTile(
-        onTap: (){
-         UrlLauncher.launch("tel://" + contacts[index]);
-        },
-        title: Row(children: [
-          Icon(Icons.phone),
-          SizedBox(width: 25.0,),
-          Padding(
-            padding: const EdgeInsets.only(top:5.0),
-            child: Text("${contacts[index]}" ,style: TextStyle(fontSize: 16.0),),
-          )]),
-      );
-    },itemCount: contacts.length,);
+  Widget custom(List contacts) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return ListTile(
+          onTap: () {
+            UrlLauncher.launch("tel://" + contacts[index]);
+          },
+          title: Row(children: [
+            Icon(Icons.phone),
+            SizedBox(
+              width: 25.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                "${contacts[index]}",
+                style: TextStyle(fontSize: 16.0),
+              ),
+            )
+          ]),
+        );
+      },
+      itemCount: contacts.length,
+    );
   }
 
   @override
@@ -61,8 +69,7 @@ class _DirectoryStatefulState extends State<DirectoryStateful> {
       children: <Widget>[
         Image(
           image: FirebaseImage(
-              "gs://manipallocals-2f95e.appspot.com/DIRECTORY.png"
-          ),
+              "gs://manipallocals-2f95e.appspot.com/DIRECTORY.png"),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
@@ -86,7 +93,6 @@ class _DirectoryStatefulState extends State<DirectoryStateful> {
                           new AlwaysStoppedAnimation<Color>(Colors.white),
                     ));
                   default:
-
                     return ListView(
                       children: <Widget>[
                         SizedBox(

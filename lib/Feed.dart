@@ -4,9 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:manipal_locals/DataShowPTV.dart';
 
-import 'DataShow.dart';
 import 'DataShowFeed.dart';
 
 class Feed extends StatelessWidget {
@@ -73,7 +71,8 @@ class _FeedDataState extends State<FeedData> {
                         SizedBox(
                           height: 16.0,
                         ),
-                        for (String name in snapshot.data["article_name"])
+                        for (String name
+                            in snapshot.data["article_name"].reversed.toList())
                           Container(
                             padding: EdgeInsets.only(
                                 top: 16.0,
