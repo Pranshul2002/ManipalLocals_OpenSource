@@ -676,7 +676,7 @@ class TopPart extends StatelessWidget {
         Stack(
           children: <Widget>[
             Image.asset(
-              "assets/images/home_page.jpeg",
+              "assets/images/home_page.png",
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.304054054,
               fit: BoxFit.fill,
