@@ -53,14 +53,8 @@ class _ClubContentState extends State<ClubContent> {
           padding: EdgeInsets.all(16),
           alignment: Alignment.centerLeft,
           child: CircleAvatar(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(70),
-              child: Image(
-                  image: FirebaseImage(
-                    widget.ds.data["club_image1"][widget.name],
-                  ),
-                  width: 200,
-                  fit: BoxFit.fill),
+            backgroundImage: FirebaseImage(
+              widget.ds.data["club_image1"][widget.name],
             ),
             radius: 70.0,
           ),
@@ -79,14 +73,8 @@ class _ClubContentState extends State<ClubContent> {
           padding: EdgeInsets.all(16),
           alignment: Alignment.centerRight,
           child: CircleAvatar(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(70),
-              child: Image(
-                  image: FirebaseImage(
-                    widget.ds.data["club_image2"][widget.name],
-                  ),
-                  width: 200,
-                  fit: BoxFit.fill),
+            backgroundImage: FirebaseImage(
+              widget.ds.data["club_image2"][widget.name],
             ),
             radius: 70.0,
           ),
@@ -110,14 +98,8 @@ class _ClubContentState extends State<ClubContent> {
               padding: EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
               child: CircleAvatar(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(70),
-                  child: Image(
-                      image: FirebaseImage(
-                        widget.ds.data["club_image3"][widget.name],
-                      ),
-                      width: 200,
-                      fit: BoxFit.fill),
+                backgroundImage: FirebaseImage(
+                  widget.ds.data["club_image3"][widget.name],
                 ),
                 radius: 70.0,
               ),
@@ -175,7 +157,7 @@ class _ClubContentState extends State<ClubContent> {
             fit: BoxFit.fitWidth,
           ), //club logo
           Padding(
-            padding: EdgeInsets.only(top: 250),
+            padding: EdgeInsets.only(top: 290),
             child: Container(
               decoration: BoxDecoration(
                   color: Color(0xff1e1e1e),

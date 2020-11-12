@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'gallery_image_container.dart';
 
@@ -13,14 +14,98 @@ class GalleryScreen extends StatefulWidget {
   _GalleryScreenState createState() => _GalleryScreenState();
 }
 
-class _GalleryScreenState extends State<GalleryScreen> {
+class _GalleryScreenState extends State<GalleryScreen>
+    with AutomaticKeepAliveClientMixin {
   List<double> width = [150, 125, 100, 112, 145, 120, 130, 135, 160];
   List<double> height = [150, 125, 100, 112, 145, 120, 130, 135, 160];
   Random random = Random();
   int dimensionIndex1, dimensionIndex2;
   int index1;
   int randomLandscape;
-  int prev = 1;
+  int prev;
+  Widget listItem(AsyncSnapshot<DocumentSnapshot> snapshot) {
+    randomLandscape = random.nextInt(5);
+    dimensionIndex1 = random.nextInt(9);
+    dimensionIndex2 = random.nextInt(9);
+
+    // print(index1);
+    // if (index1 >=
+    //     snapshot.data["images"].length - 1) {
+    //   SchedulerBinding.instance
+    //       .addPostFrameCallback((_) {
+    //     index1 = -1;
+    //   });
+    // }
+    if (index1 == -1) {
+      index1++;
+    } else {
+      if (randomLandscape == 1 && prev == 1) {
+        index1 = index1 + 1;
+      } else if (randomLandscape == 1 && prev != 1) {
+        index1 = index1 + 2;
+      } else if (prev != 1) {
+        index1 = index1 + 2;
+      } else {
+        index1 = index1 + 1;
+      }
+    }
+
+    prev = randomLandscape;
+    if (index1 == 0) prev = 1;
+    if (index1 <= snapshot.data["images"].length - 1)
+      return (index1 == 0 || randomLandscape == 1)
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (index1 <= snapshot.data["images"].length - 1)
+                  Expanded(
+                    child: ImageContainer(
+                      height: 250,
+                      width: MediaQuery.of(context).size.width,
+                      credit: snapshot.data["credit"][index1],
+                      url: snapshot.data["images"][index1],
+                    ),
+                  ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (index1 <= snapshot.data["images"].length - 1 &&
+                    index1 + 1 <= snapshot.data["images"].length - 1)
+                  Expanded(
+                    child: ImageContainer(
+                      credit: snapshot.data["credit"][index1],
+                      height: height[dimensionIndex1],
+                      width: width[dimensionIndex1],
+                      url: snapshot.data["images"][index1],
+                    ),
+                  ),
+                if (index1 <= snapshot.data["images"].length - 1 &&
+                    index1 + 1 > snapshot.data["images"].length - 1)
+                  Expanded(
+                    child: ImageContainer(
+                      height: 250,
+                      width: MediaQuery.of(context).size.width,
+                      credit: snapshot.data["credit"][index1],
+                      url: snapshot.data["images"][index1],
+                    ),
+                  ),
+                if (index1 + 1 <= snapshot.data["images"].length - 1)
+                  Expanded(
+                    child: ImageContainer(
+                      credit: snapshot.data["credit"][index1 + 1],
+                      height: height[dimensionIndex2],
+                      width: width[dimensionIndex2],
+                      url: snapshot.data["images"][index1 + 1],
+                    ),
+                  ),
+              ],
+            );
+    else
+      return SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -44,6 +129,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ));
             default:
               index1 = -1;
+              prev = 1;
               return Stack(
                 children: [
                   Image.asset(
@@ -68,99 +154,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           //   ),
                           // ),
                           Expanded(
-                            child: ListView.builder(
-                              itemCount: snapshot.data["images"].length,
-                              itemBuilder: (context, index) {
-                                randomLandscape = random.nextInt(5);
-                                dimensionIndex1 = random.nextInt(9);
-                                dimensionIndex2 = random.nextInt(9);
-                                print(index);
-                                  if (index1 == -1) {
-                                    index1++;
-                                  } else {
-                                    if (randomLandscape == 1 && prev == 1) {
-                                      index1 = index1 + 1;
-                                    } else
-                                    if (randomLandscape == 1 && prev != 1) {
-                                      index1 = index1 + 2;
-                                    } else if (prev != 1) {
-                                      index1 = index1 + 2;
-                                    } else {
-                                      index1 = index1 + 1;
-                                    }
-                                  }
-                                prev = randomLandscape;
-                                if (index1 == 0) prev = 1;
-
-                                return (index1 == 0 || randomLandscape == 1)
-                                    ? Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          if (index1 <=
-                                              snapshot.data["images"].length - 1)
-                                            Expanded(
-                                              child: ImageContainer(
-                                                height: 250,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                credit: snapshot.data["credit"]
-                                                    [index1],
-                                                url: snapshot.data["images"]
-                                                    [index1],
-                                              ),
-                                            ),
-                                        ],
-                                      )
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          if (index1 <=
-                                              snapshot.data["images"].length - 1 && index1 + 1 <=
-                                              snapshot.data["images"].length - 1)
-                                            Expanded(
-                                              child: ImageContainer(
-                                                credit: snapshot.data["credit"]
-                                                    [index1],
-                                                height: height[dimensionIndex1],
-                                                width: width[dimensionIndex1],
-                                                url: snapshot.data["images"]
-                                                    [index1],
-                                              ),
-                                            ),
-                                          if(index1 <=
-                                          snapshot.data["images"].length - 1 && index1 + 1 >
-                                snapshot.data["images"].length - 1)
-                                            Expanded(
-                                              child: ImageContainer(
-                                                height: 250,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                credit: snapshot.data["credit"]
-                                                [index1],
-                                                url: snapshot.data["images"]
-                                                [index1],
-                                              ),
-                                            ),
-                                          if (index1 + 1 <=
-                                              snapshot.data["images"].length - 1)
-                                            Expanded(
-                                              child: ImageContainer(
-                                                credit: snapshot.data["credit"]
-                                                    [index1 + 1],
-                                                height: height[dimensionIndex2],
-                                                width: width[dimensionIndex2],
-                                                url: snapshot.data["images"]
-                                                    [index1 + 1],
-                                              ),
-                                            ),
-                                        ],
-                                      );
-                              },
-                            ),
-                          ),
+                              child: ListView(
+                            children: [
+                              for (;
+                                  index1 <= snapshot.data["images"].length - 1;)
+                                listItem(snapshot)
+                            ],
+                          )),
                         ],
                       )),
                 ],
@@ -168,4 +168,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
           }
         });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

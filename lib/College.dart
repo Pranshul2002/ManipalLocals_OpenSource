@@ -77,12 +77,9 @@ class _CollegeDataState extends State<CollegeData> {
                   default:
                     return ListView(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image(
-                            image:
-                            FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
-                          ),
+                        Image(
+                          image: FirebaseImage(
+                              "gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
                         ),
                         SizedBox(
                           height: 16.0,

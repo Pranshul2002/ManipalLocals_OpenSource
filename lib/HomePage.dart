@@ -138,8 +138,8 @@ class HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(left: 16.0),
                           child: GestureDetector(
                             child: Icon(
-                              Icons.format_list_bulleted,
-                              size: 30,
+                              Icons.menu,
+                              size: 33,
                             ),
                             onTap: () {
                               Scaffold.of(context).openDrawer();
@@ -165,8 +165,8 @@ class HomePageState extends State<HomePage> {
                       children: [
                         Expanded(
                           child: Container(
-                            height:
-                                MediaQuery.of(context).size.height * 0.206756757,
+                            height: MediaQuery.of(context).size.height *
+                                0.206756757,
                             child: Container(
                               color: Colors.black,
                               child: Center(
@@ -396,7 +396,8 @@ class HomePageState extends State<HomePage> {
                         GestureDetector(
                           onTap: () {
                             showAboutDialog(
-                                context: context, applicationName: "ManipalLocals");
+                                context: context,
+                                applicationName: "ManipalLocals");
                           },
                           child: Container(
                               padding: EdgeInsets.all(15.0),
@@ -420,22 +421,26 @@ class HomePageState extends State<HomePage> {
                                               child: ListView(
                                                 children: [
                                                   Container(
-                                                    alignment: Alignment.topCenter,
+                                                    alignment:
+                                                        Alignment.topCenter,
                                                     child: Text(
                                                       "About Us",
                                                       style: TextStyle(
-                                                          fontFamily: "banglamn",
+                                                          fontFamily:
+                                                              "banglamn",
                                                           fontSize: 20,
                                                           color: Colors.white),
                                                     ),
                                                   ),
                                                   SizedBox(height: 16),
                                                   Container(
-                                                    alignment: Alignment.topCenter,
+                                                    alignment:
+                                                        Alignment.topCenter,
                                                     child: Text(
                                                       "Honestly, it's tough moving to a new city, freshers start wondering about settling themselves and wonder why can't they find everything easily, that too from the right places near them. We made ManipalLocals just to make sure that our juniors don’t face the difficulties we did and also to make their life at Manipal easy and smooth.",
                                                       style: TextStyle(
-                                                          fontFamily: "banglamn",
+                                                          fontFamily:
+                                                              "banglamn",
                                                           fontSize: 15,
                                                           color: Colors.white),
                                                     ),
@@ -449,7 +454,8 @@ class HomePageState extends State<HomePage> {
                                       decoration: new BoxDecoration(
                                           color: Color(0xff3B3B3B),
                                           borderRadius: new BorderRadius.only(
-                                              topLeft: const Radius.circular(40.0),
+                                              topLeft:
+                                                  const Radius.circular(40.0),
                                               topRight:
                                                   const Radius.circular(40.0))),
                                     ));
@@ -589,7 +595,7 @@ class HomePageState extends State<HomePage> {
               body: list[selectedIndex],
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
-                  canvasColor: selectedIndex == 0? Colors.black: Colors.transparent,
+                  canvasColor: Colors.transparent,
                 ),
                 child: BottomNavigationBar(
                   backgroundColor: Colors.transparent,
@@ -669,7 +675,7 @@ class TopPart extends StatelessWidget {
         Stack(
           children: <Widget>[
             Image.asset(
-              "assets/images/home_page.jpeg",
+              "assets/images/home_page.png",
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.304054054,
               fit: BoxFit.fill,

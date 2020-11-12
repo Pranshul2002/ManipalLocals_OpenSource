@@ -23,7 +23,6 @@ class DataShowFeed extends StatelessWidget {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-
                 backgroundColor: Colors.transparent,
                 title: Container(
                   padding: EdgeInsets.only(top: 8.0),
@@ -81,7 +80,7 @@ class _DataShowFeedStfState extends State<DataShowFeedStf> {
             child: Text(
               article,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
               ),
             ),
           ),
