@@ -8,24 +8,29 @@ class HostelMess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: PreferredSize(
-              child: Container(
-                color: Colors.black,
-                height: 3.0,
-              ),
-              preferredSize: Size.fromHeight(3.0)),
-          backgroundColor: Color(0xffFF8C00),
-          title: Container(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text(
-              "HOSTEL/MESS",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/images/ML_doodles.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
-        ),
-        body: HostelMessBody(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: Container(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  "HOSTEL/MESS",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
+            ),
+            body: HostelMessBody(),
+          ),
+        ],
       ),
     );
   }
@@ -43,10 +48,6 @@ class _HostelMessBodyState extends State<HostelMessBody> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Image(
-          image:
-              FirebaseImage("gs://manipallocals-2f95e.appspot.com/hostel.png"),
-        ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
@@ -71,6 +72,10 @@ class _HostelMessBodyState extends State<HostelMessBody> {
                   default:
                     return ListView(
                       children: <Widget>[
+                        Image(
+                          image:
+                          FirebaseImage("gs://manipallocals-2f95e.appspot.com/hostel.png"),
+                        ),
                         SizedBox(
                           height: 16.0,
                         ),

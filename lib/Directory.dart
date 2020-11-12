@@ -7,24 +7,29 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 class Directory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-            child: Container(
-              color: Colors.black,
-              height: 3.0,
-            ),
-            preferredSize: Size.fromHeight(3.0)),
-        backgroundColor: Color(0xffFF8C00),
-        title: Container(
-          padding: EdgeInsets.only(top: 8.0),
-          child: Text(
-            "DIRECTORY",
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/images/ML_doodles.png",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
         ),
-      ),
-      body: DirectoryStateful(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Container(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Text(
+                "DIRECTORY",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
+          ),
+          body: DirectoryStateful(),
+        ),
+      ],
     );
   }
 }

@@ -9,24 +9,35 @@ class College extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: PreferredSize(
-              child: Container(
-                color: Colors.black,
-                height: 3.0,
-              ),
-              preferredSize: Size.fromHeight(3.0)),
-          backgroundColor: Color(0xffFF8C00),
-          title: Container(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text(
-              "COLLEGE",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/images/ML_doodles.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
-        ),
-        body: CollegeData(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              bottom: PreferredSize(
+                  child: Container(
+                    color: Colors.black,
+                    height: 3.0,
+                  ),
+                  preferredSize: Size.fromHeight(3.0)),
+              backgroundColor: Colors.transparent,
+              title: Container(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  "COLLEGE",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
+            ),
+            body: CollegeData(),
+          ),
+        ],
       ),
     );
   }
@@ -42,10 +53,6 @@ class _CollegeDataState extends State<CollegeData> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Image(
-          image:
-              FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
-        ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
@@ -70,6 +77,13 @@ class _CollegeDataState extends State<CollegeData> {
                   default:
                     return ListView(
                       children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image(
+                            image:
+                            FirebaseImage("gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
+                          ),
+                        ),
                         SizedBox(
                           height: 16.0,
                         ),

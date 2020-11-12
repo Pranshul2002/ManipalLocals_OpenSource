@@ -143,7 +143,7 @@ class _ClubContentState extends State<ClubContent> {
         child: Text(
           article,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16,
           ),
         ),
       );

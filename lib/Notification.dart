@@ -108,7 +108,7 @@ class NotificationPageState extends State<NotificationPage> {
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Row(
                               children: [
-                                Icon(Icons.bookmark),
+                                Icon(Icons.bookmark,color: Colors.orangeAccent.shade700,),
                                 Container(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 8.0),

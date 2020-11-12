@@ -10,21 +10,26 @@ class AnswerShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: PreferredSize(
-              child: Container(
-                color: Colors.black,
-                height: 3.0,
-              ),
-              preferredSize: Size.fromHeight(3.0)),
-          backgroundColor: Color(0xff00FFFFFF),
-        ),
-        body: AnswerShowStf(
-          name: name,
-          data: data,
-          index: index,
-        ),
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/images/ML_doodles.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+            ),
+            body: AnswerShowStf(
+              name: name,
+              data: data,
+              index: index,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -59,7 +64,7 @@ class _AnswerShowStfState extends State<AnswerShowStf> {
           child: Text(
             widget.name,
             style: TextStyle(
-                fontSize: 15, color: Colors.white, fontStyle: FontStyle.italic),
+                fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
         ),
         SizedBox(
@@ -70,7 +75,7 @@ class _AnswerShowStfState extends State<AnswerShowStf> {
           child: Text(
             widget.data,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
             ),
           ),
         ),

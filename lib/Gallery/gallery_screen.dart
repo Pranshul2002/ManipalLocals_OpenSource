@@ -20,7 +20,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   int dimensionIndex1, dimensionIndex2;
   int index1;
   int randomLandscape;
-  int prev;
+  int prev = 1;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -44,101 +44,126 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ));
             default:
               index1 = -1;
-              return Scaffold(
-                  backgroundColor: Colors.black,
-                  body: Column(
-                    children: [
-                      SizedBox(
-                        height: 16,
-                      ),
-                      // Container(
-                      //   alignment: Alignment.centerLeft,
-                      //   padding: EdgeInsets.all(16),
-                      //   child: Text(
-                      //     "Gallery",
-                      //     style: TextStyle(fontSize: 75),
-                      //   ),
-                      // ),
-                      Expanded(
-                        child: ListView.builder(
-                          reverse: true,
-                          itemCount: snapshot.data["images"].length,
-                          itemBuilder: (context, index) {
-                            randomLandscape = random.nextInt(5);
-                            dimensionIndex1 = random.nextInt(9);
-                            dimensionIndex2 = random.nextInt(9);
-                            // print(prev);
-                            if (index1 == -1) {
-                              index1++;
-                            } else {
-                              if (randomLandscape == 1 && prev == 1) {
-                                index1 = index1 + 1;
-                              } else if (randomLandscape == 1 && prev != 1) {
-                                index1 = index1 + 2;
-                              } else if (prev != 1) {
-                                index1 = index1 + 2;
-                              } else {
-                                index1 = index1 + 1;
-                              }
-                            }
-                            prev = randomLandscape;
-                            if (index1 == 0) prev = 1;
+              return Stack(
+                children: [
+                  Image.asset(
+                    "assets/images/ML_doodles.png",
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  ),
+                  Scaffold(
+                      backgroundColor: Colors.transparent,
+                      body: Column(
+                        children: [
+                          SizedBox(
+                            height: 16,
+                          ),
+                          // Container(
+                          //   alignment: Alignment.centerLeft,
+                          //   padding: EdgeInsets.all(16),
+                          //   child: Text(
+                          //     "Gallery",
+                          //     style: TextStyle(fontSize: 75),
+                          //   ),
+                          // ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: snapshot.data["images"].length,
+                              itemBuilder: (context, index) {
+                                randomLandscape = random.nextInt(5);
+                                dimensionIndex1 = random.nextInt(9);
+                                dimensionIndex2 = random.nextInt(9);
+                                // print(prev);
+                                if (index1 == -1) {
+                                  index1++;
+                                } else {
+                                  if (randomLandscape == 1 && prev == 1) {
+                                    index1 = index1 + 1;
+                                  } else if (randomLandscape == 1 && prev != 1) {
+                                    index1 = index1 + 2;
+                                  } else if (prev != 1) {
+                                    index1 = index1 + 2;
+                                  } else {
+                                    index1 = index1 + 1;
+                                  }
+                                }
+                                prev = randomLandscape;
+                                if (index1 == 0) prev = 1;
 
-                            return (index1 == 0 || randomLandscape == 1)
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (index1 <=
-                                          snapshot.data["images"].length - 1)
-                                        Expanded(
-                                          child: ImageContainer(
-                                            height: 250,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            credit: snapshot.data["credit"]
+                                return (index1 == 0 || randomLandscape == 1)
+                                    ? Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          if (index1 <=
+                                              snapshot.data["images"].length - 1)
+                                            Expanded(
+                                              child: ImageContainer(
+                                                height: 250,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                credit: snapshot.data["credit"]
+                                                    [index1],
+                                                url: snapshot.data["images"]
+                                                    [index1],
+                                              ),
+                                            ),
+                                        ],
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          if (index1 <=
+                                              snapshot.data["images"].length - 1 && index1 + 1 <=
+                                              snapshot.data["images"].length - 1)
+                                            Expanded(
+                                              child: ImageContainer(
+                                                credit: snapshot.data["credit"]
+                                                    [index1],
+                                                height: height[dimensionIndex1],
+                                                width: width[dimensionIndex1],
+                                                url: snapshot.data["images"]
+                                                    [index1],
+                                              ),
+                                            ),
+                                          if(index1 <=
+                                          snapshot.data["images"].length - 1 && index1 + 1 >
+                                snapshot.data["images"].length - 1)
+                                            Expanded(
+                                              child: ImageContainer(
+                                                height: 250,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                credit: snapshot.data["credit"]
                                                 [index1],
-                                            url: snapshot.data["images"]
+                                                url: snapshot.data["images"]
                                                 [index1],
-                                          ),
-                                        ),
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      if (index1 <=
-                                          snapshot.data["images"].length - 1)
-                                        Expanded(
-                                          child: ImageContainer(
-                                            credit: snapshot.data["credit"]
-                                                [index1],
-                                            height: height[dimensionIndex1],
-                                            width: width[dimensionIndex1],
-                                            url: snapshot.data["images"]
-                                                [index1],
-                                          ),
-                                        ),
-                                      if (index1 + 1 <=
-                                          snapshot.data["images"].length - 1)
-                                        Expanded(
-                                          child: ImageContainer(
-                                            credit: snapshot.data["credit"]
-                                                [index1 + 1],
-                                            height: height[dimensionIndex2],
-                                            width: width[dimensionIndex2],
-                                            url: snapshot.data["images"]
-                                                [index1 + 1],
-                                          ),
-                                        ),
-                                    ],
-                                  );
-                          },
-                        ),
-                      ),
-                    ],
-                  ));
+                                              ),
+                                            ),
+                                          if (index1 + 1 <=
+                                              snapshot.data["images"].length - 1)
+                                            Expanded(
+                                              child: ImageContainer(
+                                                credit: snapshot.data["credit"]
+                                                    [index1 + 1],
+                                                height: height[dimensionIndex2],
+                                                width: width[dimensionIndex2],
+                                                url: snapshot.data["images"]
+                                                    [index1 + 1],
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                              },
+                            ),
+                          ),
+                        ],
+                      )),
+                ],
+              );
           }
         });
   }

@@ -11,24 +11,30 @@ class Feed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: PreferredSize(
-              child: Container(
-                color: Colors.black,
-                height: 3.0,
-              ),
-              preferredSize: Size.fromHeight(3.0)),
-          backgroundColor: Color(0xffFF8C00),
-          title: Container(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text(
-              "Feed",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/images/ML_doodles.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
-        ),
-        body: FeedData(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Container(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  "Feed",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
+            ),
+            body: FeedData(),
+          ),
+        ],
       ),
     );
   }
