@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:manipal_locals/StudentClub.dart';
 import 'College.dart';
 import 'Directory.dart';

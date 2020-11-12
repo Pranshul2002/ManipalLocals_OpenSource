@@ -74,20 +74,21 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                 randomLandscape = random.nextInt(5);
                                 dimensionIndex1 = random.nextInt(9);
                                 dimensionIndex2 = random.nextInt(9);
-                                // print(prev);
-                                if (index1 == -1) {
-                                  index1++;
-                                } else {
-                                  if (randomLandscape == 1 && prev == 1) {
-                                    index1 = index1 + 1;
-                                  } else if (randomLandscape == 1 && prev != 1) {
-                                    index1 = index1 + 2;
-                                  } else if (prev != 1) {
-                                    index1 = index1 + 2;
+                                print(index);
+                                  if (index1 == -1) {
+                                    index1++;
                                   } else {
-                                    index1 = index1 + 1;
+                                    if (randomLandscape == 1 && prev == 1) {
+                                      index1 = index1 + 1;
+                                    } else
+                                    if (randomLandscape == 1 && prev != 1) {
+                                      index1 = index1 + 2;
+                                    } else if (prev != 1) {
+                                      index1 = index1 + 2;
+                                    } else {
+                                      index1 = index1 + 1;
+                                    }
                                   }
-                                }
                                 prev = randomLandscape;
                                 if (index1 == 0) prev = 1;
 
