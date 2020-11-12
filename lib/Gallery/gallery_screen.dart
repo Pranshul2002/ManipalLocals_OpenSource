@@ -154,12 +154,15 @@ class _GalleryScreenState extends State<GalleryScreen>
                           //   ),
                           // ),
                           Expanded(
-                              child: ListView(
-                            children: [
-                              for (;
-                                  index1 <= snapshot.data["images"].length - 1;)
-                                listItem(snapshot)
-                            ],
+                              child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                for (;
+                                    index1 <=
+                                        snapshot.data["images"].length - 1;)
+                                  listItem(snapshot)
+                              ],
+                            ),
                           )),
                         ],
                       )),
