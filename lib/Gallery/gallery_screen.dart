@@ -55,53 +55,53 @@ class _GalleryScreenState extends State<GalleryScreen>
     if (index1 <= snapshot.data["images"].length - 1)
       return (index1 == 0 || randomLandscape == 1)
           ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (index1 <= snapshot.data["images"].length - 1)
-                  Expanded(
-                    child: ImageContainer(
-                      height: 250,
-                      width: MediaQuery.of(context).size.width,
-                      credit: snapshot.data["credit"][index1],
-                      url: snapshot.data["images"][index1],
-                    ),
-                  ),
-              ],
-            )
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (index1 <= snapshot.data["images"].length - 1)
+            Expanded(
+              child: ImageContainer(
+                height: 250,
+                width: MediaQuery.of(context).size.width,
+                credit: snapshot.data["credit"][index1],
+                url: snapshot.data["images"][index1],
+              ),
+            ),
+        ],
+      )
           : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (index1 <= snapshot.data["images"].length - 1 &&
-                    index1 + 1 <= snapshot.data["images"].length - 1)
-                  Expanded(
-                    child: ImageContainer(
-                      credit: snapshot.data["credit"][index1],
-                      height: height[dimensionIndex1],
-                      width: width[dimensionIndex1],
-                      url: snapshot.data["images"][index1],
-                    ),
-                  ),
-                if (index1 <= snapshot.data["images"].length - 1 &&
-                    index1 + 1 > snapshot.data["images"].length - 1)
-                  Expanded(
-                    child: ImageContainer(
-                      height: 250,
-                      width: MediaQuery.of(context).size.width,
-                      credit: snapshot.data["credit"][index1],
-                      url: snapshot.data["images"][index1],
-                    ),
-                  ),
-                if (index1 + 1 <= snapshot.data["images"].length - 1)
-                  Expanded(
-                    child: ImageContainer(
-                      credit: snapshot.data["credit"][index1 + 1],
-                      height: height[dimensionIndex2],
-                      width: width[dimensionIndex2],
-                      url: snapshot.data["images"][index1 + 1],
-                    ),
-                  ),
-              ],
-            );
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (index1 <= snapshot.data["images"].length - 1 &&
+              index1 + 1 <= snapshot.data["images"].length - 1)
+            Expanded(
+              child: ImageContainer(
+                credit: snapshot.data["credit"][index1],
+                height: height[dimensionIndex1],
+                width: width[dimensionIndex1],
+                url: snapshot.data["images"][index1],
+              ),
+            ),
+          if (index1 <= snapshot.data["images"].length - 1 &&
+              index1 + 1 > snapshot.data["images"].length - 1)
+            Expanded(
+              child: ImageContainer(
+                height: 250,
+                width: MediaQuery.of(context).size.width,
+                credit: snapshot.data["credit"][index1],
+                url: snapshot.data["images"][index1],
+              ),
+            ),
+          if (index1 + 1 <= snapshot.data["images"].length - 1)
+            Expanded(
+              child: ImageContainer(
+                credit: snapshot.data["credit"][index1 + 1],
+                height: height[dimensionIndex2],
+                width: width[dimensionIndex2],
+                url: snapshot.data["images"][index1 + 1],
+              ),
+            ),
+        ],
+      );
     else
       return SizedBox.shrink();
   }
@@ -125,8 +125,8 @@ class _GalleryScreenState extends State<GalleryScreen>
             case ConnectionState.waiting:
               return Center(
                   child: new CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
-              ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                  ));
             default:
               index1 = -1;
               prev = 1;
@@ -155,15 +155,15 @@ class _GalleryScreenState extends State<GalleryScreen>
                           // ),
                           Expanded(
                               child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                for (;
+                                child: Column(
+                                  children: [
+                                    for (;
                                     index1 <=
                                         snapshot.data["images"].length - 1;)
-                                  listItem(snapshot)
-                              ],
-                            ),
-                          )),
+                                      listItem(snapshot)
+                                  ],
+                                ),
+                              )),
                         ],
                       )),
                 ],

@@ -56,7 +56,7 @@ class _CollegeDataState extends State<CollegeData> {
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
-                  .collection("college_data")
+                  .collection("")
                   .document("gHyYe7RUaRgKARY0i4xW")
                   .snapshots(),
               builder: (BuildContext context,

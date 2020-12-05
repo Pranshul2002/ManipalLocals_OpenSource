@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:manipal_locals/food_menu_screen.dart';
 
 import 'HomePage.dart';
 
@@ -31,7 +32,7 @@ class SplashScreenImage extends StatelessWidget {
     if(FirebaseAuth.instance.currentUser() != null)
     await FirebaseAuth.instance.signInAnonymously();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => HomePage()));
+        context, MaterialPageRoute(builder: (_) => FoodMenuScreen()));
   }
 
   @override
