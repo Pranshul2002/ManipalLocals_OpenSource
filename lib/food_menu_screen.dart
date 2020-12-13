@@ -8,7 +8,6 @@ class FoodMenuScreen extends StatefulWidget {
 }
 
 class _FoodMenuScreenState extends State<FoodMenuScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,11 +30,13 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                   case ConnectionState.waiting:
                     return Center(
                         child: new CircularProgressIndicator(
-                          valueColor:
+                      valueColor:
                           new AlwaysStoppedAnimation<Color>(Colors.white),
-                        ));
+                    ));
                   default:
-                    return Menu(snapshot: snapshot,);
+                    return Menu(
+                      snapshot: snapshot,
+                    );
                 }
               }),
         ),
@@ -43,6 +44,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
     );
   }
 }
+
 class Menu extends StatefulWidget {
   final AsyncSnapshot<DocumentSnapshot> snapshot;
   Menu({@required this.snapshot});
@@ -50,9 +52,8 @@ class Menu extends StatefulWidget {
   _MenuState createState() => _MenuState();
 }
 
-class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
-
-  List<int> itemCount = [ 0,0,0,0,0,0];
+class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
+  List<int> itemCount = [0, 0, 0, 0, 0, 0];
   List<String> cartItems = [];
   List<int> price = [];
   TabController _tabController;
@@ -63,10 +64,11 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.black,
         appBar: AppBar(
           bottom: TabBar(
               controller: _tabController,
@@ -74,14 +76,14 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
               indicatorSize: TabBarIndicatorSize.tab,
               isScrollable: true,
               indicator: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.green[700],
-                    Colors.green[400],
-                  ]),
+                  gradient: LinearGradient(
+                      colors: [Colors.grey.shade900, Colors.grey.shade900]),
                   borderRadius: BorderRadius.circular(25),
                   color: Colors.green),
               tabs: [
-                for (int i = 0; i < widget.snapshot.data['cuisines'].length; i++)
+                for (int i = 0;
+                    i < widget.snapshot.data['cuisines'].length;
+                    i++)
                   Tab(
                     child: Align(
                       alignment: Alignment.center,
@@ -90,13 +92,15 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
                         child: Text(
                           widget.snapshot.data['cuisines'][i],
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w800),
+                              color: Color(0xFFFCAE20),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w800),
                         ),
                       ),
                     ),
                   ),
               ]),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.black,
           title: Container(
             padding: EdgeInsets.only(top: 0.0),
             child: Text(
@@ -124,52 +128,66 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
                       child: ListView.builder(
                           itemCount: widget.snapshot.data['foodItems'].length,
                           itemBuilder: (BuildContext context, int index) {
-                            if (widget.snapshot.data['correspondingCuisine'][index] == widget.snapshot.data['cuisines'][i]) {
+                            if (widget.snapshot.data['correspondingCuisine']
+                                    [index] ==
+                                widget.snapshot.data['cuisines'][i]) {
                               return Padding(
                                 padding: const EdgeInsets.only(
-                                  top: 16.0, ),
+                                  top: 10.0,
+                                ),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(30)),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: Colors.grey.shade900,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black,
+                                        blurRadius: 2.0,
+                                        spreadRadius: 0.0,
+                                        offset: Offset(2.0,
+                                            2.0), // shadow direction: bottom right
+                                      )
+                                    ],
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal:20),
-                                            child: Text(widget.snapshot.data['foodItems'][index],
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4.0, horizontal: 20),
+                                            child: Text(
+                                              widget.snapshot.data['foodItems']
+                                                  [index],
                                               style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                  FontWeight.bold),
+                                                  color: Color(0xFFFFC800),
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal:  20),
-                                            child: Text('\u20B9${widget.snapshot.data['foodItemPrice'][index]}',
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: Text(
+                                              '\u20B9${widget.snapshot.data['foodItemPrice'][index]}',
                                               style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                  FontWeight.bold),
+                                                  color: Color(0xFFFFC800),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                           ),
                                         ],
                                       ),
-
                                       Column(
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                              BorderRadius.all(
+                                              color: Colors.grey.shade100,
+                                              borderRadius: BorderRadius.all(
                                                   Radius.circular(30)),
                                             ),
                                             width: 100,
@@ -177,7 +195,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
                                             padding: EdgeInsets.all(10),
                                             child: ClipRRect(
                                               borderRadius:
-                                              BorderRadius.circular(20),
+                                                  BorderRadius.circular(20),
                                               child: Image(
                                                 image: NetworkImage(
                                                     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'),
@@ -186,57 +204,93 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4.0),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.all(
-                                                      Radius.circular(30)),
-                                                  color: itemCount[index]==0?Colors.red:Colors.grey.shade100,
-                                                  border: Border.all(color: Colors.black12)),
-                                              child: itemCount[index] == 0?GestureDetector(
-                                                onTap: (){
-                                                  setState(() {
-                                                    itemCount[index] = 1;
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical:5.0,horizontal: 20),
-                                                  child: Text('Add',style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                  ),),
-                                                ),
-                                              ):Row(
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      setState(() {
-                                                        itemCount[index]--;
-                                                      });
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(right: 3.0),
-                                                      child: Icon(Icons.horizontal_rule,size: 30,color: Colors.black54,),
+                                                      BorderRadius.all(
+                                                          Radius.circular(30)),
+                                                  color: itemCount[index] == 0
+                                                      ? Color(0xFFFFC800)
+                                                      : Colors.grey.shade100,
+                                                  border: Border.all(
+                                                      color: Colors.black12)),
+                                              child: itemCount[index] == 0
+                                                  ? GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          itemCount[index] = 1;
+                                                        });
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 5.0,
+                                                                horizontal: 20),
+                                                        child: Text(
+                                                          'Add',
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Row(
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              itemCount[
+                                                                  index]--;
+                                                            });
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 3.0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .horizontal_rule,
+                                                              size: 30,
+                                                              color: Colors
+                                                                  .black54,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          itemCount[index]
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontSize: 22),
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              itemCount[
+                                                                  index]++;
+                                                            });
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 2.0),
+                                                            child: Icon(
+                                                              Icons.add,
+                                                              size: 30,
+                                                              color: Colors
+                                                                  .black54,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                  Text(itemCount[index].toString(),style: TextStyle(
-                                                      fontSize: 22
-                                                  ),),
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      setState(() {
-                                                        itemCount[index]++;
-                                                      });
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(left:2.0),
-                                                      child: Icon(Icons.add,size: 30,color: Colors.black54,),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
                                             ),
                                           ),
                                         ],
@@ -254,4 +308,3 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin  {
         ));
   }
 }
-
