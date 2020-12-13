@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flare_flutter: ^2.0.6
   firebase_messaging: ^6.0.16
   url_launcher: ^5.5.0
   cloud_firestore: ^0.13.7
@@ -35,6 +36,7 @@ dependencies:
   firebase_auth:
   font_awesome_flutter: ^8.8.1
   cached_network_image: ^2.2.0+1
+  shared_preferences: ^0.5.12+4
 
 
 
@@ -60,6 +62,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/Teddy.flr
+    - assets/images/
     - assets/images/gmail.png
     - assets/images/instagram.png
     - assets/images/twitter.png

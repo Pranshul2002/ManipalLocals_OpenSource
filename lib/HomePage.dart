@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:manipal_locals/MityMeal/HomePage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:manipal_locals/StudentClub.dart';
 import 'College.dart';
@@ -720,7 +720,7 @@ class TopPart extends StatelessWidget {
                       icon: Icons.fastfood,
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => HostelMess()));
+                            MaterialPageRoute(builder: (_) => HomePageMM()));
                       },
                     ),
                   ),
