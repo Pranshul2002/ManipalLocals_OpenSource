@@ -64,6 +64,7 @@ class _HomePageMMState extends State<HomePageMM> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     timeDilation = 1;
+    var bottom = MediaQuery.of(context).viewInsets.bottom;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -177,198 +178,225 @@ class _HomePageMMState extends State<HomePageMM> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: height + 250),
+                  padding: EdgeInsets.only(
+                    top: height + 250,
+                  ),
                   child: Container(
                     width: width,
                     decoration: BoxDecoration(
                         color: Color(0xff36454f),
                         borderRadius: BorderRadius.all(Radius.circular(40))),
                     height: height - 200,
-                    child: ListView(
-                      padding: EdgeInsets.all(0),
-                      controller: _controller1,
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        //LoginPage
-                        if (!signup)
-                          Container(
-                            color: Colors.transparent,
-                            width: width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                    alignment: Alignment.topLeft,
-                                    padding: EdgeInsets.only(top: 16, left: 32),
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(fontSize: 64),
-                                    )),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Form(
-                                        key: _formKey,
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              color: Colors.transparent,
-                                              alignment: Alignment.center,
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 32, horizontal: 16),
-                                              child: new ClipRRect(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(100)),
-                                                child: new BackdropFilter(
-                                                  filter: new ImageFilter.blur(
-                                                      sigmaX: 10.0,
-                                                      sigmaY: 10.0),
-                                                  child: new Container(
-                                                    decoration:
-                                                        new BoxDecoration(
-                                                            color: Colors
-                                                                .grey.shade200
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                    child: new TextFormField(
-                                                      onTap: () {
-                                                        _teddyController.lookAt(Offset(
-                                                            0,
-                                                            MediaQuery.of(context)
-                                                                        .size
-                                                                        .height *
-                                                                    1.5 -
-                                                                100));
-                                                      },
-                                                      validator: (val) {
-                                                        if (val.length != 10)
-                                                          return "Please Enter correct number";
-                                                        else
-                                                          return null;
-                                                      },
-                                                      controller:
-                                                          mobilecontroller,
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      maxLength: 10,
-                                                      textAlignVertical:
-                                                          TextAlignVertical.top,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        prefix: Text("+91 "),
-                                                        contentPadding:
-                                                            EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        32,
-                                                                    vertical:
-                                                                        0),
-                                                        errorStyle: TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.white54),
-                                                        labelText:
-                                                            "Enter Phone Number",
-                                                        alignLabelWithHint:
-                                                            true,
-                                                        floatingLabelBehavior:
-                                                            FloatingLabelBehavior
-                                                                .never,
-                                                        hintText: "1234567890",
-                                                        hintStyle: TextStyle(
-                                                            fontSize: 20,
-                                                            color:
-                                                                Colors.white54),
-                                                        border:
-                                                            InputBorder.none,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        bottom: bottom,
+                      ),
+                      child: ListView(
+                        padding: EdgeInsets.all(0),
+                        controller: _controller1,
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          //LoginPage
+                          if (!signup)
+                            Container(
+                              color: Colors.transparent,
+                              width: width,
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: bottom),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                        alignment: Alignment.topLeft,
+                                        padding:
+                                            EdgeInsets.only(top: 16, left: 32),
+                                        child: Text(
+                                          "Login",
+                                          style: TextStyle(fontSize: 64),
+                                        )),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Form(
+                                            key: _formKey,
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  color: Colors.transparent,
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 32,
+                                                      horizontal: 16),
+                                                  child: new ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                100)),
+                                                    child: new BackdropFilter(
+                                                      filter:
+                                                          new ImageFilter.blur(
+                                                              sigmaX: 10.0,
+                                                              sigmaY: 10.0),
+                                                      child: new Container(
+                                                        decoration:
+                                                            new BoxDecoration(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade200
+                                                                    .withOpacity(
+                                                                        0.2)),
+                                                        child:
+                                                            new TextFormField(
+                                                          onTap: () {
+                                                            _teddyController.lookAt(Offset(
+                                                                0,
+                                                                MediaQuery.of(context)
+                                                                            .size
+                                                                            .height *
+                                                                        1.5 -
+                                                                    100));
+                                                          },
+                                                          validator: (val) {
+                                                            if (val.length !=
+                                                                10)
+                                                              return "Please Enter correct number";
+                                                            else
+                                                              return null;
+                                                          },
+                                                          controller:
+                                                              mobilecontroller,
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          maxLength: 10,
+                                                          textAlignVertical:
+                                                              TextAlignVertical
+                                                                  .top,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            prefix:
+                                                                Text("+91 "),
+                                                            contentPadding:
+                                                                EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            32,
+                                                                        vertical:
+                                                                            0),
+                                                            errorStyle: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .white54),
+                                                            labelText:
+                                                                "Enter Phone Number",
+                                                            alignLabelWithHint:
+                                                                true,
+                                                            floatingLabelBehavior:
+                                                                FloatingLabelBehavior
+                                                                    .never,
+                                                            hintText:
+                                                                "1234567890",
+                                                            hintStyle: TextStyle(
+                                                                fontSize: 20,
+                                                                color: Colors
+                                                                    .white54),
+                                                            border: InputBorder
+                                                                .none,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 32),
-                                        child: MaterialButton(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              side: BorderSide(
-                                                width: 2,
-                                                color: Colors.white,
-                                              )),
-                                          onPressed: () async {
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              _controller1.animateTo(
-                                                  _controller1
-                                                      .position.maxScrollExtent,
-                                                  curve: Curves.easeIn,
-                                                  duration: Duration(
-                                                      milliseconds: 300));
-                                              _teddyController.lookAt(null);
-                                              login = Login(
-                                                  mobilecontroller.text,
-                                                  _teddyController,
-                                                  context);
-                                              verify = true;
-                                              await login.start();
-                                              a = 60;
-                                              timer = Timer.periodic(
-                                                  Duration(seconds: 1),
-                                                  (timer) {
-                                                if (a == 1) {
-                                                  timer.cancel();
-                                                }
-                                                if (mounted)
-                                                  setState(() {
-                                                    a--;
-                                                  });
-                                              });
-                                            }
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              "Proceed",
-                                              style: TextStyle(fontSize: 18),
+                                                )
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 32),
+                                            child: MaterialButton(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20.0),
+                                                  side: BorderSide(
+                                                    width: 2,
+                                                    color: Colors.white,
+                                                  )),
+                                              onPressed: () async {
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                  _controller1.animateTo(
+                                                      _controller1.position
+                                                          .maxScrollExtent,
+                                                      curve: Curves.easeIn,
+                                                      duration: Duration(
+                                                          milliseconds: 300));
+                                                  _teddyController.lookAt(null);
+                                                  login = Login(
+                                                      mobilecontroller.text,
+                                                      _teddyController,
+                                                      context);
+                                                  verify = true;
+                                                  await login.start();
+                                                  a = 60;
+                                                  timer = Timer.periodic(
+                                                      Duration(seconds: 1),
+                                                      (timer) {
+                                                    if (a == 1) {
+                                                      timer.cancel();
+                                                    }
+                                                    if (mounted)
+                                                      setState(() {
+                                                        a--;
+                                                      });
+                                                  });
+                                                }
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "Proceed",
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        if (signup)
-                          Container(
-                            color: Colors.transparent,
-                            width: width,
-                            child: ListView(
-                              children: [
-                                Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: EdgeInsets.only(
-                                      top: 16, bottom: 32, left: 32, right: 32),
-                                  child: Text(
-                                    "Sign Up",
-                                    style: TextStyle(fontSize: 64),
+                          if (signup)
+                            Container(
+                              color: Colors.transparent,
+                              width: width,
+                              child: ListView(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    padding: EdgeInsets.only(
+                                        top: 16,
+                                        bottom: 32,
+                                        left: 32,
+                                        right: 32),
+                                    child: Text(
+                                      "Sign Up",
+                                      style: TextStyle(fontSize: 64),
+                                    ),
                                   ),
-                                ),
-                                Form(
-                                  key: _formKey,
-                                  child: SingleChildScrollView(
+                                  Form(
+                                    key: _formKey,
                                     child: Column(
                                       children: [
                                         Container(
@@ -383,8 +411,6 @@ class _HomePageMMState extends State<HomePageMM> {
                                                   color: Colors.grey.shade200
                                                       .withOpacity(0.2)),
                                               child: new TextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
                                                 onTap: () {
                                                   _teddyController.lookAt(
                                                       Offset(
@@ -437,8 +463,6 @@ class _HomePageMMState extends State<HomePageMM> {
                                                   color: Colors.grey.shade200
                                                       .withOpacity(0.2)),
                                               child: new TextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
                                                 onTap: () {
                                                   _teddyController.lookAt(
                                                       Offset(
@@ -617,8 +641,6 @@ class _HomePageMMState extends State<HomePageMM> {
                                                   color: Colors.grey.shade200
                                                       .withOpacity(0.2)),
                                               child: new TextFormField(
-                                                textInputAction:
-                                                    TextInputAction.done,
                                                 onTap: () {
                                                   _teddyController.lookAt(
                                                       Offset(
@@ -670,193 +692,199 @@ class _HomePageMMState extends State<HomePageMM> {
                                       ],
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 32, left: 32, right: 32, bottom: 32),
-                                  child: MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        side: BorderSide(
-                                          width: 2,
-                                          color: Colors.white,
-                                        )),
-                                    onPressed: () async {
-                                      _teddyController.lookAt(null);
-                                      if (_formKey.currentState.validate()) {
-                                        _controller1.animateTo(
-                                            _controller1
-                                                .position.maxScrollExtent,
-                                            curve: Curves.easeIn,
-                                            duration:
-                                                Duration(milliseconds: 300));
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 16,
+                                        left: 32,
+                                        right: 32,
+                                        bottom: 16),
+                                    child: MaterialButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          side: BorderSide(
+                                            width: 2,
+                                            color: Colors.white,
+                                          )),
+                                      onPressed: () async {
+                                        _teddyController.lookAt(null);
+                                        if (_formKey.currentState.validate()) {
+                                          _controller1.animateTo(
+                                              _controller1
+                                                  .position.maxScrollExtent,
+                                              curve: Curves.easeIn,
+                                              duration:
+                                                  Duration(milliseconds: 300));
 
-                                        login = Login(mobilecontroller.text,
-                                            _teddyController, context);
-                                        verify = true;
-                                        await login.start();
-                                        a = 60;
-                                        timer = Timer.periodic(
-                                            Duration(seconds: 1), (timer) {
-                                          if (a == 1) {
-                                            timer.cancel();
-                                          }
-                                          if (mounted)
-                                            setState(() {
-                                              a--;
-                                            });
-                                        });
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Proceed",
-                                        style: TextStyle(fontSize: 18),
+                                          login = Login(mobilecontroller.text,
+                                              _teddyController, context);
+                                          verify = true;
+                                          await login.start();
+                                          a = 60;
+                                          timer = Timer.periodic(
+                                              Duration(seconds: 1), (timer) {
+                                            if (a == 1) {
+                                              timer.cancel();
+                                            }
+                                            if (mounted)
+                                              setState(() {
+                                                a--;
+                                              });
+                                          });
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Proceed",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
 
-                        //OTP Verification Page
-                        Container(
-                          width: width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: EdgeInsets.only(top: 16, left: 32),
-                                  child: Text(
-                                    "Verify",
-                                    style: TextStyle(fontSize: 64),
-                                  )),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Form(
-                                      key: _formKey1,
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        child: new ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100)),
-                                          child: new BackdropFilter(
-                                            filter: new ImageFilter.blur(
-                                                sigmaX: 10.0, sigmaY: 10.0),
-                                            child: new Container(
-                                              decoration: new BoxDecoration(
-                                                  color: Colors.grey.shade200
-                                                      .withOpacity(0.2)),
-                                              child: new TextFormField(
-                                                controller: otpcontroller,
-                                                onTap: () {
-                                                  _teddyController
-                                                      .coverEyes(true);
-                                                },
-                                                style: TextStyle(fontSize: 20),
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                maxLength: 6,
-                                                textAlignVertical:
-                                                    TextAlignVertical.top,
-                                                decoration: InputDecoration(
-                                                  suffix: GestureDetector(
-                                                    onTap: () {
-                                                      if (a == 0) {
-                                                        login.start();
-                                                        if (mounted)
-                                                          setState(() {
-                                                            a = 60;
-                                                            timer =
-                                                                Timer.periodic(
-                                                                    Duration(
-                                                                        seconds:
-                                                                            1),
-                                                                    (timer) {
-                                                              if (a == 1) {
-                                                                timer.cancel();
-                                                              }
-                                                              if (mounted)
-                                                                setState(() {
-                                                                  a--;
-                                                                });
+                          //OTP Verification Page
+                          Container(
+                            width: width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                    alignment: Alignment.topLeft,
+                                    padding: EdgeInsets.only(top: 16, left: 32),
+                                    child: Text(
+                                      "Verify",
+                                      style: TextStyle(fontSize: 64),
+                                    )),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Form(
+                                        key: _formKey1,
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: new BackdropFilter(
+                                              filter: new ImageFilter.blur(
+                                                  sigmaX: 10.0, sigmaY: 10.0),
+                                              child: new Container(
+                                                decoration: new BoxDecoration(
+                                                    color: Colors.grey.shade200
+                                                        .withOpacity(0.2)),
+                                                child: new TextFormField(
+                                                  controller: otpcontroller,
+                                                  onTap: () {
+                                                    _teddyController
+                                                        .coverEyes(true);
+                                                  },
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  maxLength: 6,
+                                                  textAlignVertical:
+                                                      TextAlignVertical.top,
+                                                  decoration: InputDecoration(
+                                                    suffix: GestureDetector(
+                                                      onTap: () {
+                                                        if (a == 0) {
+                                                          login.start();
+                                                          if (mounted)
+                                                            setState(() {
+                                                              a = 60;
+                                                              timer = Timer
+                                                                  .periodic(
+                                                                      Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                      (timer) {
+                                                                if (a == 1) {
+                                                                  timer
+                                                                      .cancel();
+                                                                }
+                                                                if (mounted)
+                                                                  setState(() {
+                                                                    a--;
+                                                                  });
+                                                              });
                                                             });
-                                                          });
-                                                      }
-                                                    },
-                                                    child: Text(
-                                                      a == 0
-                                                          ? "Resend"
-                                                          : "Resend in ${a.toString()}",
-                                                      style: TextStyle(
-                                                          fontSize: 15),
+                                                        }
+                                                      },
+                                                      child: Text(
+                                                        a == 0
+                                                            ? "Resend"
+                                                            : "Resend in ${a.toString()}",
+                                                        style: TextStyle(
+                                                            fontSize: 15),
+                                                      ),
                                                     ),
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 32,
+                                                            vertical: 0),
+                                                    labelText: "Enter OTP",
+                                                    alignLabelWithHint: true,
+                                                    floatingLabelBehavior:
+                                                        FloatingLabelBehavior
+                                                            .never,
+                                                    hintText: "123456",
+                                                    hintStyle: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.white54),
+                                                    border: InputBorder.none,
                                                   ),
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          horizontal: 32,
-                                                          vertical: 0),
-                                                  labelText: "Enter OTP",
-                                                  alignLabelWithHint: true,
-                                                  floatingLabelBehavior:
-                                                      FloatingLabelBehavior
-                                                          .never,
-                                                  hintText: "123456",
-                                                  hintStyle: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.white54),
-                                                  border: InputBorder.none,
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 32),
-                                      child: MaterialButton(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            side: BorderSide(
-                                              width: 2,
-                                              color: Colors.white,
-                                            )),
-                                        onPressed: () async {
-                                          _teddyController.coverEyes(false);
-                                          _teddyController.lookAt(null);
-                                          if (otpcontroller.text.length == 6) {
-                                            await login
-                                                .verify(otpcontroller.text);
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "Verify",
-                                            style: TextStyle(fontSize: 18),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 32),
+                                        child: MaterialButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              side: BorderSide(
+                                                width: 2,
+                                                color: Colors.white,
+                                              )),
+                                          onPressed: () async {
+                                            _teddyController.coverEyes(false);
+                                            _teddyController.lookAt(null);
+                                            if (otpcontroller.text.length ==
+                                                6) {
+                                              await login
+                                                  .verify(otpcontroller.text);
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Verify",
+                                              style: TextStyle(fontSize: 18),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 )
