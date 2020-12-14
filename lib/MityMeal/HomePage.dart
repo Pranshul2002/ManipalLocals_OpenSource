@@ -5,9 +5,13 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:flutter/services.dart';
 import 'package:manipal_locals/MityMeal/LoginCode.dart';
-import 'package:manipal_locals/MityMeal/SignUpPage.dart';
+
 import 'package:manipal_locals/MityMeal/TeddyController.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'LoginCode.dart';
 
 class HomePageMM extends StatefulWidget {
   @override
@@ -20,20 +24,39 @@ class _HomePageMMState extends State<HomePageMM> {
   final _controller1 = ScrollController();
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
-  TextEditingController controller = TextEditingController();
-  TextEditingController controller1 = TextEditingController();
+  TextEditingController mobilecontroller = TextEditingController();
+  TextEditingController otpcontroller = TextEditingController();
+  TextEditingController regcontroller = TextEditingController();
+  TextEditingController roomcontroller = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
   Login login;
   int a = 0;
   Timer timer;
   bool verify = false;
   bool signup = false;
   bool loading = true;
+  SharedPreferences prefs;
+
+  int hostelBlock = 1;
+
   @override
   void initState() {
-    // TODO: Check in firebase if user exists. If it doesnot exists then change signup bool to true.
-    //TODO: After checking make loading false.
+    getShared();
     super.initState();
     _teddyController = TeddyController();
+  }
+
+  getShared() async {
+    prefs = await SharedPreferenceClass.getInstance();
+    prefs.getBool("signup") != null
+        ? setState(() {
+            signup = prefs.getBool("signup");
+            loading = false;
+          })
+        : setState(() {
+            signup = true;
+            loading = false;
+          });
   }
 
   @override
@@ -72,7 +95,7 @@ class _HomePageMMState extends State<HomePageMM> {
                           padding: EdgeInsets.only(bottom: 64),
                           child: RawMaterialButton(
                             onPressed: () {
-                              if (mounted)
+                              if (mounted && !loading)
                                 setState(() {
                                   _controller.animateTo(
                                       _controller.position.maxScrollExtent,
@@ -168,194 +191,536 @@ class _HomePageMMState extends State<HomePageMM> {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         //LoginPage
-                        // Container(
-                        //   color: Colors.transparent,
-                        //   width: width,
-                        //   child: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     mainAxisSize: MainAxisSize.max,
-                        //     children: [
-                        //       Expanded(
-                        //         child: Column(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           mainAxisSize: MainAxisSize.max,
-                        //           children: [
-                        //             Container(
-                        //                 alignment: Alignment.topLeft,
-                        //                 padding:
-                        //                     EdgeInsets.only(top: 16, left: 32),
-                        //                 child: Text(
-                        //                   "Login",
-                        //                   style: TextStyle(fontSize: 64),
-                        //                 )),
-                        //             Expanded(
-                        //               child: Column(
-                        //                 mainAxisAlignment:
-                        //                     MainAxisAlignment.center,
-                        //                 mainAxisSize: MainAxisSize.max,
-                        //                 children: [
-                        //                   Form(
-                        //                     key: _formKey,
-                        //                     child: Stack(
-                        //                       children: [
-                        //                         Container(
-                        //                           color: Colors.transparent,
-                        //                           alignment: Alignment.center,
-                        //                           padding: EdgeInsets.symmetric(
-                        //                               vertical: 32,
-                        //                               horizontal: 16),
-                        //                           child: new ClipRRect(
-                        //                             borderRadius:
-                        //                                 BorderRadius.all(
-                        //                                     Radius.circular(
-                        //                                         100)),
-                        //                             child: new BackdropFilter(
-                        //                               filter:
-                        //                                   new ImageFilter.blur(
-                        //                                       sigmaX: 10.0,
-                        //                                       sigmaY: 10.0),
-                        //                               child: new Container(
-                        //                                 decoration:
-                        //                                     new BoxDecoration(
-                        //                                         color: Colors
-                        //                                             .grey
-                        //                                             .shade200
-                        //                                             .withOpacity(
-                        //                                                 0.2)),
-                        //                                 child:
-                        //                                     new TextFormField(
-                        //                                   onTap: () {
-                        //                                     _teddyController.lookAt(Offset(
-                        //                                         0,
-                        //                                         MediaQuery.of(context)
-                        //                                                     .size
-                        //                                                     .height *
-                        //                                                 1.5 -
-                        //                                             100));
-                        //                                   },
-                        //                                   validator: (val) {
-                        //                                     if (val.length !=
-                        //                                         10)
-                        //                                       return "Please Enter correct number";
-                        //                                     else
-                        //                                       return null;
-                        //                                   },
-                        //                                   controller:
-                        //                                       controller,
-                        //                                   style: TextStyle(
-                        //                                       fontSize: 20),
-                        //                                   keyboardType:
-                        //                                       TextInputType
-                        //                                           .number,
-                        //                                   maxLength: 10,
-                        //                                   textAlignVertical:
-                        //                                       TextAlignVertical
-                        //                                           .top,
-                        //                                   decoration:
-                        //                                       InputDecoration(
-                        //                                     prefix:
-                        //                                         Text("+91 "),
-                        //                                     contentPadding:
-                        //                                         EdgeInsets
-                        //                                             .symmetric(
-                        //                                                 horizontal:
-                        //                                                     32,
-                        //                                                 vertical:
-                        //                                                     0),
-                        //                                     errorStyle: TextStyle(
-                        //                                         fontSize: 14,
-                        //                                         color: Colors
-                        //                                             .white54),
-                        //                                     labelText:
-                        //                                         "Enter Phone Number",
-                        //                                     alignLabelWithHint:
-                        //                                         true,
-                        //                                     floatingLabelBehavior:
-                        //                                         FloatingLabelBehavior
-                        //                                             .never,
-                        //                                     hintText:
-                        //                                         "1234567890",
-                        //                                     hintStyle: TextStyle(
-                        //                                         fontSize: 20,
-                        //                                         color: Colors
-                        //                                             .white54),
-                        //                                     border: InputBorder
-                        //                                         .none,
-                        //                                   ),
-                        //                                 ),
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                         )
-                        //                       ],
-                        //                     ),
-                        //                   ),
-                        //                   Padding(
-                        //                     padding: EdgeInsets.only(top: 32),
-                        //                     child: MaterialButton(
-                        //                       shape: RoundedRectangleBorder(
-                        //                           borderRadius:
-                        //                               BorderRadius.circular(
-                        //                                   20.0),
-                        //                           side: BorderSide(
-                        //                             width: 2,
-                        //                             color: Colors.white,
-                        //                           )),
-                        //                       onPressed: () async {
-                        //                         if (_formKey.currentState
-                        //                             .validate()) {
-                        //                           _controller1.animateTo(
-                        //                               _controller1.position
-                        //                                   .maxScrollExtent,
-                        //                               curve: Curves.easeIn,
-                        //                               duration: Duration(
-                        //                                   milliseconds: 300));
-                        //                           _teddyController.lookAt(null);
-                        //                           login = Login(
-                        //                               controller.text,
-                        //                               _teddyController,
-                        //                               context);
-                        //                           verify = true;
-                        //                           await login.start();
-                        //                           a = 60;
-                        //                           timer = Timer.periodic(
-                        //                               Duration(seconds: 1),
-                        //                               (timer) {
-                        //                             if (a == 1) {
-                        //                               timer.cancel();
-                        //                             }
-                        //                             if (mounted)
-                        //                               setState(() {
-                        //                                 a--;
-                        //                               });
-                        //                           });
-                        //                         }
-                        //                       },
-                        //                       child: Padding(
-                        //                         padding:
-                        //                             const EdgeInsets.all(8.0),
-                        //                         child: Text(
-                        //                           "Proceed",
-                        //                           style:
-                        //                               TextStyle(fontSize: 18),
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   )
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        SignUpPage(),
-                        //TODO: Copy the login page design to make signup page
-                        //Signup page code start
+                        if (!signup)
+                          Container(
+                            color: Colors.transparent,
+                            width: width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                    alignment: Alignment.topLeft,
+                                    padding: EdgeInsets.only(top: 16, left: 32),
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(fontSize: 64),
+                                    )),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Form(
+                                        key: _formKey,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              color: Colors.transparent,
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 32, horizontal: 16),
+                                              child: new ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(100)),
+                                                child: new BackdropFilter(
+                                                  filter: new ImageFilter.blur(
+                                                      sigmaX: 10.0,
+                                                      sigmaY: 10.0),
+                                                  child: new Container(
+                                                    decoration:
+                                                        new BoxDecoration(
+                                                            color: Colors
+                                                                .grey.shade200
+                                                                .withOpacity(
+                                                                    0.2)),
+                                                    child: new TextFormField(
+                                                      onTap: () {
+                                                        _teddyController.lookAt(Offset(
+                                                            0,
+                                                            MediaQuery.of(context)
+                                                                        .size
+                                                                        .height *
+                                                                    1.5 -
+                                                                100));
+                                                      },
+                                                      validator: (val) {
+                                                        if (val.length != 10)
+                                                          return "Please Enter correct number";
+                                                        else
+                                                          return null;
+                                                      },
+                                                      controller:
+                                                          mobilecontroller,
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      maxLength: 10,
+                                                      textAlignVertical:
+                                                          TextAlignVertical.top,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        prefix: Text("+91 "),
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        32,
+                                                                    vertical:
+                                                                        0),
+                                                        errorStyle: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.white54),
+                                                        labelText:
+                                                            "Enter Phone Number",
+                                                        alignLabelWithHint:
+                                                            true,
+                                                        floatingLabelBehavior:
+                                                            FloatingLabelBehavior
+                                                                .never,
+                                                        hintText: "1234567890",
+                                                        hintStyle: TextStyle(
+                                                            fontSize: 20,
+                                                            color:
+                                                                Colors.white54),
+                                                        border:
+                                                            InputBorder.none,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 32),
+                                        child: MaterialButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              side: BorderSide(
+                                                width: 2,
+                                                color: Colors.white,
+                                              )),
+                                          onPressed: () async {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _controller1.animateTo(
+                                                  _controller1
+                                                      .position.maxScrollExtent,
+                                                  curve: Curves.easeIn,
+                                                  duration: Duration(
+                                                      milliseconds: 300));
+                                              _teddyController.lookAt(null);
+                                              login = Login(
+                                                  mobilecontroller.text,
+                                                  _teddyController,
+                                                  context);
+                                              verify = true;
+                                              await login.start();
+                                              a = 60;
+                                              timer = Timer.periodic(
+                                                  Duration(seconds: 1),
+                                                  (timer) {
+                                                if (a == 1) {
+                                                  timer.cancel();
+                                                }
+                                                if (mounted)
+                                                  setState(() {
+                                                    a--;
+                                                  });
+                                              });
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Proceed",
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (signup)
+                          Container(
+                            color: Colors.transparent,
+                            width: width,
+                            child: ListView(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.only(
+                                      top: 16, bottom: 32, left: 32, right: 32),
+                                  child: Text(
+                                    "Sign Up",
+                                    style: TextStyle(fontSize: 64),
+                                  ),
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          color: Colors.transparent,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 16),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: new Container(
+                                              decoration: new BoxDecoration(
+                                                  color: Colors.grey.shade200
+                                                      .withOpacity(0.2)),
+                                              child: new TextFormField(
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                onTap: () {
+                                                  _teddyController.lookAt(
+                                                      Offset(
+                                                          0,
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .height *
+                                                                  1.5 -
+                                                              100));
+                                                },
+                                                validator: (val) {
+                                                  if (val.trim().length == 0)
+                                                    return "Please Enter a Name";
+                                                  else
+                                                    return null;
+                                                },
+                                                controller: namecontroller,
+                                                style: TextStyle(fontSize: 20),
+                                                decoration: InputDecoration(
+                                                  isCollapsed: true,
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 28,
+                                                          vertical: 20),
+                                                  errorStyle: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white54),
+                                                  labelText: "Enter Name",
+                                                  alignLabelWithHint: true,
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never,
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white54),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 16),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: new Container(
+                                              decoration: new BoxDecoration(
+                                                  color: Colors.grey.shade200
+                                                      .withOpacity(0.2)),
+                                              child: new TextFormField(
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                onTap: () {
+                                                  _teddyController.lookAt(
+                                                      Offset(
+                                                          0,
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .height *
+                                                                  1.5 -
+                                                              100));
+                                                },
+                                                validator: (val) {
+                                                  if (val.length != 9)
+                                                    return "Please Enter correct registration number";
+                                                  else
+                                                    return null;
+                                                },
+                                                controller: regcontroller,
+                                                style: TextStyle(fontSize: 20),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                maxLength: 9,
+                                                decoration: InputDecoration(
+                                                  counterText: '',
+                                                  isCollapsed: true,
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 28,
+                                                          vertical: 20),
+                                                  errorStyle: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white54),
+                                                  labelText:
+                                                      "Registration Number",
+                                                  alignLabelWithHint: true,
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never,
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white54),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                alignment: Alignment.topLeft,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 20,
+                                                    horizontal: 16),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(100)),
+                                                  child: Container(
+                                                    decoration:
+                                                        new BoxDecoration(
+                                                            color: Colors
+                                                                .grey.shade200
+                                                                .withOpacity(
+                                                                    0.2)),
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 5,
+                                                            horizontal: 25),
+                                                    child: DropdownButton(
+                                                        isExpanded: true,
+                                                        value: hostelBlock,
+                                                        items: [
+                                                          for (int i = 1;
+                                                              i < 23;
+                                                              i++)
+                                                            DropdownMenuItem(
+                                                              child: Text(
+                                                                  "Hostel Block $i"),
+                                                              value: i,
+                                                            ),
+                                                        ],
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            hostelBlock = value;
+                                                          });
+                                                        }),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 20,
+                                                    horizontal: 16),
+                                                child: new ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(100)),
+                                                  child: new Container(
+                                                    decoration:
+                                                        new BoxDecoration(
+                                                            color: Colors
+                                                                .grey.shade200
+                                                                .withOpacity(
+                                                                    0.2)),
+                                                    child: new TextFormField(
+                                                      onTap: () {
+                                                        _teddyController.lookAt(Offset(
+                                                            0,
+                                                            MediaQuery.of(context)
+                                                                        .size
+                                                                        .height *
+                                                                    1.5 -
+                                                                100));
+                                                      },
+                                                      validator: (val) {
+                                                        if (val.length <= 0)
+                                                          return "Please Enter Room No.";
+                                                        else
+                                                          return null;
+                                                      },
+                                                      controller:
+                                                          roomcontroller,
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                      maxLength: 9,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        counterText: '',
+                                                        isCollapsed: true,
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        28,
+                                                                    vertical:
+                                                                        20),
+                                                        errorStyle: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.white54),
+                                                        labelText: "Room No.",
+                                                        alignLabelWithHint:
+                                                            true,
+                                                        floatingLabelBehavior:
+                                                            FloatingLabelBehavior
+                                                                .never,
+                                                        hintStyle: TextStyle(
+                                                            fontSize: 20,
+                                                            color:
+                                                                Colors.white54),
+                                                        border:
+                                                            InputBorder.none,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                          color: Colors.transparent,
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 16),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: new Container(
+                                              decoration: new BoxDecoration(
+                                                  color: Colors.grey.shade200
+                                                      .withOpacity(0.2)),
+                                              child: new TextFormField(
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                onTap: () {
+                                                  _teddyController.lookAt(
+                                                      Offset(
+                                                          0,
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .height *
+                                                                  1.5 -
+                                                              100));
+                                                },
+                                                validator: (val) {
+                                                  if (val.length != 10)
+                                                    return "Please Enter correct number";
+                                                  else
+                                                    return null;
+                                                },
+                                                controller: mobilecontroller,
+                                                style: TextStyle(fontSize: 20),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                maxLength: 10,
+                                                textAlignVertical:
+                                                    TextAlignVertical.top,
+                                                decoration: InputDecoration(
+                                                  prefix: Text("+91 "),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 28,
+                                                          vertical: 0),
+                                                  errorStyle: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white54),
+                                                  labelText:
+                                                      "Enter Phone Number",
+                                                  alignLabelWithHint: true,
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never,
+                                                  hintText: "1234567890",
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white54),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 32, left: 32, right: 32, bottom: 32),
+                                  child: MaterialButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        side: BorderSide(
+                                          width: 2,
+                                          color: Colors.white,
+                                        )),
+                                    onPressed: () async {
+                                      _teddyController.lookAt(null);
+                                      if (_formKey.currentState.validate()) {
+                                        _controller1.animateTo(
+                                            _controller1
+                                                .position.maxScrollExtent,
+                                            curve: Curves.easeIn,
+                                            duration:
+                                                Duration(milliseconds: 300));
 
-                        //Signup page code end
+                                        login = Login(mobilecontroller.text,
+                                            _teddyController, context);
+                                        verify = true;
+                                        await login.start();
+                                        a = 60;
+                                        timer = Timer.periodic(
+                                            Duration(seconds: 1), (timer) {
+                                          if (a == 1) {
+                                            timer.cancel();
+                                          }
+                                          if (mounted)
+                                            setState(() {
+                                              a--;
+                                            });
+                                        });
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Proceed",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
 
                         //OTP Verification Page
                         Container(
@@ -393,7 +758,7 @@ class _HomePageMMState extends State<HomePageMM> {
                                                   color: Colors.grey.shade200
                                                       .withOpacity(0.2)),
                                               child: new TextFormField(
-                                                controller: controller1,
+                                                controller: otpcontroller,
                                                 onTap: () {
                                                   _teddyController
                                                       .coverEyes(true);
@@ -471,9 +836,9 @@ class _HomePageMMState extends State<HomePageMM> {
                                         onPressed: () async {
                                           _teddyController.coverEyes(false);
                                           _teddyController.lookAt(null);
-                                          if (controller1.text.length == 6) {
+                                          if (otpcontroller.text.length == 6) {
                                             await login
-                                                .verify(controller1.text);
+                                                .verify(otpcontroller.text);
                                           }
                                         },
                                         child: Padding(

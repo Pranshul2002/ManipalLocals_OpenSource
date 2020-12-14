@@ -6,6 +6,7 @@ import 'package:manipal_locals/MityMeal/HomePage.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
+import 'MityMeal/LoginCode.dart';
 
 Route _createRoute() {
   return PageRouteBuilder(
@@ -69,10 +70,11 @@ class BeforeMain extends StatefulWidget {
 
 class _BeforeMainState extends State<BeforeMain> {
   SharedPreferences prefs;
+
   var selected;
   @override
   Future<dynamic> getSelection() async {
-    prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferenceClass.getInstance();
     selected =
         prefs.getBool("selected") != null ? prefs.getBool("selected") : null;
     return selected;
