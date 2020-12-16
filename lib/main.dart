@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
 import 'MityMeal/LoginCode.dart';
+import 'MityMeal/Utils.dart';
 
 Route _createRoute() {
   return PageRouteBuilder(

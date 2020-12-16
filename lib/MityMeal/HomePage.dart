@@ -1,16 +1,21 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manipal_locals/MityMeal/LoginCode.dart';
 
 import 'package:manipal_locals/MityMeal/TeddyController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Utils.dart';
+import 'food_menu_screen.dart';
 import 'LoginCode.dart';
 
 class HomePageMM extends StatefulWidget {
@@ -36,17 +41,31 @@ class _HomePageMMState extends State<HomePageMM> {
   bool signup = false;
   bool loading = true;
   SharedPreferences prefs;
-
+  List<dynamic> users;
   int hostelBlock = 1;
-
+  UserInfoP userInfo;
   @override
   void initState() {
     getShared();
+
     super.initState();
     _teddyController = TeddyController();
   }
 
+  getUsers() async {
+    await Firestore.instance
+        .collection("users")
+        .document("7JOEExxZ3goV9mKPwcUO")
+        .get()
+        .then((DocumentSnapshot ds) {
+      setState(() {
+        users = ds.data["user_number"];
+      });
+    });
+  }
+
   getShared() async {
+    await getUsers();
     prefs = await SharedPreferenceClass.getInstance();
     prefs.getBool("signup") != null
         ? setState(() {
@@ -57,6 +76,15 @@ class _HomePageMMState extends State<HomePageMM> {
             signup = true;
             loading = false;
           });
+
+    var user = await FirebaseAuth.instance.currentUser();
+    print(user.phoneNumber);
+    if (users != null) {
+      if (users.contains(user.phoneNumber)) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => FoodMenuScreen()));
+      }
+    }
   }
 
   @override
@@ -146,6 +174,42 @@ class _HomePageMMState extends State<HomePageMM> {
                     ),
                   ),
                 ),
+                if (!signup)
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: height + 50),
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        padding: EdgeInsets.all(16),
+                        height: 200,
+                        child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                signup = true;
+                              });
+                            },
+                            child: Text("Sign Up")),
+                      ),
+                    ),
+                  ),
+                if (signup)
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: height + 50),
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        padding: EdgeInsets.all(16),
+                        height: 200,
+                        child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                signup = false;
+                              });
+                            },
+                            child: Text("Log In")),
+                      ),
+                    ),
+                  ),
                 SafeArea(
                   child: Container(
                     alignment: Alignment.topLeft,
@@ -202,179 +266,157 @@ class _HomePageMMState extends State<HomePageMM> {
                             Container(
                               color: Colors.transparent,
                               width: width,
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: bottom),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                        alignment: Alignment.topLeft,
-                                        padding:
-                                            EdgeInsets.only(top: 16, left: 32),
-                                        child: Text(
-                                          "Login",
-                                          style: TextStyle(fontSize: 64),
-                                        )),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Form(
-                                            key: _formKey,
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  color: Colors.transparent,
-                                                  alignment: Alignment.center,
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 32,
-                                                      horizontal: 16),
-                                                  child: new ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                100)),
-                                                    child: new BackdropFilter(
-                                                      filter:
-                                                          new ImageFilter.blur(
-                                                              sigmaX: 10.0,
-                                                              sigmaY: 10.0),
-                                                      child: new Container(
-                                                        decoration:
-                                                            new BoxDecoration(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade200
-                                                                    .withOpacity(
-                                                                        0.2)),
-                                                        child:
-                                                            new TextFormField(
-                                                          onTap: () {
-                                                            _teddyController.lookAt(Offset(
-                                                                0,
-                                                                MediaQuery.of(context)
-                                                                            .size
-                                                                            .height *
-                                                                        1.5 -
-                                                                    100));
-                                                          },
-                                                          validator: (val) {
-                                                            if (val.length !=
-                                                                10)
-                                                              return "Please Enter correct number";
-                                                            else
-                                                              return null;
-                                                          },
-                                                          controller:
-                                                              mobilecontroller,
-                                                          style: TextStyle(
-                                                              fontSize: 20),
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .number,
-                                                          maxLength: 10,
-                                                          textAlignVertical:
-                                                              TextAlignVertical
-                                                                  .top,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            prefix:
-                                                                Text("+91 "),
-                                                            contentPadding:
-                                                                EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            32,
-                                                                        vertical:
-                                                                            0),
-                                                            errorStyle: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .white54),
-                                                            labelText:
-                                                                "Enter Phone Number",
-                                                            alignLabelWithHint:
-                                                                true,
-                                                            floatingLabelBehavior:
-                                                                FloatingLabelBehavior
-                                                                    .never,
-                                                            hintText:
-                                                                "1234567890",
-                                                            hintStyle: TextStyle(
-                                                                fontSize: 20,
-                                                                color: Colors
-                                                                    .white54),
-                                                            border: InputBorder
-                                                                .none,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 32),
-                                            child: MaterialButton(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
-                                                  side: BorderSide(
-                                                    width: 2,
-                                                    color: Colors.white,
-                                                  )),
-                                              onPressed: () async {
-                                                if (_formKey.currentState
-                                                    .validate()) {
-                                                  _controller1.animateTo(
-                                                      _controller1.position
-                                                          .maxScrollExtent,
-                                                      curve: Curves.easeIn,
-                                                      duration: Duration(
-                                                          milliseconds: 300));
-                                                  _teddyController.lookAt(null);
-                                                  login = Login(
-                                                      mobilecontroller.text,
-                                                      _teddyController,
-                                                      context);
-                                                  verify = true;
-                                                  await login.start();
-                                                  a = 60;
-                                                  timer = Timer.periodic(
-                                                      Duration(seconds: 1),
-                                                      (timer) {
-                                                    if (a == 1) {
-                                                      timer.cancel();
-                                                    }
-                                                    if (mounted)
-                                                      setState(() {
-                                                        a--;
-                                                      });
-                                                  });
-                                                }
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Proceed",
-                                                  style:
-                                                      TextStyle(fontSize: 18),
+                              child: ListView(
+                                children: [
+                                  Container(
+                                      alignment: Alignment.topLeft,
+                                      padding:
+                                          EdgeInsets.only(top: 16, left: 32),
+                                      child: Text(
+                                        "Login",
+                                        style: TextStyle(fontSize: 64),
+                                      )),
+                                  SizedBox(
+                                    height: 100,
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Form(
+                                        key: _formKey,
+                                        child: Container(
+                                          //   color: Colors.pink,
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 32, horizontal: 16),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: new Container(
+                                              decoration: new BoxDecoration(
+                                                  color: Colors.grey.shade200
+                                                      .withOpacity(0.2)),
+                                              child: new TextFormField(
+                                                onTap: () {
+                                                  _teddyController.lookAt(
+                                                      Offset(
+                                                          0,
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .height *
+                                                                  1.5 -
+                                                              100));
+                                                },
+                                                validator: (val) {
+                                                  if (val.length != 10)
+                                                    return "Please Enter correct number";
+                                                  else
+                                                    return null;
+                                                },
+                                                controller: mobilecontroller,
+                                                style: TextStyle(fontSize: 20),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                maxLength: 10,
+                                                textAlignVertical:
+                                                    TextAlignVertical.top,
+                                                decoration: InputDecoration(
+                                                  prefix: Text("+91 "),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 32,
+                                                          vertical: 0),
+                                                  errorStyle: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white54),
+                                                  labelText:
+                                                      "Enter Phone Number",
+                                                  alignLabelWithHint: true,
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never,
+                                                  hintText: "1234567890",
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white54),
+                                                  border: InputBorder.none,
                                                 ),
                                               ),
                                             ),
-                                          )
-                                        ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 14,
+                                            bottom: 16,
+                                            left: 32,
+                                            right: 32),
+                                        child: MaterialButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              side: BorderSide(
+                                                width: 2,
+                                                color: Colors.white,
+                                              )),
+                                          onPressed: () async {
+                                            if (users.contains(
+                                                mobilecontroller.text.trim())) {
+                                              Fluttertoast.showToast(
+                                                  msg: "User not registered",
+                                                  backgroundColor: Colors.grey,
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  textColor: Colors.white);
+                                              setState(() {
+                                                signup = true;
+                                              });
+                                            } else {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                _controller1.animateTo(
+                                                    _controller1.position
+                                                        .maxScrollExtent,
+                                                    curve: Curves.easeIn,
+                                                    duration: Duration(
+                                                        milliseconds: 300));
+                                                _teddyController.lookAt(null);
+                                                login = Login(
+                                                    mobilecontroller.text,
+                                                    _teddyController,
+                                                    context);
+                                                verify = true;
+                                                await login.start(
+                                                    signup, users, userInfo);
+                                                a = 60;
+                                                timer = Timer.periodic(
+                                                    Duration(seconds: 1),
+                                                    (timer) {
+                                                  if (a == 1) {
+                                                    timer.cancel();
+                                                  }
+                                                  if (mounted)
+                                                    setState(() {
+                                                      a--;
+                                                    });
+                                                });
+                                              }
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Proceed",
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           if (signup)
@@ -708,29 +750,53 @@ class _HomePageMMState extends State<HomePageMM> {
                                           )),
                                       onPressed: () async {
                                         _teddyController.lookAt(null);
-                                        if (_formKey.currentState.validate()) {
-                                          _controller1.animateTo(
-                                              _controller1
-                                                  .position.maxScrollExtent,
-                                              curve: Curves.easeIn,
-                                              duration:
-                                                  Duration(milliseconds: 300));
-
-                                          login = Login(mobilecontroller.text,
-                                              _teddyController, context);
-                                          verify = true;
-                                          await login.start();
-                                          a = 60;
-                                          timer = Timer.periodic(
-                                              Duration(seconds: 1), (timer) {
-                                            if (a == 1) {
-                                              timer.cancel();
-                                            }
-                                            if (mounted)
-                                              setState(() {
-                                                a--;
-                                              });
+                                        if (users.contains("+91" +
+                                            mobilecontroller.text.trim())) {
+                                          Fluttertoast.showToast(
+                                              msg: "User already registered",
+                                              backgroundColor: Colors.grey,
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              textColor: Colors.white);
+                                          setState(() {
+                                            signup = false;
                                           });
+                                        } else {
+                                          setState(() {
+                                            userInfo = UserInfoP(
+                                                namecontroller.text.trim(),
+                                                int.parse(regcontroller.text),
+                                                hostelBlock,
+                                                roomcontroller.text.trim(),
+                                                int.parse(mobilecontroller.text
+                                                    .trim()));
+                                          });
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _controller1.animateTo(
+                                                _controller1
+                                                    .position.maxScrollExtent,
+                                                curve: Curves.easeIn,
+                                                duration: Duration(
+                                                    milliseconds: 300));
+
+                                            login = Login(mobilecontroller.text,
+                                                _teddyController, context);
+                                            verify = true;
+
+                                            await login.start(
+                                                signup, users, userInfo);
+                                            a = 60;
+                                            timer = Timer.periodic(
+                                                Duration(seconds: 1), (timer) {
+                                              if (a == 1) {
+                                                timer.cancel();
+                                              }
+                                              if (mounted)
+                                                setState(() {
+                                                  a--;
+                                                });
+                                            });
+                                          }
                                         }
                                       },
                                       child: Padding(
@@ -798,7 +864,8 @@ class _HomePageMMState extends State<HomePageMM> {
                                                     suffix: GestureDetector(
                                                       onTap: () {
                                                         if (a == 0) {
-                                                          login.start();
+                                                          login.start(signup,
+                                                              users, userInfo);
                                                           if (mounted)
                                                             setState(() {
                                                               a = 60;
@@ -862,10 +929,14 @@ class _HomePageMMState extends State<HomePageMM> {
                                           onPressed: () async {
                                             _teddyController.coverEyes(false);
                                             _teddyController.lookAt(null);
+
                                             if (otpcontroller.text.length ==
                                                 6) {
-                                              await login
-                                                  .verify(otpcontroller.text);
+                                              await login.verify(
+                                                  otpcontroller.text,
+                                                  signup,
+                                                  users,
+                                                  userInfo);
                                             }
                                           },
                                           child: Padding(

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:manipal_locals/MityMeal/Utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodMenuScreen extends StatefulWidget {
   @override
@@ -53,16 +55,39 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
-  List<int> itemCount = [0, 0, 0, 0, 0, 0];
+  List<int> itemCount;
   List<String> cartItems = [];
-  List<int> price = [];
   TabController _tabController;
-
+  List<FoodItem> foodItemList = [];
+  SharedPreferences prefs;
+  String text = "Menu";
   @override
   void initState() {
     _tabController = TabController(length: 5, vsync: this, initialIndex: 0);
-    // TODO: implement initState
     super.initState();
+    getMenu(widget.snapshot);
+  }
+
+  getMenu(AsyncSnapshot<DocumentSnapshot> ds) {
+    prefs = SharedPreferenceClass.sharedPreferences;
+    List<String> list = prefs.getStringList("listItems");
+    List<String> numbers = prefs.getStringList("count");
+    itemCount = List.filled(widget.snapshot.data["foodItems"].length, 0);
+    for (int i = 0; i < ds.data['foodItems'].length; i++) {
+      if (ds.data[ds.data['foodItems'][i]]["is_available"])
+        foodItemList.add(FoodItem(
+            ds.data['foodItems'][i],
+            ds.data[ds.data['foodItems'][i]]["name"],
+            ds.data[ds.data['foodItems'][i]]["cuisine"],
+            ds.data[ds.data['foodItems'][i]]["price"],
+            ds.data[ds.data['foodItems'][i]]["is_veg"]));
+      if (list != null) {
+        if (list.contains(ds.data['foodItems'][i])) {
+          itemCount[i] =
+              int.parse(numbers[list.indexOf(ds.data['foodItems'][i])]);
+        }
+      }
+    }
   }
 
   @override
@@ -104,7 +129,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
           title: Container(
             padding: EdgeInsets.only(top: 0.0),
             child: Text(
-              "Menu",
+              text,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
@@ -126,10 +151,9 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                   ),
                   Expanded(
                       child: ListView.builder(
-                          itemCount: widget.snapshot.data['foodItems'].length,
+                          itemCount: foodItemList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            if (widget.snapshot.data['correspondingCuisine']
-                                    [index] ==
+                            if (foodItemList[index].cuisine ==
                                 widget.snapshot.data['cuisines'][i]) {
                               return Padding(
                                 padding: const EdgeInsets.only(
@@ -161,8 +185,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 4.0, horizontal: 20),
                                             child: Text(
-                                              widget.snapshot.data['foodItems']
-                                                  [index],
+                                              foodItemList[index].name,
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Color(0xFFFFC800),
@@ -173,7 +196,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 20),
                                             child: Text(
-                                              '\u20B9${widget.snapshot.data['foodItemPrice'][index]}',
+                                              '\u20B9${foodItemList[index].price}',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Color(0xFFFFC800),
@@ -221,6 +244,19 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                                                       onTap: () {
                                                         setState(() {
                                                           itemCount[index] = 1;
+                                                          cartItems.add(
+                                                              foodItemList[
+                                                                      index]
+                                                                  .id);
+                                                          prefs.setStringList(
+                                                              "listItems",
+                                                              cartItems);
+                                                          prefs.setStringList(
+                                                              "count",
+                                                              itemCount
+                                                                  .map((el) => el
+                                                                      .toString())
+                                                                  .toList());
                                                         });
                                                       },
                                                       child: Padding(
@@ -247,6 +283,12 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                                                             setState(() {
                                                               itemCount[
                                                                   index]--;
+                                                              prefs.setStringList(
+                                                                  "count",
+                                                                  itemCount
+                                                                      .map((el) =>
+                                                                          el.toString())
+                                                                      .toList());
                                                             });
                                                           },
                                                           child: Padding(
@@ -274,6 +316,12 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
                                                             setState(() {
                                                               itemCount[
                                                                   index]++;
+                                                              prefs.setStringList(
+                                                                  "count",
+                                                                  itemCount
+                                                                      .map((el) =>
+                                                                          el.toString())
+                                                                      .toList());
                                                             });
                                                           },
                                                           child: Padding(
