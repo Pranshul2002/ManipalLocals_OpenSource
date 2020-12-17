@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manipal_locals/MityMeal/Utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
 class FoodMenuScreen extends StatefulWidget {
   @override
@@ -92,6 +93,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1;
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
