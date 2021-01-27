@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'MityMeal/Utils.dart';
 
 class PlacesToVisit extends StatelessWidget {
   @override
@@ -166,12 +168,12 @@ class _CardDesignState extends State<CardDesign>
                           children: [
                             Expanded(
                               child: Image(
-                                image: FirebaseImage(
+                                image: NetworkImage(Convert.convertString(
                                     "gs://manipallocals-2f95e.appspot.com/" +
                                         name.replaceAll(
                                             new RegExp(r"\s+"), "") +
                                         index.toString() +
-                                        ".png"),
+                                        ".png")),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -201,7 +203,7 @@ class _CardDesignState extends State<CardDesign>
                               size: 40,
                             ),
                             onPressed: () {
-                              print(index);
+
                               setState(() {
                                 if (index > 1) {
                                   index = index - 1;

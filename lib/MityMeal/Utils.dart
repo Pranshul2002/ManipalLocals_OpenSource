@@ -36,7 +36,25 @@ class FoodItem {
   String cuisine;
   int price;
   String id;
-  FoodItem(this.id, this.name, this.cuisine, this.price, this.isVeg);
+  String image_url;
+  FoodItem(
+      this.id, this.name, this.cuisine, this.price, this.isVeg, this.image_url);
 
   bool isVeg;
+}
+
+class Convert {
+  static String convertString(String str) {
+    String str1 =
+        'https://firebasestorage.googleapis.com/v0/b/manipallocals-2f95e.appspot.com/o/';
+    String str2;
+    String str3 = '?alt=media';
+
+    if (str.startsWith('gs') == true) {
+      str2 = str.substring(37);
+      str = str1 + str2 + str3;
+    }
+
+    return str;
+  }
 }

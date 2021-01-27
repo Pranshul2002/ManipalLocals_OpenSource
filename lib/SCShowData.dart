@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import 'HomePage.dart';
+import 'MityMeal/Utils.dart';
 
 class ClubContent extends StatefulWidget {
   AsyncSnapshot<DocumentSnapshot> ds;
@@ -29,9 +30,7 @@ class _ClubContentState extends State<ClubContent> {
               child: ListBody(
             children: [
               Image(
-                  image: FirebaseImage(
-                    url,
-                  ),
+                  image: NetworkImage(Convert.convertString(url)),
                   fit: BoxFit.fill),
             ],
           )),
@@ -53,9 +52,8 @@ class _ClubContentState extends State<ClubContent> {
           padding: EdgeInsets.all(16),
           alignment: Alignment.centerLeft,
           child: CircleAvatar(
-            backgroundImage: FirebaseImage(
-              widget.ds.data["club_image1"][widget.name],
-            ),
+            backgroundImage: NetworkImage(Convert.convertString(
+                widget.ds.data["club_image1"][widget.name])),
             radius: 70.0,
           ),
         ),
@@ -73,9 +71,8 @@ class _ClubContentState extends State<ClubContent> {
           padding: EdgeInsets.all(16),
           alignment: Alignment.centerRight,
           child: CircleAvatar(
-            backgroundImage: FirebaseImage(
-              widget.ds.data["club_image2"][widget.name],
-            ),
+            backgroundImage: NetworkImage(Convert.convertString(
+                widget.ds.data["club_image2"][widget.name])),
             radius: 70.0,
           ),
         ),
@@ -98,9 +95,8 @@ class _ClubContentState extends State<ClubContent> {
               padding: EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
               child: CircleAvatar(
-                backgroundImage: FirebaseImage(
-                  widget.ds.data["club_image3"][widget.name],
-                ),
+                backgroundImage: NetworkImage(Convert.convertString(
+                    widget.ds.data["club_image3"][widget.name])),
                 radius: 70.0,
               ),
             ),
@@ -149,9 +145,9 @@ class _ClubContentState extends State<ClubContent> {
       body: Stack(
         children: [
           Image(
-            image: FirebaseImage(
+            image: NetworkImage(Convert.convertString(
               widget.ds.data["club_icon"][widget.name],
-            ),
+            )),
             height: 300,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.fitWidth,

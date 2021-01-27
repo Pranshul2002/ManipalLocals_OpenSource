@@ -78,8 +78,7 @@ class _HomePageMMState extends State<HomePageMM> {
           });
 
     var user = await FirebaseAuth.instance.currentUser();
-    print(user.phoneNumber);
-    if (users != null) {
+    if (users != null && user != null) {
       if (users.contains(user.phoneNumber)) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => FoodMenuScreen()));
@@ -362,7 +361,7 @@ class _HomePageMMState extends State<HomePageMM> {
                                                 color: Colors.white,
                                               )),
                                           onPressed: () async {
-                                            if (users.contains(
+                                            if (!users.contains("+91" +
                                                 mobilecontroller.text.trim())) {
                                               Fluttertoast.showToast(
                                                   msg: "User not registered",

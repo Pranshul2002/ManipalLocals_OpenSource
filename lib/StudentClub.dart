@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manipal_locals/HomePage.dart';
 import 'package:manipal_locals/SCShowData.dart';
+
+import 'MityMeal/Utils.dart';
 
 class StudentClub extends StatefulWidget {
   @override
@@ -47,7 +49,7 @@ class _StudentClubState extends State<StudentClub>
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
                   ));
                 default:
-                  print(snapshot.data["club_icon"]);
+
                   _tabController = new TabController(
                       length: snapshot.data['type_names'].length,
                       vsync: this,
@@ -188,12 +190,12 @@ class _StudentClubState extends State<StudentClub>
                                                                             20),
                                                                     child:
                                                                         Image(
-                                                                      image: FirebaseImage(snapshot
+                                                                      image: NetworkImage(Convert.convertString(snapshot
                                                                               .data[
                                                                           "club_icon"][snapshot
                                                                               .data["clubs"]
                                                                           [
-                                                                          index]]),
+                                                                          index]])),
                                                                       fit: BoxFit
                                                                           .fill,
                                                                     ),

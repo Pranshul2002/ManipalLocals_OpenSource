@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'DataShowFeed.dart';
+import 'MityMeal/Utils.dart';
 
 class Feed extends StatelessWidget {
   @override
@@ -101,12 +102,13 @@ class _FeedDataState extends State<FeedData> {
                                       children: [
                                         Expanded(
                                           child: Image(
-                                            image: FirebaseImage(
-                                                "gs://manipallocals-2f95e.appspot.com/" +
-                                                    name.replaceAll(
-                                                        new RegExp(r"\s+"),
-                                                        "") +
-                                                    ".png"),
+                                            image: NetworkImage(
+                                                Convert.convertString(
+                                                    "gs://manipallocals-2f95e.appspot.com/" +
+                                                        name.replaceAll(
+                                                            new RegExp(r"\s+"),
+                                                            "") +
+                                                        ".png")),
                                             fit: BoxFit.fitWidth,
                                           ),
                                         ),

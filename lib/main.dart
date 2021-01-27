@@ -6,7 +6,6 @@ import 'package:manipal_locals/MityMeal/HomePage.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
-import 'MityMeal/LoginCode.dart';
 import 'MityMeal/Utils.dart';
 
 Route _createRoute() {
@@ -73,7 +72,6 @@ class _BeforeMainState extends State<BeforeMain> {
   SharedPreferences prefs;
 
   var selected;
-  @override
   Future<dynamic> getSelection() async {
     prefs = await SharedPreferenceClass.getInstance();
     selected =
@@ -81,6 +79,7 @@ class _BeforeMainState extends State<BeforeMain> {
     return selected;
   }
 
+  @override
   void initState() {
     super.initState();
     getSelection().then((value) {
@@ -103,43 +102,74 @@ class _BeforeMainState extends State<BeforeMain> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(top: 32, bottom: 32),
-            child: CircleAvatar(
-              radius: 100,
-              child: GestureDetector(
-                onTap: () {
-                  prefs.setBool("selected", true);
-                  Navigator.of(context).pushReplacement(_createRoute1());
-                },
-                child: Image.asset(
-                  "assets/images/ML.png",
-                  fit: BoxFit.contain,
+          Expanded(
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.only(top: 32, bottom: 32),
+              child: CircleAvatar(
+                radius: 100,
+                child: GestureDetector(
+                  onTap: () {
+                    prefs.setBool("selected", true);
+                    Navigator.of(context).pushReplacement(_createRoute1());
+                  },
+                  child: Image.asset(
+                    "assets/images/ML.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
+                backgroundColor: Colors.transparent,
               ),
-              backgroundColor: Colors.transparent,
+              height: MediaQuery.of(context).size.height / 2,
             ),
-            height: MediaQuery.of(context).size.height / 2,
           ),
-          Container(
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(top: 32, bottom: 32),
-            child: CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.transparent,
-              child: GestureDetector(
-                onTap: () {
-                  prefs.setBool("selected", false);
-                  Navigator.of(context).push(_createRoute());
-                },
-                child: Image.asset(
-                  "assets/images/mitymeal.png",
-                  fit: BoxFit.contain,
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.keyboard_arrow_up_sharp,
+                color: Colors.white,
+              )
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Choose one",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.keyboard_arrow_down_sharp, color: Colors.white)
+            ],
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(top: 32, bottom: 32),
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Colors.transparent,
+                child: GestureDetector(
+                  onTap: () {
+                    prefs.setBool("selected", false);
+                    Navigator.of(context).push(_createRoute());
+                  },
+                  child: Image.asset(
+                    "assets/images/mitymeal.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
+              height: MediaQuery.of(context).size.height / 2,
             ),
-            height: MediaQuery.of(context).size.height / 2,
           )
         ],
       ),

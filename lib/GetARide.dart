@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+
+import 'MityMeal/Utils.dart';
 
 class Get_A_Ride extends StatelessWidget {
   @override
@@ -18,7 +20,6 @@ class Get_A_Ride extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-
             backgroundColor: Colors.transparent,
             title: Container(
               padding: EdgeInsets.only(top: 8.0),
@@ -43,7 +44,7 @@ class Get_A_RideStateful extends StatefulWidget {
 class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
   final global = GlobalKey();
   Widget custom(List contacts) {
-    print(contacts);
+
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
@@ -75,7 +76,8 @@ class _Get_A_RideStatefulState extends State<Get_A_RideStateful> {
     return Column(
       children: <Widget>[
         Image(
-          image: FirebaseImage("gs://manipallocals-2f95e.appspot.com/AUTO.png"),
+          image: NetworkImage(Convert.convertString(
+              "gs://manipallocals-2f95e.appspot.com/AUTO.png")),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(

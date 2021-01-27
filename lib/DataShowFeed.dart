@@ -1,6 +1,6 @@
-import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:manipal_locals/MityMeal/Utils.dart';
 import 'dart:math' as math;
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
@@ -64,9 +64,10 @@ class _DataShowFeedStfState extends State<DataShowFeedStf> {
             // height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width,
             child: Image(
-              image: FirebaseImage("gs://manipallocals-2f95e.appspot.com/" +
-                  widget.name.replaceAll(new RegExp(r"\s+"), "") +
-                  ".png"),
+              image: NetworkImage(Convert.convertString(
+                  "gs://manipallocals-2f95e.appspot.com/" +
+                      widget.name.replaceAll(new RegExp(r"\s+"), "") +
+                      ".png")),
               fit: BoxFit.fill,
             ),
           ),

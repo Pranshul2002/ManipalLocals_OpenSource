@@ -1,7 +1,7 @@
-import 'package:firebase_image/firebase_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+import 'MityMeal/Utils.dart';
 
 class NotificationShow extends StatelessWidget {
   String name;
@@ -73,7 +73,7 @@ class _NotificationShowStfState extends State<NotificationShowStf> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Image(
-                image: FirebaseImage(url),
+                image: NetworkImage(Convert.convertString(url)),
               ),
             )
       ],

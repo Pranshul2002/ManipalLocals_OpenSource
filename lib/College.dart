@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'DataShow.dart';
+import 'MityMeal/Utils.dart';
 
 class College extends StatelessWidget {
   @override
@@ -56,7 +57,7 @@ class _CollegeDataState extends State<CollegeData> {
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
-                  .collection("")
+                  .collection("college_data")
                   .document("gHyYe7RUaRgKARY0i4xW")
                   .snapshots(),
               builder: (BuildContext context,
@@ -78,8 +79,8 @@ class _CollegeDataState extends State<CollegeData> {
                     return ListView(
                       children: <Widget>[
                         Image(
-                          image: FirebaseImage(
-                              "gs://manipallocals-2f95e.appspot.com/COLLEGE.png"),
+                          image: NetworkImage(Convert.convertString(
+                              "gs://manipallocals-2f95e.appspot.com/COLLEGE.png")),
                         ),
                         SizedBox(
                           height: 16.0,

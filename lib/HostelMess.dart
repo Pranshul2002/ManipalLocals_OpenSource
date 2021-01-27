@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'DataShow.dart';
+import 'MityMeal/Utils.dart';
 
 class HostelMess extends StatelessWidget {
   @override
@@ -73,8 +74,8 @@ class _HostelMessBodyState extends State<HostelMessBody> {
                     return ListView(
                       children: <Widget>[
                         Image(
-                          image:
-                          FirebaseImage("gs://manipallocals-2f95e.appspot.com/hostel.png"),
+                          image: NetworkImage(Convert.convertString(
+                              "gs://manipallocals-2f95e.appspot.com/hostel.png")),
                         ),
                         SizedBox(
                           height: 16.0,

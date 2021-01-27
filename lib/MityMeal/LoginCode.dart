@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:manipal_locals/MityMeal/MenuPage.dart';
 import 'package:manipal_locals/MityMeal/TeddyController.dart';
 import 'package:manipal_locals/MityMeal/food_menu_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +17,7 @@ class Login {
 
   Login(String phone, TeddyController tc, BuildContext context) {
     this.phone += phone;
-    print(phone);
+
     this.tc = tc;
     this.context = context;
   }
@@ -47,7 +46,7 @@ class Login {
           });
         },
         verificationFailed: (AuthException exc) {
-          print("Error " + exc.message);
+
           tc.fail();
           Fluttertoast.showToast(
               msg: "Error: ${exc.message}",
@@ -56,7 +55,7 @@ class Login {
               textColor: Colors.white);
         },
         codeSent: (String verificationId, [int resendCode]) {
-          print("codesent");
+
           this.verId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verid) {});
@@ -69,7 +68,7 @@ class Login {
 
     try {
       AuthResult ar = await auth.signInWithCredential(phoneAuthProvider);
-      print(ar.user);
+
       if (ar.user != null) {
         tc.success();
         if (signup) {

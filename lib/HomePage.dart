@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:manipal_locals/MityMeal/HomePage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:manipal_locals/MityMeal/Utils.dart';
 import 'package:manipal_locals/StudentClub.dart';
 import 'College.dart';
 import 'Directory.dart';
@@ -15,9 +17,11 @@ import 'Notification.dart';
 import 'PlacesToVisit.dart';
 import 'Feed.dart';
 import 'MessageBean.dart';
-
+import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -98,7 +102,6 @@ class HomePageState extends State<HomePage> {
       NotificationPage.item.addListener(() {
         setState(() {
           NotificationPageState.items = NotificationPage.item;
-          print(NotificationPageState.items);
         });
       });
     } catch (e) {
@@ -113,6 +116,7 @@ class HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -589,6 +593,45 @@ class HomePageState extends State<HomePage> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await FirebaseAuth.instance.signOut();
+                            var prefs = SharedPreferenceClass.sharedPreferences;
+                            prefs.setBool("selected", false);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => BeforeMain()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Icon(
+                                    Icons.autorenew,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Switch to MityMeal",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),

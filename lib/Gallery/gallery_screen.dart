@@ -4,12 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'gallery_image_container.dart';
 
 class GalleryScreen extends StatefulWidget {
-  // 150 ,150,120,130,150
   @override
   _GalleryScreenState createState() => _GalleryScreenState();
 }
@@ -28,14 +27,7 @@ class _GalleryScreenState extends State<GalleryScreen>
     dimensionIndex1 = random.nextInt(9);
     dimensionIndex2 = random.nextInt(9);
 
-    // print(index1);
-    // if (index1 >=
-    //     snapshot.data["images"].length - 1) {
-    //   SchedulerBinding.instance
-    //       .addPostFrameCallback((_) {
-    //     index1 = -1;
-    //   });
-    // }
+
     if (index1 == -1) {
       index1++;
     } else {

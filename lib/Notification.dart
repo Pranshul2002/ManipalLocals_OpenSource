@@ -122,7 +122,7 @@ class NotificationPageState extends State<NotificationPage> {
                           ),
                         ),
                         onTap: () {
-                          //       print(snapshot.data["pdf_included"][index].toString());
+
                           if (snapshot.data["body"][index] != "null") {
                             Navigator.push(
                                 context,

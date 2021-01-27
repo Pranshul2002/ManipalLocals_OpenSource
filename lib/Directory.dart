@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_image/firebase_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+
+import 'MityMeal/Utils.dart';
 
 class Directory extends StatelessWidget {
   @override
@@ -73,8 +75,8 @@ class _DirectoryStatefulState extends State<DirectoryStateful> {
     return Column(
       children: <Widget>[
         Image(
-          image: FirebaseImage(
-              "gs://manipallocals-2f95e.appspot.com/DIRECTORY.png"),
+          image: NetworkImage(Convert.convertString(
+              "gs://manipallocals-2f95e.appspot.com/DIRECTORY.png")),
         ),
         Expanded(
           child: StreamBuilder<DocumentSnapshot>(
