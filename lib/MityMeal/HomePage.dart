@@ -865,25 +865,21 @@ class _HomePageMMState extends State<HomePageMM> {
                                                         if (a == 0) {
                                                           login.start(signup,
                                                               users, userInfo);
-                                                          if (mounted)
-                                                            setState(() {
-                                                              a = 60;
-                                                              timer = Timer
-                                                                  .periodic(
-                                                                      Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                      (timer) {
-                                                                if (a == 1) {
-                                                                  timer
-                                                                      .cancel();
-                                                                }
-                                                                if (mounted)
-                                                                  setState(() {
-                                                                    a--;
-                                                                  });
+                                                          if (mounted) a = 60;
+                                                          timer =
+                                                              Timer.periodic(
+                                                                  Duration(
+                                                                      seconds:
+                                                                          1),
+                                                                  (timer) {
+                                                            if (a == 1) {
+                                                              timer.cancel();
+                                                            }
+                                                            if (mounted)
+                                                              setState(() {
+                                                                a--;
                                                               });
-                                                            });
+                                                          });
                                                         }
                                                       },
                                                       child: Text(

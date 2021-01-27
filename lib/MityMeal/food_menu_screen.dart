@@ -494,11 +494,14 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                     ),
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.only(
+                                        left: 8.0,
+                                        right: 8.0,
+                                      ),
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(0.0),
-                                        color: Colors.grey.shade900,
+                                        //  color: Colors.grey.shade900,
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.black,
@@ -521,8 +524,7 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                                 children: [
                                                   Container(
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade100,
+                                                      color: Colors.transparent,
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
@@ -555,36 +557,59 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                        left: 5,
-                                                        right: 5,
+                                                        left: 3,
+                                                        right: 3,
                                                       ),
-                                                      child: Icon(
-                                                        Icons
-                                                            .fiber_manual_record,
-                                                        color:
-                                                            foodItemList[index]
-                                                                    .isVeg
-                                                                ? Colors.green
-                                                                : Colors.red,
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color: foodItemList[
+                                                                          index]
+                                                                      .isVeg
+                                                                  ? Colors.green
+                                                                  : Colors.red,
+                                                              width: 1),
+                                                        ),
+                                                        padding:
+                                                            EdgeInsets.all(2),
+                                                        child: Icon(
+                                                          Icons
+                                                              .fiber_manual_record,
+                                                          color: foodItemList[
+                                                                      index]
+                                                                  .isVeg
+                                                              ? Colors.green
+                                                              : Colors.red,
+                                                        ),
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 4.0,
-                                                              left: 5,
-                                                              right: 5,
-                                                              top: 10),
-                                                      child: Text(
-                                                        foodItemList[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Color(
-                                                                0xFFFFC800),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width /
+                                                                  3 +
+                                                              20,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 4.0,
+                                                                left: 5,
+                                                                right: 5,
+                                                                top: 4),
+                                                        child: Text(
+                                                          foodItemList[index]
+                                                              .name,
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Color(
+                                                                  0xFFFFC800),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
                                                     ),
                                                     Padding(
@@ -631,7 +656,6 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                                   child: itemCount[index] == 0
                                                       ? GestureDetector(
                                                           onTap: () {
-
                                                             if (mounted)
                                                               setState(() {
                                                                 itemCount[
@@ -678,7 +702,6 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                                           children: [
                                                             GestureDetector(
                                                               onTap: () {
-
                                                                 if (mounted)
                                                                   setState(() {
                                                                     itemCount[
@@ -726,7 +749,6 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                                                             ),
                                                             GestureDetector(
                                                               onTap: () {
-
                                                                 if (mounted)
                                                                   setState(() {
                                                                     itemCount[

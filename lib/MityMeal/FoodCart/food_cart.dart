@@ -84,7 +84,8 @@ class _FoodCartDataState extends State<FoodCartData> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(top: 8.0),
+                                      padding: EdgeInsets.only(
+                                          top: 8.0, left: 16.0, right: 16.0),
                                       child: Text(
                                         MyLists.itemName[i],
                                         style: kItemTextStyle,

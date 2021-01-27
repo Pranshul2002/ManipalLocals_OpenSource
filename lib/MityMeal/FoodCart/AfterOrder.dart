@@ -31,7 +31,7 @@ class _AfterOrderState extends State<AfterOrder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   // MyLists.getItems();
+    // MyLists.getItems();
     prefs = SharedPreferenceClass.sharedPreferences;
   }
 
@@ -308,7 +308,7 @@ class _AfterOrderState extends State<AfterOrder> {
                             padding: EdgeInsets.only(top: 3.0),
                             itemCount: MyLists.itemName.length,
                             itemBuilder: (context, int i) {
-                              if (MyLists.qty[i] > 0)
+                              if (MyLists.qty[i] > 0) {
                                 return Container(
                                   height: 80.0,
                                   width:
@@ -321,55 +321,49 @@ class _AfterOrderState extends State<AfterOrder> {
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 32.0),
-                                              child: Text(
-                                                MyLists.itemName[i],
-                                                style: kItemTextStyle,
-                                                overflow: TextOverflow.ellipsis,
-                                                // softWrap: true,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 16.0),
-                                              child: Text(
-                                                "x    " +
-                                                    MyLists.qty[i].toString(),
-                                                style: kTextStyle,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 16.0),
-                                              child: Text(
-                                                  '\u20B9  ${(MyLists.price[i] * MyLists.qty[i]).toString()}',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 15.0,
-                                                      fontFamily: 'Cabin')),
-                                            ),
-                                          ],
+                                        flex: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 32.0),
+                                          child: Text(
+                                            MyLists.itemName[i],
+                                            style: kItemTextStyle,
+                                            overflow: TextOverflow.ellipsis,
+                                            // softWrap: true,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 16.0),
+                                          child: Text(
+                                            "x    " + MyLists.qty[i].toString(),
+                                            style: kTextStyle,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: Text(
+                                              '\u20B9  ${(MyLists.price[i] * MyLists.qty[i]).toString()}',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                  fontFamily: 'Cabin')),
                                         ),
                                       ),
                                     ],
                                   ),
                                 );
-                              else
+                              } else
                                 return SizedBox.shrink();
                             },
                           ),

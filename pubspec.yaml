@@ -36,6 +36,7 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   cached_network_image: ^2.2.0+1
   shared_preferences: ^0.5.12+4
+  marquee: ^1.6.1
 
 
 
