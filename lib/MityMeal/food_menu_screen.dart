@@ -65,16 +65,17 @@ class Menu extends StatefulWidget {
 }
 
 class MenuState extends State<Menu> with TickerProviderStateMixin {
-  List<int> itemCount = [];
-  List<String> cartItems = [];
+  static List<int> itemCount = [];
+  static List<String> cartItems = [];
   TabController _tabController;
   static List<FoodItem> foodItemList = [];
-  SharedPreferences prefs;
+  static SharedPreferences prefs;
   String text = "The Indian Kitchen";
-  bool isVeg = false;
+  static bool isVeg = false;
   static AsyncSnapshot<DocumentSnapshot> ds;
   Future result;
   int lengthoftab;
+
   @override
   void initState() {
     lengthoftab = widget.snapshot.data["cuisines"].length;
@@ -124,10 +125,7 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
     itemCount = List.filled(widget.snapshot.data["foodItems"].length, 0);
     for (int i = 0; i < ds.data['foodItems'].length; i++) {
       if (list != null) {
-        if (list.contains(ds.data['foodItems'][i])) {
-          itemCount[i] =
-              int.parse(numbers[list.indexOf(ds.data['foodItems'][i])]);
-        }
+        itemCount[i] = int.parse(numbers[i]);
       }
     }
     if (prefs.getBool("after") == true)
@@ -138,6 +136,224 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                 builder: (_) =>
                     AfterOrder(orderId: prefs.getString("orderId"))));
       });
+  }
+
+  Widget ItemContainer(int index) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 10.0,
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(
+          left: 8.0,
+          right: 8.0,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.0),
+          //  color: Colors.grey.shade900,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 2.0,
+              spreadRadius: 0.0,
+              offset: Offset(2.0, 2.0), // shadow direction: bottom right
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      width: 100,
+                      height: 100,
+                      padding: EdgeInsets.all(10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image(
+                          image: NetworkImage(
+                              MenuState.foodItemList[index].image_url),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 3,
+                          right: 3,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: MenuState.foodItemList[index].isVeg
+                                    ? Colors.green
+                                    : Colors.red,
+                                width: 1),
+                          ),
+                          padding: EdgeInsets.all(2),
+                          child: Icon(
+                            Icons.fiber_manual_record,
+                            color: MenuState.foodItemList[index].isVeg
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 3 + 20,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 4.0, left: 5, right: 5, top: 4),
+                          child: Text(
+                            MenuState.foodItemList[index].name,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFFFFC800),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          '\u20B9${MenuState.foodItemList[index].price}',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Color(0xFFFFC800),
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: MenuState.itemCount[index] == 0
+                            ? Color(0xFFFFC800)
+                            : Colors.grey.shade200,
+                        border: Border.all(color: Colors.black12)),
+                    child: MenuState.itemCount[index] == 0
+                        ? GestureDetector(
+                            onTap: () {
+                              if (mounted)
+                                setState(() {
+                                  MenuState.itemCount[index] = 1;
+
+                                  MenuState.cartItems
+                                      .add(MenuState.foodItemList[index].id);
+
+                                  MenuState.prefs.setStringList(
+                                      "listItems", MenuState.cartItems);
+                                  MenuState.prefs.setStringList(
+                                      "count",
+                                      MenuState.itemCount
+                                          .map((el) => el.toString())
+                                          .toList());
+                                });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 20),
+                              child: Text(
+                                'Add',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (mounted)
+                                    setState(() {
+                                      MenuState.itemCount[index]--;
+
+                                      if (MenuState.itemCount[index] == 0) {
+                                        MenuState.cartItems.remove(
+                                            MenuState.foodItemList[index].id);
+
+                                        MenuState.prefs.setStringList(
+                                            "listItems", MenuState.cartItems);
+                                      }
+                                      MenuState.prefs.setStringList(
+                                          "count",
+                                          MenuState.itemCount
+                                              .map((el) => el.toString())
+                                              .toList());
+                                    });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Icon(
+                                    Icons.horizontal_rule,
+                                    size: 25,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                MenuState.itemCount[index].toString(),
+                                style: TextStyle(fontSize: 22),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (mounted)
+                                    setState(() {
+                                      MenuState.itemCount[index]++;
+                                      MenuState.prefs.setStringList(
+                                          "count",
+                                          MenuState.itemCount
+                                              .map((el) => el.toString())
+                                              .toList());
+                                    });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 25,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -482,312 +698,26 @@ class MenuState extends State<Menu> with TickerProviderStateMixin {
                         height: 16.0,
                       ),
                       Expanded(
-                          child: ListView.builder(
-                              itemCount: foodItemList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (foodItemList[index].cuisine ==
-                                        widget.snapshot.data['cuisines'][i] &&
-                                    (!isVeg || foodItemList[index].isVeg)) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 10.0,
-                                    ),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.only(
-                                        left: 8.0,
-                                        right: 8.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(0.0),
-                                        //  color: Colors.grey.shade900,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black,
-                                            blurRadius: 2.0,
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0,
-                                                2.0), // shadow direction: bottom right
-                                          )
-                                        ],
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30)),
-                                                    ),
-                                                    width: 100,
-                                                    height: 100,
-                                                    padding: EdgeInsets.all(10),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      child: Image(
-                                                        image: NetworkImage(
-                                                            foodItemList[index]
-                                                                .image_url),
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 3,
-                                                        right: 3,
-                                                      ),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                              color: foodItemList[
-                                                                          index]
-                                                                      .isVeg
-                                                                  ? Colors.green
-                                                                  : Colors.red,
-                                                              width: 1),
-                                                        ),
-                                                        padding:
-                                                            EdgeInsets.all(2),
-                                                        child: Icon(
-                                                          Icons
-                                                              .fiber_manual_record,
-                                                          color: foodItemList[
-                                                                      index]
-                                                                  .isVeg
-                                                              ? Colors.green
-                                                              : Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                      .size
-                                                                      .width /
-                                                                  3 +
-                                                              20,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 4.0,
-                                                                left: 5,
-                                                                right: 5,
-                                                                top: 4),
-                                                        child: Text(
-                                                          foodItemList[index]
-                                                              .name,
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              color: Color(
-                                                                  0xFFFFC800),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5),
-                                                      child: Text(
-                                                        '\u20B9${foodItemList[index].price}',
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Color(
-                                                                0xFFFFC800),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w300),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Column(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 20.0),
-                                                child: Container(
-                                                  padding: EdgeInsets.all(5.0),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30)),
-                                                      color: itemCount[index] ==
-                                                              0
-                                                          ? Color(0xFFFFC800)
-                                                          : Colors
-                                                              .grey.shade200,
-                                                      border: Border.all(
-                                                          color:
-                                                              Colors.black12)),
-                                                  child: itemCount[index] == 0
-                                                      ? GestureDetector(
-                                                          onTap: () {
-                                                            if (mounted)
-                                                              setState(() {
-                                                                itemCount[
-                                                                    index] = 1;
-
-                                                                cartItems.add(
-                                                                    foodItemList[
-                                                                            index]
-                                                                        .id);
-
-                                                                prefs.setStringList(
-                                                                    "listItems",
-                                                                    cartItems);
-                                                                prefs.setStringList(
-                                                                    "count",
-                                                                    itemCount
-                                                                        .map((el) =>
-                                                                            el.toString())
-                                                                        .toList());
-                                                              });
-                                                          },
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    vertical:
-                                                                        5.0,
-                                                                    horizontal:
-                                                                        20),
-                                                            child: Text(
-                                                              'Add',
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : Row(
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (mounted)
-                                                                  setState(() {
-                                                                    itemCount[
-                                                                        index]--;
-
-                                                                    if (itemCount[
-                                                                            index] ==
-                                                                        0) {
-                                                                      cartItems.remove(
-                                                                          foodItemList[index]
-                                                                              .id);
-
-                                                                      prefs.setStringList(
-                                                                          "listItems",
-                                                                          cartItems);
-                                                                    }
-                                                                    prefs.setStringList(
-                                                                        "count",
-                                                                        itemCount
-                                                                            .map((el) =>
-                                                                                el.toString())
-                                                                            .toList());
-                                                                  });
-                                                              },
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        right:
-                                                                            5.0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .horizontal_rule,
-                                                                  size: 25,
-                                                                  color: Colors
-                                                                      .black54,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              itemCount[index]
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  fontSize: 22),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (mounted)
-                                                                  setState(() {
-                                                                    itemCount[
-                                                                        index]++;
-                                                                    prefs.setStringList(
-                                                                        "count",
-                                                                        itemCount
-                                                                            .map((el) =>
-                                                                                el.toString())
-                                                                            .toList());
-                                                                  });
-                                                              },
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            5.0),
-                                                                child: Icon(
-                                                                  Icons.add,
-                                                                  size: 25,
-                                                                  color: Colors
-                                                                      .black54,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                } else
-                                  return SizedBox();
-                              }))
+                          child: Padding(
+                        padding: itemCount.any((element) {
+                          if (element != 0) {
+                            return true;
+                          } else
+                            return false;
+                        })
+                            ? const EdgeInsets.only(bottom: 50.0)
+                            : EdgeInsets.all(0),
+                        child: ListView.builder(
+                            itemCount: foodItemList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (foodItemList[index].cuisine ==
+                                      widget.snapshot.data['cuisines'][i] &&
+                                  (!isVeg || foodItemList[index].isVeg)) {
+                                return ItemContainer(index);
+                              } else
+                                return SizedBox();
+                            }),
+                      ))
                     ]),
                   )
               ],

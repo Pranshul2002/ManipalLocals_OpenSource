@@ -32,6 +32,110 @@ class _FoodCartDataState extends State<FoodCartData> {
     prefs = SharedPreferenceClass.sharedPreferences;
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          title: Text(
+            'Place order?',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Yes',
+                  style: TextStyle(color: Colors.green, fontSize: 18)),
+              onPressed: () async {
+                int sum = 0;
+                MyLists.qty.forEach((num e) {
+                  sum += e;
+                });
+                await Firestore.instance
+                    .collection("food_menu")
+                    .document("1bF1qLEpWuhKj9n7Af8P")
+                    .get()
+                    .then((value) {
+                  setState(() {
+                    isOpen = !value.data["closed"];
+                  });
+                });
+                if (sum != 0 && isOpen) {
+                  Map order = Map();
+                  MyLists.itemId.forEach((element) {
+                    int dex = MenuState.foodItemList
+                        .indexWhere((element1) => element1.id == element);
+
+                    if (MyLists.qty[dex] > 0)
+                      order.addAll({element: MyLists.qty[dex]});
+                  });
+
+                  FirebaseAuth.instance.currentUser().then((value) {
+                    order.addAll({"phoneNumber": value.phoneNumber});
+                  });
+                  await Firestore.instance
+                      .collection("orders")
+                      .document("h5i5dYLy8BC33umrteH4")
+                      .get()
+                      .then((ds) async {
+                    print(ds.data);
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(1000000);
+                    setState(() {
+                      orderId = "order" +
+                          ds.data["count"].toString() +
+                          randomNumber.toString();
+                    });
+
+                    List<dynamic> list12 = ds.data["orderId"];
+                    list12.add(orderId);
+
+                    var count = ds.data["count"] + 1;
+                    await Firestore.instance
+                        .collection("orders")
+                        .document("h5i5dYLy8BC33umrteH4")
+                        .updateData({
+                      "orderId": list12,
+                      "count": count,
+                      orderId: order
+                    });
+                    await Firestore.instance
+                        .collection("orders")
+                        .document("status")
+                        .updateData({orderId: "0"});
+                  });
+                  prefs.setBool("after", true);
+                  prefs.setString("orderId", orderId);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => AfterOrder(
+                                orderId: orderId,
+                              )));
+                } else if (!isOpen) {
+                  Fluttertoast.showToast(msg: "Error: Restaurant closed");
+                  Navigator.of(context).pop();
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Error: Cart is empty.\nPlease add some items.");
+                  Navigator.pop(context);
+                }
+              },
+            ),
+            TextButton(
+              child:
+                  Text('No', style: TextStyle(color: Colors.red, fontSize: 18)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     MyLists.getItems();
@@ -62,10 +166,15 @@ class _FoodCartDataState extends State<FoodCartData> {
                     padding: EdgeInsets.only(top: 3.0),
                     itemCount: MyLists.itemName.length,
                     itemBuilder: (context, int i) {
-                      // if (MyLists.qty.length < MyLists.itemName.length) {
-                      //   MyLists.qty.add(1);
-                      // }
-                      if (MyLists.qty[i] > 0)
+                      if (MyLists
+                              .qty[MenuState.foodItemList.indexWhere((element) {
+                            if (element.id == MyLists.itemId[i]) {
+                              return true;
+                            } else {
+                              return false;
+                            }
+                          })] >
+                          0)
                         return Container(
                           height: 80.0,
                           width: MediaQuery.of(context).size.width * 0.1,
@@ -109,8 +218,27 @@ class _FoodCartDataState extends State<FoodCartData> {
                                           fillColor: Color(0xFFFFEFC6),
                                           onPressed: () {
                                             setState(() {
-                                              if (MyLists.qty[i] > 1) {
-                                                MyLists.qty[i]--;
+                                              if (MyLists.qty[MenuState
+                                                      .foodItemList
+                                                      .indexWhere((element) {
+                                                    if (element.id ==
+                                                        MyLists.itemId[i]) {
+                                                      return true;
+                                                    } else {
+                                                      return false;
+                                                    }
+                                                  })] >
+                                                  1) {
+                                                MyLists.qty[MenuState
+                                                    .foodItemList
+                                                    .indexWhere((element) {
+                                                  if (element.id ==
+                                                      MyLists.itemId[i]) {
+                                                    return true;
+                                                  } else {
+                                                    return false;
+                                                  }
+                                                })]--;
                                                 prefs.setStringList(
                                                     "count",
                                                     MyLists.qty
@@ -124,7 +252,16 @@ class _FoodCartDataState extends State<FoodCartData> {
                                         Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Text(
-                                              MyLists.qty[i].toString(),
+                                              MyLists.qty[MenuState.foodItemList
+                                                      .indexWhere((element) {
+                                                if (element.id ==
+                                                    MyLists.itemId[i]) {
+                                                  return true;
+                                                } else {
+                                                  return false;
+                                                }
+                                              })]
+                                                  .toString(),
                                               style: kTextStyle,
                                             )),
                                         RawMaterialButton(
@@ -135,7 +272,15 @@ class _FoodCartDataState extends State<FoodCartData> {
                                           ),
                                           onPressed: () {
                                             setState(() {
-                                              MyLists.qty[i]++;
+                                              MyLists.qty[MenuState.foodItemList
+                                                  .indexWhere((element) {
+                                                if (element.id ==
+                                                    MyLists.itemId[i]) {
+                                                  return true;
+                                                } else {
+                                                  return false;
+                                                }
+                                              })]++;
                                               prefs.setStringList(
                                                   "count",
                                                   MyLists.qty
@@ -161,7 +306,14 @@ class _FoodCartDataState extends State<FoodCartData> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                        '\u20B9  ${(MyLists.price[i] * MyLists.qty[i]).toString()}',
+                                        '\u20B9  ${(MyLists.price[i] * MyLists.qty[MenuState.foodItemList.indexWhere((element) {
+                                              if (element.id ==
+                                                  MyLists.itemId[i]) {
+                                                return true;
+                                              } else {
+                                                return false;
+                                              }
+                                            })]).toString()}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15.0,
@@ -171,7 +323,15 @@ class _FoodCartDataState extends State<FoodCartData> {
                                       child: IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            MyLists.qty[i] = 0;
+                                            MyLists.qty[MenuState.foodItemList
+                                                .indexWhere((element) {
+                                              if (element.id ==
+                                                  MyLists.itemId[i]) {
+                                                return true;
+                                              } else {
+                                                return false;
+                                              }
+                                            })] = 0;
 
                                             MyLists.itemName.removeAt(i);
                                             MyLists.price.removeAt(i);
@@ -291,77 +451,8 @@ class _FoodCartDataState extends State<FoodCartData> {
                       Expanded(
                         flex: 2,
                         child: GestureDetector(
-                          onTap: () async {
-                            int sum = 0;
-                            MyLists.qty.forEach((num e) {
-                              sum += e;
-                            });
-                            await Firestore.instance
-                                .collection("food_menu")
-                                .document("1bF1qLEpWuhKj9n7Af8P")
-                                .get()
-                                .then((value) {
-                              setState(() {
-                                isOpen = !value.data["closed"];
-                              });
-                            });
-                            if (sum != 0 && isOpen) {
-                              Map order = Map();
-                              MyLists.itemName.forEach((element) {
-                                var dex = MyLists.itemName.indexOf(element);
-                                order.addAll({element: MyLists.qty[dex]});
-                              });
-                              FirebaseAuth.instance.currentUser().then((value) {
-                                order
-                                    .addAll({"phoneNumber": value.phoneNumber});
-                              });
-                              await Firestore.instance
-                                  .collection("orders")
-                                  .document("h5i5dYLy8BC33umrteH4")
-                                  .get()
-                                  .then((ds) async {
-                                Random random = new Random();
-                                int randomNumber = random.nextInt(1000000);
-                                setState(() {
-                                  orderId = "order" +
-                                      ds.data["count"].toString() +
-                                      randomNumber.toString();
-                                });
-
-                                List<dynamic> list12 = ds.data["orderId"];
-                                list12.add(orderId);
-
-                                var count = ds.data["count"] + 1;
-                                await Firestore.instance
-                                    .collection("orders")
-                                    .document("h5i5dYLy8BC33umrteH4")
-                                    .updateData({
-                                  "orderId": list12,
-                                  "count": count,
-                                  orderId: order
-                                });
-                                await Firestore.instance
-                                    .collection("orders")
-                                    .document("status")
-                                    .updateData({orderId: "0"});
-                              });
-                              prefs.setBool("after", true);
-                              prefs.setString("orderId", orderId);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => AfterOrder(
-                                            orderId: orderId,
-                                          )));
-                            } else if (!isOpen) {
-                              Fluttertoast.showToast(
-                                  msg: "Error: Restaurant closed");
-                              Navigator.of(context).pop();
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "Error: Cart is empty.\nPlease add some items.");
-                            }
+                          onTap: () {
+                            _showMyDialog();
                           },
                           child: Container(
                             child: Center(

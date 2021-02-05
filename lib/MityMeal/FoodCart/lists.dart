@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../food_menu_screen.dart';
 import '../Utils.dart';
@@ -10,11 +9,13 @@ class MyLists {
   static List<int> price = [];
   static List<int> qty = [];
   static double deliveryCharges = 0.0;
+  static List<int> Qty = [];
   static getItems() {
     itemId = [];
     itemName = [];
     price = [];
     qty = [];
+    Qty = [];
     prefs = SharedPreferenceClass.sharedPreferences;
     List<String> list = prefs.getStringList("listItems") != null
         ? prefs.getStringList("listItems")
