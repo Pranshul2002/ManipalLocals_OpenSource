@@ -1,228 +1,49 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:manipal_locals/MityMeal/HomePage.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'HomePage.dart';
-import 'MityMeal/Utils.dart';
 
-Route _createRoute() {
-  return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => HomePageMM(),
-      transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-      ) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(0.0, 1.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      });
-}
-
-Route _createRoute1() {
-  return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          SplashScreenImage(),
-      transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-      ) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(0.0, 1.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      });
-}
+import 'features/homepage/home_page.dart';
 
 void main() {
-  runApp(SplashScreen());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
-class BeforeMain extends StatefulWidget {
-  @override
-  _BeforeMainState createState() => _BeforeMainState();
-}
-
-class _BeforeMainState extends State<BeforeMain> {
-  SharedPreferences prefs;
-
-  var selected;
-  Future<dynamic> getSelection() async {
-    prefs = await SharedPreferenceClass.getInstance();
-    selected =
-        prefs.getBool("selected") != null ? prefs.getBool("selected") : null;
-    return selected;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getSelection().then((value) {
-      if (value != null) {
-        if (value) {
-          Navigator.of(context).pushReplacement(_createRoute1());
-        } else {
-          Navigator.of(context).push(_createRoute());
-        }
-      }
-    });
-  }
-
+class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
   @override
   Widget build(BuildContext context) {
-    timeDilation = 2.5;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(top: 32, bottom: 32),
-              child: CircleAvatar(
-                radius: 100,
-                child: GestureDetector(
-                  onTap: () {
-                    prefs.setBool("selected", true);
-                    Navigator.of(context).pushReplacement(_createRoute1());
-                  },
-                  child: Image.asset(
-                    "assets/images/ML.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-              height: MediaQuery.of(context).size.height / 2,
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.keyboard_arrow_up_sharp,
-                color: Colors.white,
-              )
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Choose one",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.keyboard_arrow_down_sharp, color: Colors.white)
-            ],
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(top: 32, bottom: 32),
-              child: CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.transparent,
-                child: GestureDetector(
-                  onTap: () {
-                    prefs.setBool("selected", false);
-                    Navigator.of(context).push(_createRoute());
-                  },
-                  child: Image.asset(
-                    "assets/images/mitymeal.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              height: MediaQuery.of(context).size.height / 2,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class SplashScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     return MaterialApp(
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: BeforeMain(),
-      ),
-    );
-  }
-}
-
-class SplashScreenImage extends StatelessWidget {
-  Future<void> delay(BuildContext context) async {
-    if (FirebaseAuth.instance.currentUser() != null)
-      await FirebaseAuth.instance.signInAnonymously();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => HomePage()));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    delay(context);
-
-    return SizedBox.expand(
-      child: Container(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  "assets/images/logo.png",
-                  width: MediaQuery.of(context).size.width - 32,
+      theme: ThemeData(
+          canvasColor: Colors.black,
+          brightness: Brightness.dark,
+          fontFamily: "banglamn"),
+      home: FutureBuilder(
+          future: _initialization,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Scaffold(
+                body: Center(
+                  child: Text("Error: " + snapshot.error.toString()),
                 ),
-              ],
-            ),
-          ],
-        ),
-      ),
+              );
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Image.asset("assets/images/ML.png"),
+              );
+            }
+
+            return HomePage();
+          }),
     );
   }
 }
