@@ -40,8 +40,13 @@ The App contains information about:
 ![Student Club Page](assets/screenshots/StudentClubs.jpg)
 
 ## Installation Guide
-Clone this github repository and run flutter pub get in the terminal
+* Clone this github repository and run flutter pub get in the terminal
+* Create a new firebase project through https://console.firebase.google.com/
+* Add android app to the project
+* Enable firebase, authentication for the project
+* Add the config file to the app directory of the project
+* Add collections and documents as depicted in the code
 
-##Project Available at
-[Web App](https://manipallocals-2f95e.web.app/#/)
-[Android App](https://play.google.com/store/apps/details?id=com.manipal_locals.android&hl=en_IN&gl=US)
+## Project Available at
+* [Web App](https://manipallocals-2f95e.web.app/#/)
+* [Android App](https://play.google.com/store/apps/details?id=com.manipal_locals.android&hl=en_IN&gl=US)
